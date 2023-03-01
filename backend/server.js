@@ -36,7 +36,7 @@ app.put('/parse', (req,res) => {
 });
 
 app.get('/db', (req,res) => {
-    connection.query('SHOW TABLES', (err,rows, fields) => {
+    connection.query('SHOW TABLES', (err, rows, fields) => {
         if (err) throw err;
 
         console.log(rows);
@@ -46,7 +46,34 @@ app.get('/db', (req,res) => {
 });
 
 app.post('/user', (req, res) => {
-    
+    const { first, last, age, admin } = req.body;
+    const query = `INSERT INTO users (first_name, last_name, age, admin) VALUES ('${first}','${last}',${age},${admin})`;
+    connection.query(query, (err, rows, fields) => {
+        if (err) throw err;
+
+        console.log(rows);
+        res.status(200);
+        res.send("Added user!");
+    });
+});
+
+app.get('/users', (req,res) => {
+    connection.query('SELECT * FROM users', (err, rows, fields) => {
+        if (err) throw err;
+
+        console.log(rows);
+        res.status(200);
+        res.send(rows);
+    });
+});
+
+app.put('/users', (req,res) => {
+    connection.query('DELETE FROM users', (err, rows, fields) => {
+        if (err) throw err;
+
+        res.status(200);
+        res.send('Cleared users!');
+    });
 });
 
 app.listen(port, () => {
