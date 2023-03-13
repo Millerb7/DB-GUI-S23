@@ -1,5 +1,6 @@
 import './App.css';
 import axios from 'axios';
+import Login from './auth/Login'
 
 function App() {
   const url = 'http://localhost:8000';
@@ -61,6 +62,7 @@ function App() {
         <button onClick={getUsers}>Get Users</button>
         <button onClick={clearUsers}>Clear Users</button>
       </header>
+      <Login />
     </div>
   );
 }
