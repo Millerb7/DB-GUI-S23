@@ -6,4 +6,7 @@ CREATE TABLE IF NOT EXISTS users(
     last_name   VARCHAR(255) NOT NULL,
     age         INT,
     admin       BOOLEAN NOT NULL DEFAULT FALSE
+    courses     INT
+    totalAssigns INT
+    completedAssigns INT
 );
