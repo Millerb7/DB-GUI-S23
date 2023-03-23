@@ -76,6 +76,23 @@ app.put('/users', (req,res) => {
     });
 });
 
+app.post('/login', (req,res) => {
+    console.log(req.body);
+    connection.query(`SELECT email=${req.body.email} FROM users`, (err, rows, fields) => {
+        if (err) throw err;
+        
+        console.log(rows);
+        if(rows.password == req.body.password) {
+            res.status(200);
+            res.send(rows);
+
+        } else {
+            res.status(201);
+            res.send('Incorrect Login!');
+        }
+    });
+});
+
 app.listen(port, () => {
     console.log(`listening to port ${port}`);
 });
