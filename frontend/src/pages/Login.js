@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import LoginForm from "../sections/LoginForm"
+import { LoginForm } from "../sections/LoginForm"
 
-function Login() {
+export const Login = () => {
 
   return (
-    <div>
+    <>
         <h1>Login Page</h1>
         <LoginForm />
-    </div>
+    </>
   );
 }
-
-export default Login;

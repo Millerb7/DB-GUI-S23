@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function LoginForm() {
+export const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    axios.post("/login", { email, password })
+  const handleSubmit = () => {
+    axios.post("/login", { email: email, password: password })
       .then((response) => {
+        console.log("logged in");
         console.log(response.data);
         // window change
       })
@@ -18,27 +17,17 @@ function LoginForm() {
       });
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
   return (
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email:</label>
-          <input type="email" value={email} onChange={handleEmailChange} />
+          <input type="email" value={email} onChange={() => {setEmail(email);}} />
         </div>
         <div>
           <label>Password:</label>
-          <input type="password" value={password} onChange={handlePasswordChange} />
+          <input type="password" value={password} onChange={() => {setPassword(email);}} />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" onClick={handleSubmit}>Login</button>
       </form>
   );
 }
-
-export default LoginForm;
