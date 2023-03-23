@@ -1,8 +1,8 @@
 import './App.css';
 import axios from 'axios';
-import Login from './auth/Login'
+import { Login } from './pages/Login';
 
-function App() {
+export const App = () => {
   const url = 'http://localhost:8000';
   const checkAPI = () => {
     axios.get(url + '/').then((res) => {
@@ -13,7 +13,7 @@ function App() {
   }
 
   const user = {
-    "first": "Hayden",
+    "first": "Hgit yden",
     "last": "Center",
     "age": 22,
     "admin": true
@@ -66,5 +66,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
