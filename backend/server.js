@@ -76,6 +76,15 @@ app.put('/users', (req,res) => {
     });
 });
 
+app.get('/login', async (req, res, next) => {
+    connection.query(`SELECT user FROM users WHERE user_id=${req.body.id}`, (err, rows, fields) => {
+        if (err) throw err;
+
+        res.status(200);
+        res.send(rows);
+    });
+});
+
 app.listen(port, () => {
     console.log(`listening to port ${port}`);
 });
