@@ -1,6 +1,7 @@
 import './App.css';
 import axios from 'axios';
 import { Login } from './pages/Login';
+import { CoursePage } from './pages/CoursePage';
 
 export const App = () => {
   const url = 'http://localhost:8000';
