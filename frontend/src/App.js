@@ -1,7 +1,9 @@
 import './App.css';
 import axios from 'axios';
+import { Login } from './pages/Login';
+import { CoursePage } from './pages/CoursePage';
 
-function App() {
+export const App = () => {
   const url = 'http://localhost:8000';
   const checkAPI = () => {
     axios.get(url + '/').then((res) => {
@@ -12,7 +14,7 @@ function App() {
   }
 
   const user = {
-    "first": "Hayden",
+    "first": "Hgit yden",
     "last": "Center",
     "age": 22,
     "admin": true
@@ -61,8 +63,7 @@ function App() {
         <button onClick={getUsers}>Get Users</button>
         <button onClick={clearUsers}>Clear Users</button>
       </header>
+      <Login />
     </div>
   );
 }
-
-export default App;

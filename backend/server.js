@@ -45,27 +45,52 @@ app.get('/db', (req,res) => {
     });
 });
 
-app.post('/user', (req, res) => {
-    const { first, last, age, admin } = req.body;
-    const query = `INSERT INTO users (first_name, last_name, age, admin) VALUES ('${first}','${last}',${age},${admin})`;
-    connection.query(query, (err, rows, fields) => {
-        if (err) throw err;
+// app.post('/user', (req, res) => {
+//     const { first, last, age, admin } = req.body;
+//     const query = `INSERT INTO users (first_name, last_name, age, admin) VALUES ('${first}','${last}',${age},${admin})`;
+//     connection.query(query, (err, rows, fields) => {
+//         if (err) throw err;
+//         console.log(rows);
+//         res.status(200);
+//         res.send("Added user!");
+//     });
+// });
 
-        console.log(rows);
-        res.status(200);
-        res.send("Added user!");
-    });
+//ryans stuff
+
+app.post('/user', (req,res) => {
+    console.log(req.body);
+    const { user_id, first_name, last_name, age, admin, courses, totalAssigns, completedAssigns} = req.body;
+    const query = `INSERT INTO users (user_id, first_name, last_name, age, admin, courses, totalAssigns, completedAssigns) VALUES ('${user_id}', '${first_name}','${last_name}','${age}','${admin}','${courses}','${totalAssigns}','${completedAssigns}')`;
+        connection.query(query, (err,rows,fields) => {
+            if (err) throw err;
+            console.log(rows);
+            res.status(200);
+            res.send("Added user");
+        });
 });
 
 app.get('/users', (req,res) => {
-    connection.query('SELECT * FROM users', (err, rows, fields) => {
+    connection.query('SELECT * FROM users', (err,rows,fields) => {
         if (err) throw err;
 
         console.log(rows);
         res.status(200);
         res.send(rows);
-    });
-});
+    })
+})
+
+//end of ryans stuff
+
+// app.get('/users', (req,res) => {
+//     connection.query('SELECT * FROM users', (err, rows, fields) => {
+//         if (err) throw err;
+
+//         console.log(rows);
+//         res.status(200);
+//         res.send(rows);
+//     });
+// });
 
 app.put('/users', (req,res) => {
     connection.query('DELETE FROM users', (err, rows, fields) => {
@@ -73,6 +98,23 @@ app.put('/users', (req,res) => {
 
         res.status(200);
         res.send('Cleared users!');
+    });
+});
+
+app.post('/login', (req,res) => {
+    console.log(req.body);
+    connection.query(`SELECT email=${req.body.email} FROM users`, (err, rows, fields) => {
+        if (err) throw err;
+        
+        console.log(rows);
+        if(rows.password == req.body.password) {
+            res.status(200);
+            res.send(rows);
+
+        } else {
+            res.status(201);
+            res.send('Incorrect Login!');
+        }
     });
 });
 
