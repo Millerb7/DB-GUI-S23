@@ -4,7 +4,7 @@ import { Home, CalendarPage, CoursePage, IndividualCoursePage, AssignmentPage } 
 export default function Router () {
     return useRoutes([
         {
-            path: '/dashboard',
+            path: '/',
             element: <Home />,
             children: [
                 { path: 'courses', element: <CoursePage /> },
