@@ -14,3 +14,15 @@ VALUES
 ('marley', 'wine', 45, true),
 ('mort', 'lemur', 7, false),
 ('bat', 'man', 20, true);
+
+CREATE TABLE IF NOT EXISTS courses(
+    course_id     INT AUTO_INCREMENT PRIMARY KEY,
+    course_name  VARCHAR(255) NOT NULL,
+);
+
+INSERT INTO courses (course_name, course_id)
+VALUES
+('English I', 123),
+('History II', 111),
+('Calculus I', 110),
+('Spanish II', 100);
