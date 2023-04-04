@@ -1,10 +1,10 @@
 import { Grid, Select, InputLabel, FormControl, Button, Typography, MenuItem } from '@mui/material';
-import { Page } from '../components/Page'
+import Page from '../components/Page'
 
 export const Calendar = () => {
 
     return (
-        <Page>
+        <Page title="Dashboard | Minimal-UI">
             <Grid container spacing={1} direction='row'>
                 <Grid item>
                     <Typography>Grid Items</Typography>

@@ -9,6 +9,7 @@ import DashboardApp from './pages/DashboardApp';
 import Courses from './pages/Courses';
 import User from './pages/User';
 import NotFound from './pages/Page404';
+import { Calendar } from './pages/Calendar';
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +21,8 @@ export default function Router() {
       children: [
         { path: 'app', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
-        { path: 'products', element: <Courses /> }
+        { path: 'courses', element: <Courses /> },
+        { path: 'calendar', element: <Calendar /> }
       ]
     },
     {
