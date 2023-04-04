@@ -18,9 +18,12 @@ VALUES
 CREATE TABLE IF NOT EXISTS courses(
     course_id     INT AUTO_INCREMENT PRIMARY KEY,
     course_name  VARCHAR(255) NOT NULL,
+    year          INT NOT NULL,
+    semester VARCHAR(255) NOT NULL,
+    course_completed BOOLEAN NOT NULL DEFAULT FALSE
 );
 
-INSERT INTO courses (course_name, course_id)
+INSERT INTO courses (course_name, course_id, )
 VALUES
 ('English I', 123),
 ('History II', 111),

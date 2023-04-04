@@ -96,7 +96,7 @@ app.post('/login', (req,res) => {
 
 app.post('/courses', (req, res) => {//add course
     const { course_name, course_id } = req.body;
-    const query = `INSERT INTO courses (course_name, course_id) VALUES ('${course_name}','${course_id}')`;
+    const query = `INSERT INTO courses (course_name, course_id, semester, year, completed) VALUES ('${course_name}','${course_id}')`;
     connection.query(query, (err, rows, fields) => {
         if (err) throw err;
 
