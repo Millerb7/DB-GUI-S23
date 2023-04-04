@@ -93,6 +93,29 @@ app.post('/login', (req,res) => {
     });
 });
 
+
+app.post('/courses', (req, res) => {//add course
+    const { course_name, course_id } = req.body;
+    const query = `INSERT INTO courses (course_name, course_id, semester, year, completed) VALUES ('${course_name}','${course_id}')`;
+    connection.query(query, (err, rows, fields) => {
+        if (err) throw err;
+
+        console.log(rows);
+        res.status(200);
+        res.send("Added course!");
+    });
+});
+
+app.get('/course', (req,res) => {//get all courses
+    connection.query('SELECT * FROM courses', (err, rows, fields) => {
+        if (err) throw err;
+
+        console.log(rows);
+        res.status(200);
+        res.send(rows);
+    });
+});
+
 app.listen(port, () => {
     console.log(`listening to port ${port}`);
 });
