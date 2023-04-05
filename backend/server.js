@@ -125,16 +125,20 @@ app.get('/courses', (req,res) => {
     }
 });
 
-//Need to update this to edit the courses
-app.put('/courses', (req,res) => {
-    connection.query('DELETE FROM courses', (err, rows, fields) => {
-        if (err) throw err;
-
-        res.status(200);
-        res.send('Cleared Course!');
+//Can update Course Name and whether or not it is completed 
+app.put('/courses/:course_id', (req, res) => {
+    const course_id = req.params.course_id;
+    const { course_name, course_completed } = req.body;
+    const query = `UPDATE courses SET course_name = ?, course_completed = ? WHERE course_id = ?`;
+    connection.query(query, [course_name, course_completed, course_id], (err, rows, fields) => {
+      if (err) throw err;
+  
+      console.log(rows);
+      res.status(200);
+      res.send("Updated course!");
     });
-});
-
+  });
+  
 //Delete a course
 app.delete('/courses/:course_id',(req, res)=> {
     const course_id = req.params.course_id;
