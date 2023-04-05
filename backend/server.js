@@ -82,16 +82,6 @@ app.get('/users', (req,res) => {
 
 //end of ryans stuff
 
-// app.get('/users', (req,res) => {
-//     connection.query('SELECT * FROM users', (err, rows, fields) => {
-//         if (err) throw err;
-
-//         console.log(rows);
-//         res.status(200);
-//         res.send(rows);
-//     });
-// });
-
 app.put('/users', (req,res) => {
     connection.query('DELETE FROM users', (err, rows, fields) => {
         if (err) throw err;
