@@ -14,7 +14,7 @@ const connection = mysql.createConnection({
     database: 'DBUI'
 });
 
-connection.connect();
+connection.connect();//Does this connect to SQL?
 
 app.get('/', (req,res) => {
     res.send('hello world');
@@ -95,18 +95,22 @@ app.post('/login', (req,res) => {
 
 
 app.post('/courses', (req, res) => {//add course
-    const { course_name, course_id } = req.body;
-    const query = `INSERT INTO courses (course_name, course_id, semester, year, completed) VALUES ('${course_name}','${course_id}')`;
+    const { course_name, course_id, semester, year, course_completed } = req.body;
+    const query = `INSERT INTO courses (course_name, course_id, semester, year, course_completed) VALUES ('${course_name}','${course_id}','${semester}',${year},${course_completed})`;
+console.log(course_id)
     connection.query(query, (err, rows, fields) => {
         if (err) throw err;
 
         console.log(rows);
         res.status(200);
         res.send("Added course!");
-    });
+    }); 
+
 });
 
-app.get('/course', (req,res) => {//get all courses
+app.get('/courses', (req,res) => {//get all courses
+    console.log("here")
+    try {
     connection.query('SELECT * FROM courses', (err, rows, fields) => {
         if (err) throw err;
 
@@ -114,8 +118,22 @@ app.get('/course', (req,res) => {//get all courses
         res.status(200);
         res.send(rows);
     });
+}
+    catch (err) {
+        console.log(err);
+    }
 });
 
+app.put('/courses', (req,res) => {//Will this clear all or only one?
+    connection.query('DELETE FROM courses', (err, rows, fields) => {
+        if (err) throw err;
+
+        res.status(200);
+        res.send('Cleared Course!');
+    });
+});
+
+//How would I update the courses?
 app.listen(port, () => {
     console.log(`listening to port ${port}`);
 });
