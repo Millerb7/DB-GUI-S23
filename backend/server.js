@@ -108,7 +108,8 @@ console.log(course_id)
 
 });
 
-app.get('/courses', (req,res) => {//get all courses
+//Retrieve all courses
+app.get('/courses', (req,res) => {
     console.log("here")
     try {
     connection.query('SELECT * FROM courses', (err, rows, fields) => {
@@ -124,12 +125,24 @@ app.get('/courses', (req,res) => {//get all courses
     }
 });
 
-app.put('/courses', (req,res) => {//Will this clear all or only one?
+//Need to update this to edit the courses
+app.put('/courses', (req,res) => {
     connection.query('DELETE FROM courses', (err, rows, fields) => {
         if (err) throw err;
 
         res.status(200);
         res.send('Cleared Course!');
+    });
+});
+
+//Delete a course
+app.delete('/courses/:course_id',(req, res)=> {
+    const course_id = req.params.course_id;
+    connection.query('DELETE FROM courses WHERE course_id = ?', [course_id], (err, rows, fields) =>{
+        if (err) throw err;
+
+        res.status(200);
+        res.send('Course Deleted!');
     });
 });
 
