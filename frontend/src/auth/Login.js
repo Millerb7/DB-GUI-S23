@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { MissingAssignments } from '../components/MissingAssignments';
 
 
-export default function Login () {
+export default function Login () { 
 
     const url = 'http://localhost:8000';
     const [ user, setUser ] = useState(undefined);
@@ -44,7 +45,7 @@ export default function Login () {
             autoComplete="password"
             type="email"
             label="Email address"name="password"></textarea>
-            <button type="button">Login</button>
+            <button type="button" onclick={MissingAssignments()}>Login</button>
         </form>
     );
 }
