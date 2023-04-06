@@ -26,28 +26,4 @@ export const checkAPI = () => {
     });
   };
 
-  export const sendUser = () => {
-    axios.post(url + '/user', user).then((res) => {
-      alert(res.data);
-    }).catch((err) => {
-      console.log(err);
-    });
-  };
-
-  export const getUsers = () => {
-    axios.get(url + '/users').then((res) => {
-      alert(JSON.stringify(res.data));
-    }).catch((err) => {
-      console.log(err);
-    });
-  };
-
-  export const clearUsers = () => {
-    axios.put(url + '/users/clear', user).then((res) => {
-      alert(res.data);
-    }).catch((err) => {
-      console.log(err);
-    });
-  };
-
   
