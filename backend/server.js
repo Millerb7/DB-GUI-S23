@@ -110,7 +110,6 @@ console.log(course_id)
 
 //Retrieve all courses
 app.get('/courses', (req,res) => {
-    console.log("here")
     try {
     connection.query('SELECT * FROM courses', (err, rows, fields) => {
         if (err) throw err;
@@ -138,7 +137,7 @@ app.put('/courses/:course_id', (req, res) => {
       res.send("Updated course!");
     });
   });
-  
+
 //Delete a course
 app.delete('/courses/:course_id',(req, res)=> {
     const course_id = req.params.course_id;
