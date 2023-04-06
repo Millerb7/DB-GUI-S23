@@ -14,6 +14,9 @@ export const checkAPI = () => {
   const course = {
     "name": "English",
     "id": 123,
+    "semester": "Fall",
+    "year": 2023,
+    "completed": false,
   };
 
   export const sendJSON = () => {
@@ -42,4 +45,5 @@ export const checkAPI = () => {
     });
   };
 
+ 
   //Do I need to clear?
