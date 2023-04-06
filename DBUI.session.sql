@@ -5,7 +5,10 @@ CREATE TABLE IF NOT EXISTS users(
     first_name  VARCHAR(255) NOT NULL,
     last_name   VARCHAR(255) NOT NULL,
     age         INT,
-    admin       BOOLEAN NOT NULL DEFAULT FALSE
+    admin       BOOLEAN NOT NULL DEFAULT FALSE,
+    courses     INT,
+    totalAssigns INT,
+    completedAssigns INT
 );
 
 INSERT INTO users (first_name, last_name, age, admin) 
