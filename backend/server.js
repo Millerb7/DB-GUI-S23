@@ -95,8 +95,8 @@ app.post('/login', (req,res) => {
 
 
 app.post('/courses', (req, res) => {//add course
-    const { course_name, course_id, semester, year, course_completed } = req.body;
-    const query = `INSERT INTO courses (course_name, course_id, semester, year, course_completed) VALUES ('${course_name}','${course_id}','${semester}',${year},${course_completed})`;
+    const { course_name, course_id, semester, year, course_completed, professor_name, student_id } = req.body;
+    const query = `INSERT INTO courses (course_name, course_id, semester, year, course_completed, professor_name, student_id) VALUES ('${course_name}','${course_id}','${semester}',${year},${course_completed}, '${professor_name}','${student_id}')`;
 console.log(course_id)
     connection.query(query, (err, rows, fields) => {
         if (err) throw err;
@@ -124,6 +124,8 @@ app.get('/courses', (req,res) => {
     }
 });
 
+
+
 //Can update Course Name and whether or not it is completed 
 app.put('/courses/:course_id', (req, res) => {
     const course_id = req.params.course_id;
@@ -149,7 +151,6 @@ app.delete('/courses/:course_id',(req, res)=> {
     });
 });
 
-//How would I update the courses?
 app.listen(port, () => {
     console.log(`listening to port ${port}`);
 });
