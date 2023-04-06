@@ -14,7 +14,7 @@ const connection = mysql.createConnection({
     database: 'DBUI'
 });
 
-connection.connect();
+connection.connect();//Does this connect to SQL?
 
 app.get('/', (req,res) => {
     res.send('hello world');
@@ -45,27 +45,42 @@ app.get('/db', (req,res) => {
     });
 });
 
-app.post('/user', (req, res) => {
-    const { first, last, age, admin } = req.body;
-    const query = `INSERT INTO users (first_name, last_name, age, admin) VALUES ('${first}','${last}',${age},${admin})`;
-    connection.query(query, (err, rows, fields) => {
-        if (err) throw err;
+// app.post('/user', (req, res) => {
+//     const { first, last, age, admin } = req.body;
+//     const query = `INSERT INTO users (first_name, last_name, age, admin) VALUES ('${first}','${last}',${age},${admin})`;
+//     connection.query(query, (err, rows, fields) => {
+//         if (err) throw err;
+//         console.log(rows);
+//         res.status(200);
+//         res.send("Added user!");
+//     });
+// });
 
-        console.log(rows);
-        res.status(200);
-        res.send("Added user!");
-    });
+//ryans stuff
+
+app.post('/user', (req,res) => {
+    console.log(req.body);
+    const { user_id, first_name, last_name, age, admin, courses, totalAssigns, completedAssigns} = req.body;
+    const query = `INSERT INTO users (user_id, first_name, last_name, age, admin, courses, totalAssigns, completedAssigns) VALUES ('${user_id}', '${first_name}','${last_name}','${age}','${admin}','${courses}','${totalAssigns}','${completedAssigns}')`;
+        connection.query(query, (err,rows,fields) => {
+            if (err) throw err;
+            console.log(rows);
+            res.status(200);
+            res.send("Added user");
+        });
 });
 
 app.get('/users', (req,res) => {
-    connection.query('SELECT * FROM users', (err, rows, fields) => {
+    connection.query('SELECT * FROM users', (err,rows,fields) => {
         if (err) throw err;
 
         console.log(rows);
         res.status(200);
         res.send(rows);
-    });
-});
+    })
+})
+
+//end of ryans stuff
 
 app.put('/users', (req,res) => {
     connection.query('DELETE FROM users', (err, rows, fields) => {
@@ -93,6 +108,64 @@ app.post('/login', (req,res) => {
     });
 });
 
+
+app.post('/courses', (req, res) => {//add course
+    const { course_name, course_id, semester, year, course_completed } = req.body;
+    const query = `INSERT INTO courses (course_name, course_id, semester, year, course_completed) VALUES ('${course_name}','${course_id}','${semester}',${year},${course_completed})`;
+console.log(course_id)
+    connection.query(query, (err, rows, fields) => {
+        if (err) throw err;
+
+        console.log(rows);
+        res.status(200);
+        res.send("Added course!");
+    }); 
+
+});
+
+//Retrieve all courses
+app.get('/courses', (req,res) => {
+    console.log("here")
+    try {
+    connection.query('SELECT * FROM courses', (err, rows, fields) => {
+        if (err) throw err;
+
+        console.log(rows);
+        res.status(200);
+        res.send(rows);
+    });
+}
+    catch (err) {
+        console.log(err);
+    }
+});
+
+//Can update Course Name and whether or not it is completed 
+app.put('/courses/:course_id', (req, res) => {
+    const course_id = req.params.course_id;
+    const { course_name, course_completed } = req.body;
+    const query = `UPDATE courses SET course_name = ?, course_completed = ? WHERE course_id = ?`;
+    connection.query(query, [course_name, course_completed, course_id], (err, rows, fields) => {
+      if (err) throw err;
+  
+      console.log(rows);
+      res.status(200);
+      res.send("Updated course!");
+    });
+  });
+  
+//Delete a course
+app.delete('/courses/:course_id',(req, res)=> {
+    const course_id = req.params.course_id;
+    connection.query('DELETE FROM courses WHERE course_id = ?', [course_id], (err, rows, fields) =>{
+        if (err) throw err;
+
+        res.status(200);
+        res.send('Course Deleted!');
+    });
+});
+
+//How would I update the courses?
 app.listen(port, () => {
     console.log(`listening to port ${port}`);
 });
