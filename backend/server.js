@@ -95,7 +95,7 @@ app.post('/login', (req,res) => {
     console.log(req.body);
     connection.query(`SELECT email=${req.body.email} FROM users`, (err, rows, fields) => {
         if (err) throw err;
-        
+
         console.log(rows);
         if(rows.password == req.body.password) {
             res.status(200);
