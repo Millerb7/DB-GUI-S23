@@ -91,7 +91,7 @@ app.put('/users', (req,res) => {
     });
 });
 
-app.post('/login', (req,res) => {
+app.post('/user/login', (req,res) => {
     console.log(req.body);
     connection.query(`SELECT email=${req.body.email} FROM users`, (err, rows, fields) => {
         if (err) throw err;

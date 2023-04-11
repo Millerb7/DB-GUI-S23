@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const url = "http://localhost:8000";
+const url = "http://localhost:8000/user";
 
 // send user
-export const sendUser = (user) => new Promise((resolve, reject) => {
+export const sendUser = ( first_name, last_name, email, password ) => new Promise((resolve, reject) => {
   axios
-    .post(url + "/user", user)
+    .post(url, { first_name, last_name, email, password })
     .then((res) => {
         console.log(res.data);
         resolve(res.data.user);
@@ -19,7 +19,7 @@ export const sendUser = (user) => new Promise((resolve, reject) => {
 // login for specific user
 export const sendLogin = (email, password) => new Promise((resolve, reject) => {
   axios
-    .post(url + "/user/", { email, password })
+    .post(url + "/login", { email, password })
     .then((res) => {
       console.log(res.data);
       resolve(res.data);
@@ -33,7 +33,7 @@ export const sendLogin = (email, password) => new Promise((resolve, reject) => {
 // get all users
 export const getUsers = () => new Promise((resolve, reject) => {
   axios
-    .get(url + "/users")
+    .get(url)
     .then((res) => {
         console.log(JSON.stringify(res.data));
         resolve(res.data.user);
@@ -47,7 +47,7 @@ export const getUsers = () => new Promise((resolve, reject) => {
 // delete specific user
 export const deleteUser = ( user ) => new Promise((resolve, reject) => {
   axios
-    .put(url + "/users/delete", user)
+    .delete(url + `/delete/${user.id}`)
     .then((res) => {
         console.log(res.data);
         resolve(res.data.user);

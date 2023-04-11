@@ -7,12 +7,14 @@ import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
+import { sendUser } from 'src/api/user';
 
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [ user, setUser ] = useState(undefined);
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -32,12 +34,25 @@ export default function RegisterForm() {
       password: ''
     },
     validationSchema: RegisterSchema,
-    onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+    onSubmit: ( values, actions ) => {
+      if(values.firstName && values.lastName && values.email && values.password) {
+        // login api call, should return a user if valid, a string if false
+        sendUser( values.firstName, values.lastName, values.email, values.password ).then( res =>{
+          if(res !== 'invalid register attempt, credentials exist') {
+            setUser(res.user);
+            navigate('/dashboard/app', { replace: true });
+          } else {
+            alert('invalid registry credentials please try again');
+            setUser(null);
+          }
+        })
+      }
+
+      actions.resetForm(); 
     }
   });
 
-  const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+  const { errors, values, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
 
   return (
     <FormikProvider value={formik}>
