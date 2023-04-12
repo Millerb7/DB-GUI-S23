@@ -12,8 +12,8 @@ export const checkAPI = () => {
   }
 
   const course = {
-    "name": "English",
-    "id": 123,
+    "course_name": "English",
+    "course_id": 123,
     "semester": "Fall",
     "year": 2023,
     "completed": false,
@@ -44,6 +44,16 @@ export const checkAPI = () => {
       console.log(err);
     });
   };
+
+  export const getCourseById = (course_id) => {
+    axios.get(url + '/courses/' + course_id).then((res) => {
+        alert(JSON.stringify(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
 
  
   //Do I need to clear?
