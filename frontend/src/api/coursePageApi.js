@@ -54,6 +54,15 @@ export const checkAPI = () => {
       });
   };
 
+  export const AddCourse = (course_id) => {
+    axios.put(url + '/courses/' + course_id).then((res) => {
+        alert(JSON.stringify(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
 
  
   //Do I need to clear?

@@ -141,7 +141,22 @@ app.get('/courses/:id', (req, res) => {
     }
 });
 
+//remove :username - make route on frontend
+app.get('/user/courses/:id', (req, res) => {
+    try {
+      const user_id = req.params.id;//req.user.username
+      connection.query('SELECT * FROM courses WHERE student_id = ?', [user_id], (err, rows, fields) => {//should pull courses in by student_id
+        if (err) throw err;
 
+        console.log(rows);
+        res.status(200);
+        res.send(rows);
+    });
+}
+    catch (err) {
+        console.log(err);
+    }
+});
 
 //Can update Course Name and whether or not it is completed 
 app.put('/courses/:course_id', (req, res) => {
