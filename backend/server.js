@@ -95,7 +95,7 @@ app.post('/login', (req,res) => {
     console.log(req.body);
     connection.query(`SELECT email=${req.body.email} FROM users`, (err, rows, fields) => {
         if (err) throw err;
-        
+
         console.log(rows);
         if(rows.password == req.body.password) {
             res.status(200);
@@ -110,8 +110,8 @@ app.post('/login', (req,res) => {
 
 
 app.post('/courses', (req, res) => {//add course
-    const { course_name, course_id, semester, year, course_completed } = req.body;
-    const query = `INSERT INTO courses (course_name, course_id, semester, year, course_completed) VALUES ('${course_name}','${course_id}','${semester}',${year},${course_completed})`;
+    const { course_name, course_id, semester, year, course_completed, professor_name, student_id } = req.body;
+    const query = `INSERT INTO courses (course_name, course_id, semester, year, course_completed, professor_name, student_id) VALUES ('${course_name}','${course_id}','${semester}',${year},${course_completed}, '${professor_name}','${student_id}')`;
 console.log(course_id)
     connection.query(query, (err, rows, fields) => {
         if (err) throw err;
@@ -125,7 +125,6 @@ console.log(course_id)
 
 //Retrieve all courses
 app.get('/courses', (req,res) => {
-    console.log("here")
     try {
     connection.query('SELECT * FROM courses', (err, rows, fields) => {
         if (err) throw err;
@@ -140,6 +139,8 @@ app.get('/courses', (req,res) => {
     }
 });
 
+
+
 //Can update Course Name and whether or not it is completed 
 app.put('/courses/:course_id', (req, res) => {
     const course_id = req.params.course_id;
@@ -153,7 +154,7 @@ app.put('/courses/:course_id', (req, res) => {
       res.send("Updated course!");
     });
   });
-  
+
 //Delete a course
 app.delete('/courses/:course_id',(req, res)=> {
     const course_id = req.params.course_id;
@@ -165,7 +166,6 @@ app.delete('/courses/:course_id',(req, res)=> {
     });
 });
 
-//How would I update the courses?
 app.listen(port, () => {
     console.log(`listening to port ${port}`);
 });
