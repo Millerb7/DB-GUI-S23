@@ -6,10 +6,6 @@ export const IndividualCoursePage = () => {
     const [course, setCourse] = useState(undefined);
 
     useEffect(() => {
-        // getCourseByID(num).then(x => setCourse(x));
+        // getCourseByID(courseId).then(x => setCourse(x));
     }, []);
-
-    return <>
-    <h1>HELLO!</h1>
-    </>
 }
