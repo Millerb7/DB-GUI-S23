@@ -1,7 +1,0 @@
-export * from './Calendar'
-export * from './AssignmentPage'
-export * from './CoursePage'
-export * from './CreateAccountPage'
-export * from './Home'
-export * from './IndividualCoursePage'
-export * from './Login'
