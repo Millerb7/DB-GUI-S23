@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { getCourseById } from "src/api/coursePageApi";
 import Page from '../components/Page'
 
 export const IndividualCoursePage = () => {
@@ -6,6 +7,10 @@ export const IndividualCoursePage = () => {
     const [course, setCourse] = useState(undefined);
 
     useEffect(() => {
-        // getCourseByID(courseId).then(x => setCourse(x));
+        getCourseById(course).then(x => setCourse(x));
     }, []);
+
+    return<>
+        <h1>hello</h1>
+    </>
 }

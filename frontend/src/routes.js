@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import DashboardApp from './pages/DashboardApp';
 import Courses from './pages/Courses';
+import { IndividualCoursePage } from './pages/IndividualCoursePage';
 import User from './pages/User';
 import NotFound from './pages/Page404';
 import { Calendar } from './pages/Calendar';
