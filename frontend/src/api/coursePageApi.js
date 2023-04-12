@@ -45,5 +45,15 @@ export const checkAPI = () => {
     });
   };
 
+  export const getCourseById = (course_id) => {
+    axios.get(url + '/courses/' + course_id).then((res) => {
+        alert(JSON.stringify(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
  
   //Do I need to clear?
