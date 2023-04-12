@@ -12,8 +12,8 @@ export const checkAPI = () => {
   }
 
   const course = {
-    "name": "English",
-    "id": 123,
+    "course_name": "English",
+    "course_id": 123,
     "semester": "Fall",
     "year": 2023,
     "completed": false,
