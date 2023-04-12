@@ -124,6 +124,22 @@ app.get('/courses', (req,res) => {
     }
 });
 
+app.get('/courses/:id', (req, res) => {
+    try {
+      const courseId = req.params.id;
+      connection.query('SELECT * FROM courses WHERE course_id = ?', [courseId], (err, rows, fields) => {
+        if (err) throw err;
+
+        console.log(rows);
+        res.status(200);
+        res.send(rows);
+    });
+}
+    catch (err) {
+        console.log(err);
+    }
+});
+
 
 
 //Can update Course Name and whether or not it is completed 
