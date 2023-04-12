@@ -7,7 +7,6 @@ import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
 import { LoginForm } from '../sections/authentication/login';
-import AuthSocial from '../sections/authentication/AuthSocial';
 
 // ----------------------------------------------------------------------
 
@@ -48,22 +47,14 @@ export default function Login() {
         </Link>
       </AuthLayout>
 
-      <SectionStyle sx={{ display: { xs: 'none', md: 'flex' } }}>
-        <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-          Hi, Welcome Back
-        </Typography>
-        <img src="/static/illustrations/illustration_login.png" alt="login" />
-      </SectionStyle>
-
       <Container maxWidth="sm">
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Sign in to Minimal
+              Sign in to ~~NAME PROJECT~~
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
           </Stack>
-          <AuthSocial />
 
           <LoginForm />
 

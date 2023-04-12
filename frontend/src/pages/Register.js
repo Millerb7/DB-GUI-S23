@@ -7,7 +7,6 @@ import AuthLayout from '../layouts/AuthLayout';
 // components
 import Page from '../components/Page';
 import { RegisterForm } from '../sections/authentication/register';
-import AuthSocial from '../sections/authentication/AuthSocial';
 
 // ----------------------------------------------------------------------
 
@@ -48,39 +47,15 @@ export default function Register() {
         </Link>
       </AuthLayout>
 
-      <SectionStyle sx={{ display: { xs: 'none', md: 'flex' } }}>
-        <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-          Manage the job more effectively with Minimal
-        </Typography>
-        <img alt="register" src="/static/illustrations/illustration_register.png" />
-      </SectionStyle>
-
       <Container>
         <ContentStyle>
           <Box sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Get started absolutely free.
-            </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>
-              Free forever. No credit card needed.
+              Make an account by entering your information
             </Typography>
           </Box>
 
-          <AuthSocial />
-
           <RegisterForm />
-
-          <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-            By registering, I agree to Minimal&nbsp;
-            <Link underline="always" color="textPrimary">
-              Terms of Service
-            </Link>
-            &nbsp;and&nbsp;
-            <Link underline="always" color="textPrimary">
-              Privacy Policy
-            </Link>
-            .
-          </Typography>
 
           <Typography
             variant="subtitle2"
