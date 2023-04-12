@@ -58,6 +58,7 @@ app.get('/db', (req,res) => {
 
 //ryans stuff
 
+//add user
 app.post('/user', (req,res) => {
     console.log(req.body);
     const { user_id, first_name, last_name, age, admin, courses, totalAssigns, completedAssigns} = req.body;
@@ -70,6 +71,7 @@ app.post('/user', (req,res) => {
         });
 });
 
+//get all users
 app.get('/users', (req,res) => {
     connection.query('SELECT * FROM users', (err,rows,fields) => {
         if (err) throw err;
@@ -79,6 +81,24 @@ app.get('/users', (req,res) => {
         res.send(rows);
     })
 })
+
+
+//get user by id
+app.get('/users/:id', (req, res) => {
+    try {
+      const course_id = req.params.id;
+      connection.query('SELECT * FROM users WHERE user_id = ?', [user_id], (err, rows, fields) => {
+        if (err) throw err;
+
+        console.log(rows);
+        res.status(200);
+        res.send(rows);
+    });
+}
+    catch (err) {
+        console.log(err);
+    }
+});
 
 //end of ryans stuff
 

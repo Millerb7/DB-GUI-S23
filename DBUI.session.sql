@@ -14,7 +14,7 @@ VALUES ('james', 'bench', 33, false),
        ('marley', 'wine', 45, true),
        ('mort', 'lemur', 7, false),
        ('bat', 'man', 20, true);
-
+)
 
 CREATE TABLE IF NOT EXISTS courses
 (
