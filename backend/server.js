@@ -86,7 +86,7 @@ app.get('/users', (req,res) => {
 //get user by id
 app.get('/users/:id', (req, res) => {
     try {
-      const course_id = req.params.id;
+      const user_id = req.params.id;
       connection.query('SELECT * FROM users WHERE user_id = ?', [user_id], (err, rows, fields) => {
         if (err) throw err;
 
