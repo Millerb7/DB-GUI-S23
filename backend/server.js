@@ -156,7 +156,7 @@ app.get('/courses/:id', (req, res) => {
     }
 });
 
-//Pull courses on completion status
+//Pull courses on completion status - courses/completed/true or courses/completed/false
 app.get('/courses/completed/:course_completed', (req, res) => {
     try {
       const course_completed = req.params.course_completed === 'true';
