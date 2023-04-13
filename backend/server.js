@@ -61,8 +61,8 @@ app.get('/db', (req,res) => {
 //add user
 app.post('/user', (req,res) => {
     console.log(req.body);
-    const { user_id, first_name, last_name, age, admin, courses, totalAssigns, completedAssigns} = req.body;
-    const query = `INSERT INTO users (user_id, first_name, last_name, age, admin, courses, totalAssigns, completedAssigns) VALUES ('${user_id}', '${first_name}','${last_name}','${age}','${admin}','${courses}','${totalAssigns}','${completedAssigns}')`;
+    const { first_name, last_name, email, password} = req.body;
+    const query = `INSERT INTO users (first_name, last_name, email, password) VALUES ('${user_id}', '${first_name}','${last_name}','${email}','${password}')`;
         connection.query(query, (err,rows,fields) => {
             if (err) throw err;
             console.log(rows);
