@@ -33,7 +33,7 @@ export const MissingAssignments = () => {
         <Grid container spacing={2}> 
             {assignments.map((assignment, id) => 
                 assignment.missing ?  
-                    <Grid item xs={6} key={id}>
+                    <Grid item key={id} width={{xs: '50%'}}>
                         <div style={{display:'flex'}}>
                             <Box sx={{fontWeight: 'bold'}}><AssignmentLate color='error' fontSize='small' sx={{mb:-.5, mr:1}}/>{assignment.assignmentName}</Box>
                             <Box sx={{color: 'text.secondary', ml: 2}} >Course: {assignment.course}</Box> 
