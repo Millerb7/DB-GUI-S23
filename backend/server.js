@@ -208,7 +208,7 @@ app.listen(port, () => {
 app.post('/assignments', (req, res)=> {
     const { assignment_name, assignment_id, assignment_due_date, assignment_work_date, course_number, assignment_description, overdue, student_number} = req.body;
     const query = `INSERT INTO assignments 
-               (assignment_name, assignment_id, assignment_due_date, assignment_work_date, course_id, assignment_description, overdue)
+               (assignment_name, assignment_id, assignment_due_date, assignment_work_date, course_number, assignment_description, overdue, student_number)
                VALUES 
                ('${assignment_name}', ${assignment_id}, '${assignment_due_date}', '${assignment_work_date}', ${course_number}, '${assignment_description}', ${overdue}, ${student_number})`;
     console.log(assignment_id)
