@@ -63,6 +63,26 @@ export const checkAPI = () => {
       });
   };
 
+  export const getCurrentCourses = () => new Promise((resolve, reject) => {
+    axios.get(url + '/courses/completed/' + false)
+        .then(resp => resolve(resp.data))
+        .catch(error => {
+          alert(error);
+          reject(error);
+        });
+  });
+
+  export const getPastCourses = () => new Promise((resolve, reject) => {
+    axios.get(url + '/courses/completed/' + true)
+        .then(resp => resolve(resp.data))
+        .catch(error => {
+          alert(error);
+          reject(error);
+        });
+  });
+
+  
+
 
  
   //Do I need to clear?
