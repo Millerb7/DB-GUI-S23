@@ -56,6 +56,18 @@ app.get('/db', (req,res) => {
 //     });
 // });
 
+app.post('/user', (req,res) => {
+    console.log(req.body);
+    const { first_name, last_name, email, password } = req.body;
+    const query = `INSERT INTO users (first_name, last_name, email, password) VALUES ('${user_id}', '${first_name}','${last_name}','${email}','${password}')`;
+        connection.query(query, (err,rows,fields) => {
+            if (err) throw err;
+            console.log(rows);
+            res.status(200);
+            res.send(rows);
+        });
+});
+
 //ryans stuff
 
 //add user
@@ -67,7 +79,7 @@ app.post('/user', (req,res) => {
             if (err) throw err;
             console.log(rows);
             res.status(200);
-            res.send("Added user");
+            res.send(rows);
         });
 });
 
@@ -111,9 +123,9 @@ app.put('/users', (req,res) => {
     });
 });
 
-app.post('/login', (req,res) => {
+app.post('/user/login', (req,res) => {
     console.log(req.body);
-    connection.query(`SELECT email=${req.body.email} FROM users`, (err, rows, fields) => {
+    connection.query(`SELECT * FROM users where email=${req.body.email}`, (err, rows, fields) => {
         if (err) throw err;
 
         console.log(rows);
