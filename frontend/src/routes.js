@@ -6,7 +6,7 @@ import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import DashboardApp from './pages/DashboardApp';
-import Courses from './pages/Courses';
+import {Courses} from './pages/Courses';
 import User from './pages/User';
 import NotFound from './pages/Page404';
 import { Calendar } from './pages/Calendar';
