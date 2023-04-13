@@ -17,9 +17,9 @@ export const sendUser = (user) => new Promise((resolve, reject) => {
 });
 
 // login for specific user
-export const sendLogin = (email, password) => new Promise((resolve, reject) => {
+export const sendLogin = ( firstname, lastname, email, password ) => new Promise((resolve, reject) => {
   axios
-    .post(url + "/user/", { email, password })
+    .post(url + "/user/", { firstname, lastname, email, password })
     .then((res) => {
       console.log(res.data);
       resolve(res.data);
