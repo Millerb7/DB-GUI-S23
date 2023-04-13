@@ -206,11 +206,11 @@ app.listen(port, () => {
 
 //Add Assignment
 app.post('/assignments', (req, res)=> {
-    const { assignment_name, assignment_id, assignment_due_date, assignment_work_date, course_id, assignment_description, overdue } = req.body;
+    const { assignment_name, assignment_id, assignment_due_date, assignment_work_date, course_number, assignment_description, overdue, student_number} = req.body;
     const query = `INSERT INTO assignments 
                (assignment_name, assignment_id, assignment_due_date, assignment_work_date, course_id, assignment_description, overdue)
                VALUES 
-               ('${assignment_name}', ${assignment_id}, '${assignment_due_date}', '${assignment_work_date}', ${course_id}, '${assignment_description}', ${overdue})`;
+               ('${assignment_name}', ${assignment_id}, '${assignment_due_date}', '${assignment_work_date}', ${course_number}, '${assignment_description}', ${overdue}, ${student_number})`;
     console.log(assignment_id)
         connection.query(query, (err, rows, fields) => {
             if (err) throw err;
@@ -238,28 +238,14 @@ app.get('/assignments', (req, res) => {
         }
 });
 
-//Update Assignment
-// app.put('/assignments/:course_id', (req, res) => {
-//     const course_id = req.params.course_id;
-//     const { course_name, course_completed } = req.body;
-//     const query = `UPDATE courses SET course_name = ?, course_completed = ? WHERE course_id = ?`;
-//     connection.query(query, [course_name, course_completed, course_id], (err, rows, fields) => {
-//       if (err) throw err;
-  
-//       console.log(rows);
-//       res.status(200);
-//       res.send("Updated course!");
-//     });
-//   });
-
 
 //Delete all assignments
 //.delete or .put?
 app.delete('/assignments/clear', (req, res) => {
     connection.query('DELETE FROM assignments;', (err, rows, fields) => {
-        if (err) throw err
+        if (err) throw err;
 
-        res.status(200)
-        res.send("Successfully cleared assignments")
+        res.status(200);
+        res.send("Successfully cleared assignments");
     })
 })
