@@ -14,7 +14,7 @@ const connection = mysql.createConnection({
     database: 'DBUI'
 });
 
-connection.connect();//Does this connect to SQL?
+connection.connect();
 
 app.get('/', (req,res) => {
     res.send('hello world');
@@ -155,6 +155,23 @@ app.get('/courses/:id', (req, res) => {
         console.log(err);
     }
 });
+
+//Pull courses on completion status
+app.get('/courses/completed/:course_completed', (req, res) => {
+    try {
+      const course_completed = req.params.course_completed === 'true';
+      connection.query('SELECT * FROM courses WHERE course_completed = ?', [course_completed], (err, rows, fields) => {
+        if (err) throw err;
+  
+        console.log(rows);
+        res.status(200);
+        res.send(rows);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
 
 //remove :username - make route on frontend
 app.get('/user/courses/:id', (req, res) => {
