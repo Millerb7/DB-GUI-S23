@@ -14,7 +14,7 @@ const connection = mysql.createConnection({
     database: 'DBUI'
 });
 
-connection.connect();//Does this connect to SQL?
+connection.connect();
 
 app.get('/', (req,res) => {
     res.send('hello world');
@@ -110,8 +110,8 @@ app.post('/login', (req,res) => {
 
 
 app.post('/courses', (req, res) => {//add course
-    const { course_name, course_id, semester, year, course_completed } = req.body;
-    const query = `INSERT INTO courses (course_name, course_id, semester, year, course_completed) VALUES ('${course_name}','${course_id}','${semester}',${year},${course_completed})`;
+    const { course_name, course_id, semester, year, course_completed, professor_name, student_id } = req.body;
+    const query = `INSERT INTO courses (course_name, course_id, semester, year, course_completed, professor_name, student_id) VALUES ('${course_name}','${course_id}','${semester}',${year},${course_completed}, '${professor_name}','${student_id}')`;
 console.log(course_id)
     connection.query(query, (err, rows, fields) => {
         if (err) throw err;
@@ -125,9 +125,59 @@ console.log(course_id)
 
 //Retrieve all courses
 app.get('/courses', (req,res) => {
-    console.log("here")
     try {
     connection.query('SELECT * FROM courses', (err, rows, fields) => {
+        if (err) throw err;
+
+        console.log(rows);
+        res.status(200);
+        res.send(rows);
+    });
+}
+    catch (err) {
+        console.log(err);
+    }
+});
+
+//Get course by ID
+app.get('/courses/:id', (req, res) => {
+    try {
+      const course_id = req.params.id;
+      connection.query('SELECT * FROM courses WHERE course_id = ?', [course_id], (err, rows, fields) => {
+        if (err) throw err;
+
+        console.log(rows);
+        res.status(200);
+        res.send(rows);
+    });
+}
+    catch (err) {
+        console.log(err);
+    }
+});
+
+//Pull courses on completion status
+app.get('/courses/completed/:course_completed', (req, res) => {
+    try {
+      const course_completed = req.params.course_completed === 'true';
+      connection.query('SELECT * FROM courses WHERE course_completed = ?', [course_completed], (err, rows, fields) => {
+        if (err) throw err;
+  
+        console.log(rows);
+        res.status(200);
+        res.send(rows);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+
+//remove :username - make route on frontend
+app.get('/user/courses/:id', (req, res) => {
+    try {
+      const user_id = req.params.id;//req.user.username
+      connection.query('SELECT * FROM courses WHERE student_id = ?', [user_id], (err, rows, fields) => {//should pull courses in by student_id
         if (err) throw err;
 
         console.log(rows);
@@ -153,7 +203,7 @@ app.put('/courses/:course_id', (req, res) => {
       res.send("Updated course!");
     });
   });
-  
+
 //Delete a course
 app.delete('/courses/:course_id',(req, res)=> {
     const course_id = req.params.course_id;
@@ -165,7 +215,6 @@ app.delete('/courses/:course_id',(req, res)=> {
     });
 });
 
-//How would I update the courses?
 app.listen(port, () => {
     console.log(`listening to port ${port}`);
 });
