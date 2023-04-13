@@ -201,3 +201,49 @@ app.delete('/courses/:course_id',(req, res)=> {
 app.listen(port, () => {
     console.log(`listening to port ${port}`);
 });
+
+//Assignments
+
+//Add Assignment
+app.post('/assignments', (req, res)=> {
+    const { assignment_name, assignment_id, assignment_due_date, assignment_work_date, course_id, assignment_desciprtion, overdue } = req.body;
+    const query = `INSERT INTO assignments 
+               (assignment_name, assignment_id, assignment_due_date, assignment_work_date, course_id, assignment_description, overdue)
+               VALUES 
+               ('${assignment_name}', ${assignment_id}, '${assignment_due_date}', '${assignment_work_date}', ${course_id}, '${assignment_description}', ${overdue})`;
+    console.log(assignment_id)
+        connection.query(query, (err, rows, fields) => {
+            if (err) throw err;
+
+            console.log(rows);
+            res.status(200);
+            res.send("Successfully added assignment!");
+        })
+})
+
+//Retrieve all assignments
+app.get('/assignments', (req, res) => {
+    try{
+        connection.query('SELECT * FROM assignments', (err, rows, fields) => {
+            if (err) throw err;
+
+            console.log(rows);
+            res.status(200);
+            res.send(rows);
+        });
+    }
+        catch (err) {
+            console.log(err);
+        }
+});
+
+//Delete all assignments
+//.delete or .put?
+app.delete('/assignments/clear', (req, res) => {
+    connection.query('DELETE FROM assignments;', (err, rows, fields) => {
+        if (err) throw err
+
+        res.status(200)
+        res.send("Successfully cleared assignments")
+    })
+})
