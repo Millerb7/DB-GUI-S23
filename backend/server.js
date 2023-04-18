@@ -188,7 +188,7 @@ app.get('/courses/:id', (req, res) => {
     }
 });
 
-//Pull courses on completion status
+//Pull courses on completion status - courses/completed/true or courses/completed/false
 app.get('/courses/completed/:course_completed', (req, res) => {
     try {
       const course_completed = req.params.course_completed === 'true';
@@ -225,9 +225,9 @@ app.get('/user/courses/:id', (req, res) => {
 //Can update Course Name and whether or not it is completed 
 app.put('/courses/:course_id', (req, res) => {
     const course_id = req.params.course_id;
-    const { course_name, course_completed } = req.body;
-    const query = `UPDATE courses SET course_name = ?, course_completed = ? WHERE course_id = ?`;
-    connection.query(query, [course_name, course_completed, course_id], (err, rows, fields) => {
+    const { course_name,  semester, year, course_completed, professor_name } = req.body;
+    const query = `UPDATE courses SET course_name = ?, course_completed = ?, semester = ?, year = ?, professor_name = ? WHERE course_id = ?`;
+    connection.query(query, [course_name, course_completed, semester, year, course_id, professor_name], (err, rows, fields) => {
       if (err) throw err;
   
       console.log(rows);
