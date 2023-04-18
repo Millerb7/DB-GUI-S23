@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Textfield } from "../components/Textfield";
 import { CheckboxField } from "../components/CheckboxField";
 import { addCourse, editCourse, getCourseById } from "src/api/coursePageApi";
@@ -41,10 +41,6 @@ export const CourseEditor = () => {
                         value={course.student_id}
                         setValue={value => mergeAccount({ student_id: value })}
                         />
-            {/* <Textfield  id="course_id" 
-                        label="Course ID"
-                        value={course.course_id}
-                        setValue={value => mergeAccount({ course_id: value })} /> */}
             <Textfield  id="course_name" 
                         label="Course Name"
                         value={course.course_name}
