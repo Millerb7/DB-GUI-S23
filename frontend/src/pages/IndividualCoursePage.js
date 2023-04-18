@@ -8,4 +8,8 @@ export const IndividualCoursePage = () => {
     useEffect(() => {
         // getCourseByID(courseId).then(x => setCourse(x));
     }, []);
+
+    return <>
+        <h2>Individual Course Page</h2>
+    </>;
 }

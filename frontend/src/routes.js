@@ -11,6 +11,7 @@ import User from './pages/User';
 import NotFound from './pages/Page404';
 import { Calendar } from './pages/Calendar';
 import { IndividualCoursePage } from './pages/IndividualCoursePage';
+import { CourseEditor } from './pages/CourseEditor';
 
 // ----------------------------------------------------------------------
 
@@ -23,6 +24,8 @@ export default function Router() {
         { path: 'app', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
         { path: 'courses', element: <Courses /> },
+        { path: 'courses/new', element: <CourseEditor/>},
+        { path: 'courses/edit/:course_id', element: <CourseEditor/>},
         { path: 'courses/:course_id', element: <IndividualCoursePage/>},
         { path: 'calendar', element: <Calendar /> }
       ]
