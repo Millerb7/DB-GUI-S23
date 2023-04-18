@@ -142,9 +142,8 @@ app.post('/user/login', (req,res) => {
 
 
 app.post('/courses', (req, res) => {//add course
-    const { course_name, course_id, semester, year, course_completed, professor_name, student_id } = req.body;
-    const query = `INSERT INTO courses (course_name, course_id, semester, year, course_completed, professor_name, student_id) VALUES ('${course_name}','${course_id}','${semester}',${year},${course_completed}, '${professor_name}','${student_id}')`;
-console.log(course_id)
+    const { course_name, semester, year, course_completed, professor_name, student_id } = req.body;
+    const query = `INSERT INTO courses (course_name, semester, year, course_completed, professor_name, student_id) VALUES ('${course_name}','${semester}',${year},${course_completed}, '${professor_name}','${student_id}')`;
     connection.query(query, (err, rows, fields) => {
         if (err) throw err;
 
