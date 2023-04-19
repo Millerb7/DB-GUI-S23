@@ -112,7 +112,7 @@ app.post('/login', (req,res) => {
 app.post('/courses', (req, res) => {//add course
     const { course_name, semester, year, course_completed, professor_name, student_id } = req.body;
     const query = `INSERT INTO courses (course_name, semester, year, course_completed, professor_name, student_id) VALUES ('${course_name}','${semester}',${year},${course_completed}, '${professor_name}','${student_id}')`;
-console.log(course_id)
+
     connection.query(query, (err, rows, fields) => {
         if (err) throw err;
 
@@ -148,7 +148,7 @@ app.get('/courses/:id', (req, res) => {
 
         console.log(rows);
         res.status(200);
-        res.send(rows);
+        res.send(rows[0]);//returnring one record
     });
 }
     catch (err) {

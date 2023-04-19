@@ -64,5 +64,6 @@ export const checkAPI = () => {
   };
 
 
- 
+ //Be able to pull in courses by student ID
   //Do I need to clear?
+//Make sure to check how to pull courses by ID
