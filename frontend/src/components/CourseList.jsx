@@ -30,7 +30,7 @@ export const CourseList = ({ courses }) => {
                                 type="button"
                                 className="btn btn-primary btn-lg col-12 mt-4"
                                 onClick={() => {
-                                    navigate(`/dashboard/courses/edit/${course.course_id}`);
+                                    navigate(`edit/${course.course_id}`);
                                  }}>
                                 <ModeEditIcon></ModeEditIcon>
                             </Button>

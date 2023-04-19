@@ -6,16 +6,16 @@ import { addCourse, editCourse, getCourseById } from "src/api/coursePageApi";
 import { Button } from "@mui/material";
 
 export const CourseEditor = () => {
-    const [ course, setCourse ] = useState(undefined);
-
+    const [course, setCourse] = useState(undefined);
+    
     const navigate = useNavigate();
     const params = useParams();
 
     const mergeAccount = delta => setCourse({ ...course, ...delta });
 
     const handleSave = () => {
-        if (params.id) {
-            editCourse(course.id, course);
+        if (params.course_id) {
+            editCourse(params.course_id, course);
         } else {
             addCourse(course);
         }
@@ -23,11 +23,18 @@ export const CourseEditor = () => {
 
     useEffect(() => {
         if (params.course_id) {
-            getCourseById(params.course_id).then(x => setCourse(x));
+            getCourseById(params.course_id).then(x => {
+                //parse the x array to get the course object
+                setCourse(x[0]);
+                //debugging
+                alert(JSON.stringify(x) + " " + params.course_id);
+                //setCourse(x);
+
+            });
         } else {
             setCourse({ course_id: '', course_name: '', semester: '', year: '', course_completed: false });
         }
-    }, [params.course_id]);
+    }, []);
 
     if (!course) {
         return <>Loading...</>;
@@ -39,28 +46,28 @@ export const CourseEditor = () => {
             <Textfield  id="student_id"
                         label="Student ID"
                         value={course.student_id}
-                        setValue={value => mergeAccount({ student_id: value })}
+                        setValue={student_id => mergeAccount({ student_id })}
                         />
             <Textfield  id="course_name" 
                         label="Course Name"
                         value={course.course_name}
-                        setValue={value => mergeAccount({ course_name: value })} />
+                        setValue={ course_name  => mergeAccount({ course_name })} />
             <Textfield  id="professor_name"
                         label="Professor Name"
                         value={course.professor_name}
-                        setValue={value => mergeAccount({ professor_name: value })} />
+                        setValue={professor_name => mergeAccount({ professor_name })} />
             <Textfield  id="semester"
                         label="Semester"
                         value={course.semester}
-                        setValue={value => mergeAccount({ semester: value })} />
+                        setValue={semester => mergeAccount({ semester })} />
             <Textfield  id="year"
                         label="Year"
                         value={course.year}
-                        setValue={value => mergeAccount({ year: value })} />
+                        setValue={year => mergeAccount({ year })} />
             <CheckboxField  id="course_completed"
                             label="Completed"
                             checked={course.course_completed}
-                            setChecked={value => mergeAccount({ course_completed: value })} />
+                            setChecked={course_completed => mergeAccount({ course_completed })} />
 
             <Button type="button"
                 className="btn btn-primary btn-lg col-12 mt-4"
