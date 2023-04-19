@@ -6,8 +6,12 @@ CREATE TABLE IF NOT EXISTS users
     user_id    INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
     last_name  VARCHAR(255) NOT NULL,
+
+    age        INT,
+    admin      BOOLEAN      NOT NULL DEFAULT FALSE
     email      VARCHAR(255) NOT NULL,
     password   VARCHAR(255) NOT NULL
+
 
 INSERT INTO users (first_name, last_name, email, password)
 VALUES ('james', 'bench', 'james@gmail.com', '1234'),
