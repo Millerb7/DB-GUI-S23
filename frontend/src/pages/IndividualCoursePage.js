@@ -11,6 +11,6 @@ export const IndividualCoursePage = () => {
     }, []);
 
     return<>
-        <h1>Course Name</h1>
+        <h1>hello</h1>
     </>
 }
