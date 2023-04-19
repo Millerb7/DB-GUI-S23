@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Textfield } from "../components/Textfield";
 import { CheckboxField } from "../components/CheckboxField";
 import { addCourse, editCourse, getCourseById } from "src/api/coursePageApi";
-import { Button } from "@mui/material";
+import { Button, FormGroup, Grid } from "@mui/material";
 
 export const CourseEditor = () => {
     const [course, setCourse] = useState(undefined);
@@ -42,7 +42,8 @@ export const CourseEditor = () => {
 
     return <>
         <div>
-            <h1>Course Editor</h1>
+            <h1 style={{marginLeft: "2rem"}}>Course Editor</h1>
+            <FormGroup sx={{mt: 2, mx:4}}>
             <Textfield  id="student_id"
                         label="Student ID"
                         value={course.student_id}
@@ -68,15 +69,20 @@ export const CourseEditor = () => {
                             label="Completed"
                             checked={course.course_completed}
                             setChecked={course_completed => mergeAccount({ course_completed })} />
-
+           
             <Button type="button"
-                className="btn btn-primary btn-lg col-12 mt-4"
                 onClick={() => {
                     handleSave();
                     navigate('/dashboard/courses');
                  }}
             >Submit</Button>
-
+                        <Button type="button" color="error"
+                className="btn btn-primary btn-lg col-12 mt-4"
+                onClick={() => {
+                    navigate('/dashboard/courses');
+                 }}
+            >Cancel</Button>
+ </FormGroup>
         </div>
     </>;
 }
