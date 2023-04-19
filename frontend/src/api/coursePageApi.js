@@ -54,6 +54,45 @@ export const checkAPI = () => {
       });
   };
 
+  export const editCourse = (course_id, course) => new Promise ((resolve, reject) => {
+    axios.put(url + `/courses/${course_id}`, course)
+        .then(resp => resolve(resp.data))
+        .catch(error => {
+          alert(error);
+          reject(error);
+        });
+  });
+
+  export const addCourse = (course) => {
+    axios.post(url + '/courses', course)
+      .then((res) => {
+        alert(JSON.stringify(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  export const getCurrentCourses = () => new Promise((resolve, reject) => {
+    axios.get(url + '/courses/completed/' + false)
+        .then(resp => resolve(resp.data))
+        .catch(error => {
+          alert(error);
+          reject(error);
+        });
+  });
+
+  export const getPastCourses = () => new Promise((resolve, reject) => {
+    axios.get(url + '/courses/completed/' + true)
+        .then(resp => resolve(resp.data))
+        .catch(error => {
+          alert(error);
+          reject(error);
+        });
+  });
+
+  
+
 
  
   //Do I need to clear?
