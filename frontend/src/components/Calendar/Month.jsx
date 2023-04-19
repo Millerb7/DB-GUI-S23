@@ -8,7 +8,7 @@ import WeekView from './Week';
             {
                 weeks ? 
                 weeks.map((week, index) => (
-                        <WeekView key={index} month={Month} week={week} />
+                        <WeekView key={index} Month={Month} week={week} />
                     ))
                     :
                     <></>

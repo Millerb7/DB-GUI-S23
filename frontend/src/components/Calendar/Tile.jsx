@@ -19,12 +19,12 @@ import { Card, Paper, Container, InputLabel, FormControl, Button, Typography, Me
         <Paper style={{ padding: 15, margin: 1}}>
                 {handleCompare() ? 
                     <>
-                        <Typography variant="h5">{day}</Typography>
+                        <Typography variant="h5">{day.split(' ')[2]}</Typography>
                         <Typography>homework</Typography>
                     </>
                     :
                     <>
-                    <Typography variant="h5" color="text.secondary">{day}</Typography>
+                    <Typography variant="h5" color="text.secondary">{day.split(' ')[2]}</Typography>
                     <Typography color="text.secondary">homework</Typography>
                 </>
                 }

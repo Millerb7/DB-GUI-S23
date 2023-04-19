@@ -56,6 +56,43 @@ export const Calendar = () => {
         setWeeks(cal);
     }
 
+    function handleWeekChange ( newDate ) {
+
+        // update current date
+        setCurrentDate(newDate);
+        // update month
+        setMonth(newDate.getMonth());
+        // update the first day of the month
+        setFirstDay(new Date(newDate.getFullYear(), Month, 1));
+        // update the last day of the month
+        setLastDay(new Date(newDate.getFullYear(), Month+1, 0));
+
+        let cal = [];
+        let i = 0;            
+
+        for(let w = 0; w < 6; w++) {
+            const week = [];
+            for(let d = 0; d < 7; d++) {
+                // if the day is in the preious month
+                if(w === 0 && d < firstDay.getDay()) {
+                    week.push(new Date(currentDate.getFullYear(), Month-1, new Date(currentDate.getFullYear(), Month, 0).getDate()-5+d).toDateString());
+                } 
+                // if the day is in the next month
+                else if (w === 6 && d > lastDay.getDate()) {
+                    week.push(new Date(currentDate.getFullYear(), Month+1, d).toDateString());
+                }
+                // in the month
+                else {
+                    i++;
+                    week.push(new Date(currentDate.getFullYear(), Month, i).toDateString());
+                }
+            }
+            cal.push(week);
+        }
+        // set the value for the arrays of weeks and days
+        setWeeks(cal);
+    }
+
     const handleDayView = (day) => {
         setView(<Tile day={day.toDateString()} Month={Month} />)
     }
@@ -100,48 +137,51 @@ export const Calendar = () => {
                         <Button key="month" onClick={() => handleMonthView()}>Month</Button>
                     </ButtonGroup>
                     <Button onClick={() => handleMonthChange(new Date(currentDate.getFullYear(), Month+1, 1))}>next</Button>
-                    <Grid item container size={2}>
-                        <Paper>
-                            <Typography variant="h5">Sunday</Typography>
-                        </Paper>
-                        <Card>
-                            <CardContent>
-                                <Typography>Monday</Typography>
-                            </CardContent>
-                        </Card>
-                        <Card>
-                            <CardContent>
-                                <Typography>Tuesday</Typography>
-                            </CardContent>
-                        </Card>
-                        <Card>
-                            <CardContent>
-                                <Typography>Wednesday</Typography>
-                            </CardContent>
-                        </Card>
-                        <Card>
-                            <CardContent>
-                                <Typography>Thursday</Typography>
-                            </CardContent>
-                        </Card>
-                        <Card>
-                            <CardContent>
-                                <Typography>Friday</Typography>
-                            </CardContent>
-                        </Card>
-                        <Card>
-                            <CardContent>
-                                <Typography>Saturday</Typography>
-                            </CardContent>
-                        </Card>
+                    <Grid>
+                        <Typography>{currentDate.toLocaleString('en-US', { month: 'long' })}</Typography>
+                        <Grid item container size={2}>
+                            <Paper>
+                                <Typography variant="h5">Sunday</Typography>
+                            </Paper>
+                            <Card>
+                                <CardContent>
+                                    <Typography>Monday</Typography>
+                                </CardContent>
+                            </Card>
+                            <Card>
+                                <CardContent>
+                                    <Typography>Tuesday</Typography>
+                                </CardContent>
+                            </Card>
+                            <Card>
+                                <CardContent>
+                                    <Typography>Wednesday</Typography>
+                                </CardContent>
+                            </Card>
+                            <Card>
+                                <CardContent>
+                                    <Typography>Thursday</Typography>
+                                </CardContent>
+                            </Card>
+                            <Card>
+                                <CardContent>
+                                    <Typography>Friday</Typography>
+                                </CardContent>
+                            </Card>
+                            <Card>
+                                <CardContent>
+                                    <Typography>Saturday</Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                        {view}
+                        <Grid>
+                            <Typography>
+                                Date: {currentDate.toDateString()}
+                            </Typography>
+                        </Grid>
                     </Grid>
                 </Box>
-                {view}
-                <Grid>
-                    <Typography>
-                        Date: {currentDate.toDateString()}
-                    </Typography>
-                </Grid>
 
             </Container>
         </Page>
