@@ -255,6 +255,59 @@ app.get('/assignments', (req, res) => {
         }
 });
 
+//Retrieve all assignments by course_id
+app.get('/assignments/:course_number', (req, res) => {
+    try{
+        const course_number = req.params.course_number;
+        connection.query('SELECT * FROM assignments WHERE course_number = ?', [course_number], (err, rows, fields) => {
+            if (err) throw err;
+
+            console.log(rows);
+            res.status(200);
+            res.send(rows);
+        });
+    }
+        catch (err) {
+            console.log(err);
+        }
+});
+
+//Get assignemnts by 
+// app.get('/assignments/courses/:course_id', (req, res) => {
+//     const course_id = req.params.course_number;
+//     console.log('Course number:', course_id);
+//     connection.query('SELECT * FROM assignments WHERE course_number = ?', [course_id], (err, rows, fields) => {
+//         try {
+//             if (err) throw err;
+//             console.log('Rows: ', rows);
+//             res.status(200);
+//             res.send(rows);
+//         } catch (err) {
+//             console.error(err);
+//             res.status(500);
+//             res.send(err)
+//         }
+//     })
+// })
+
+app.get('/assignments/courses/:course_id', (req, res) => { // Change :course_number to :course_id
+    const course_id = req.params.course_id;
+    console.log('Course ID:', course_id);
+    connection.query('SELECT * FROM assignments WHERE course_number = ?', [course_id], (err, rows, fields) => {
+        try {
+            if (err) throw err;
+            console.log('Rows: ', rows);
+            res.status(200);
+            res.send(rows);
+        } catch (err) {
+            console.error(err);
+            res.status(500);
+            res.send(err);
+        }
+    });
+});
+
+
 
 //Delete all assignments
 //.delete or .put?
@@ -286,3 +339,5 @@ app.get('/assignments/missingassignments', (req, res) => {
 
 
 //all missing assignment by course
+
+//do all those by course id
