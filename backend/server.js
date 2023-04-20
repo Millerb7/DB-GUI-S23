@@ -303,23 +303,7 @@ app.get('/assignments/missingassignments', (req, res) => {
     });
 });
 
-//Retrieve missing assignments by course id
-// app.get('/assignments/missingassignments/:course_id', (req, res) => {
-//     const course_id = req.params.course_id;
-//     connection.query('SELECT * FROM assignments WHERE course_number = ? AND overdue = TRUE', [course_id], (err, rows, fields) => {
-//         try {
-//             if (err) throw err;
-//             console.log('Rows: ', rows);
-//             res.status(200);
-//             res.send(rows);
-//         } catch (err) {
-//             console.error(err);
-//             res.status(500);
-//             res.send(err);
-//         }
-//     });
-// });
-
+//Retrieve all missing assignments by course_id
 app.get('/assignments/missingassignments/:course_id', (req, res) => {
     const course_id = req.params.course_id;
     console.log('Course ID:', course_id);
@@ -337,7 +321,20 @@ app.get('/assignments/missingassignments/:course_id', (req, res) => {
     });
 });
 
-
-//all missing assignment by course
+//Retrieve all assignments due within a week
+app.get('/assignments/duesoon', (req, res) => {
+    connection.query('SELECT * FROM assignments WHERE assignment_due_date >= CURDATE() AND assignment_due_date <= DATE_ADD(CURDATE(), INTERVAL 1 WEEK)', [], (err, rows, fields) => {
+        try {
+            if (err) throw err;
+            console.log('Rows: ', rows);
+            res.status(200);
+            res.send(rows);
+        } catch (err) {
+            console.error(err);
+            res.status(500);
+            res.send(err);
+        }
+    });
+});
 
 //do all those by course id

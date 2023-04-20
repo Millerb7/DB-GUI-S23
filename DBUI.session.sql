@@ -34,6 +34,8 @@ VALUES ('English I', 123, 'Mr.James', 2023, 'Fall', true, 1),
        ('Calculus I', 110, 'Mr.Yuko', 2023, 'Fall', false, 3),
        ('Spanish II', 100, 'Ms.Hiyla', 2023, 'Fall', false, 1);
 
+DROP TABLE assignments;
+
 CREATE TABLE IF NOT EXISTS assignments
 (
     assignment_name         VARCHAR(255) NOT NULL,
@@ -49,8 +51,8 @@ CREATE TABLE IF NOT EXISTS assignments
 );
 
 INSERT INTO assignments (assignment_name, assignment_id, assignment_due_date, assignment_work_date, course_number, assignment_description, overdue, student_number)
-VALUES ('Test Assignment 0', 0, '2000-03-24', NULL, 100, 'Assignment Description for assignment 234 with course id 123', false, 1),
-       ('Test Assignment 1', 1, '2000-03-24', NULL, 100, 'Assignment Description for assignment 1 with course id 100', true, 1),
-       ('Test Assignment 2', 2, '2000-03-24', NULL, 110, 'Assignment Description for assignment 2 with course id 110', true, 1),
-       ('Test Assignment 3', 3, '2000-03-24', NULL, 111, 'Assignment Description for assignment 3 with course id 111', false, 1);
+VALUES ('Test Assignment 0', 0, '2023-03-24', NULL, 100, 'Assignment Description for assignment 234 with course id 123', false, 1),
+       ('Test Assignment 1', 1, '2023-04-24', NULL, 100, 'Assignment Description for assignment 1 with course id 100', true, 1),
+       ('Test Assignment 2', 2, '2023-04-26', NULL, 110, 'Assignment Description for assignment 2 with course id 110', true, 1),
+       ('Test Assignment 3', 3, '2023-05-01', NULL, 111, 'Assignment Description for assignment 3 with course id 111', false, 1);
 
