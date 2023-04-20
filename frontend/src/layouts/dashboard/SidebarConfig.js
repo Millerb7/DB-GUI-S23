@@ -19,12 +19,12 @@ const sidebarConfig = [
   {
     title: 'Calendar',
     path: '/dashboard/calendar',
-    icon: getIcon('eva:shopping-bag-fill')
+    icon: getIcon('eva:calendar-fill')
   },
   {
     title: 'Courses',
     path: '/dashboard/courses',
-    icon: getIcon('eva:shopping-bag-fill')
+    icon: getIcon('eva:book-fill')
   }
 ];
 
