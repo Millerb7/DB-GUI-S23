@@ -125,7 +125,7 @@ app.put('/users', (req,res) => {
 
 app.post('/user/login', (req,res) => {
     console.log(req.body);
-    connection.query(`SELECT * FROM users where email=${req.body.email}`, (err, rows, fields) => {
+    connection.query(`SELECT * FROM users where email = ?`, [req.body.email], (err, rows, fields) => {
         if (err) throw err;
 
         console.log(rows);
