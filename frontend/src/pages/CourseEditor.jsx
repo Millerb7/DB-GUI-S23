@@ -25,7 +25,7 @@ export const CourseEditor = () => {
         if (params.course_id) {
             getCourseById(params.course_id).then(x => {
                 //parse the x array to get the course object
-                setCourse(x[0]);
+                setCourse(x);
                 //debugging
                 alert(JSON.stringify(x) + " " + params.course_id);
                 //setCourse(x);
