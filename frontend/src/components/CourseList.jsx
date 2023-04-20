@@ -5,6 +5,28 @@ import { useNavigate } from "react-router-dom";
 export const CourseList = ({ courses }) => {
     const navigate = useNavigate();
 
+    if(courses.length === 0) {
+        return <>
+            <Table sx={{mb: 3}}>
+                <TableHead>
+                    <TableRow>
+                    <TableCell>Course</TableCell>
+                    <TableCell>Semester</TableCell>
+                    <TableCell>Year</TableCell>
+                    <TableCell>Professor</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    <TableRow>
+                        <TableCell align="center" colSpan={4}>
+                            No courses found. Please add a course.
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+        </>;
+    } else {
+
     return <>
         <Table sx={{mb: 3}}>
             <TableHead>
@@ -18,6 +40,7 @@ export const CourseList = ({ courses }) => {
 
             <TableBody>
                 {
+
                     courses.map(course => <TableRow key={course.course_id}>
                         <TableCell>
                             <Link href={`courses/${course.course_id}`}> {course.course_name} </Link>
@@ -28,9 +51,8 @@ export const CourseList = ({ courses }) => {
                         <TableCell>
                             <Button 
                                 type="button"
-                                className="btn btn-primary btn-lg col-12 mt-4"
                                 onClick={() => {
-                                    navigate(`/dashboard/courses/edit/${course.course_id}`);
+                                    navigate(`edit/${course.course_id}`);
                                  }}>
                                 <ModeEditIcon></ModeEditIcon>
                             </Button>
@@ -40,4 +62,5 @@ export const CourseList = ({ courses }) => {
             </TableBody>
         </Table>
     </>;
+    }
 }

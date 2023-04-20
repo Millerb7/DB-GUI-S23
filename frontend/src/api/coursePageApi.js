@@ -36,26 +36,8 @@ export const checkAPI = () => {
     });
   };
 
-
-  export const getCourses = () => {
-    axios.get(url + '/courses').then((res) => {
-      alert(JSON.stringify(res.data));
-    }).catch((err) => {
-      console.log(err);
-    });
-  };
-
-  export const getCourseById = (course_id) => {
-    axios.get(url + '/courses/' + course_id).then((res) => {
-        alert(JSON.stringify(res.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  export const editCourse = (course_id, course) => new Promise ((resolve, reject) => {
-    axios.put(url + `/courses/${course_id}`, course)
+  export const getCourses = () => new Promise((resolve, reject) => {
+    axios.get(url + '/courses')
         .then(resp => resolve(resp.data))
         .catch(error => {
           alert(error);
@@ -63,15 +45,42 @@ export const checkAPI = () => {
         });
   });
 
-  export const addCourse = (course) => {
+  export const getCourseById = (course_id) => new Promise((resolve, reject) => {
+    axios.get(url + '/courses/' + course_id)
+        .then(resp => {
+          resolve(resp.data);
+          //debugging
+          //alert(JSON.stringify(resp.data));
+        })
+        .catch(error => {
+          alert(error);
+          reject(error);
+        });
+  });
+
+  export const editCourse = (course_id, course) => new Promise ((resolve, reject) => {
+    axios.put(url + `/courses/${course_id}`, course)
+        .then(resp => {
+          resolve(resp.data);
+          alert(JSON.stringify(resp.data));
+        })
+        .catch(error => {
+          alert(error);
+          reject(error);
+        });
+  });
+
+  export const addCourse = (course) => new Promise ((resolve,reject) => {
     axios.post(url + '/courses', course)
-      .then((res) => {
-        alert(JSON.stringify(res.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+        .then(resp => {
+          resolve(resp.data);
+          alert(JSON.stringify(resp.data));
+        })
+        .catch(error => {
+          alert(error);
+          reject(error);
+        });
+  });
 
   export const getCurrentCourses = () => new Promise((resolve, reject) => {
     axios.get(url + '/courses/completed/' + false)
@@ -94,5 +103,6 @@ export const checkAPI = () => {
   
 
 
- 
+ //Be able to pull in courses by student ID
   //Do I need to clear?
+//Make sure to check how to pull courses by ID

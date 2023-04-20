@@ -1,3 +1,4 @@
+DROP DATABASE DBUI;
 CREATE DATABASE IF NOT EXISTS DBUI;
 USE DBUI;
 
@@ -6,15 +7,19 @@ CREATE TABLE IF NOT EXISTS users
     user_id    INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
     last_name  VARCHAR(255) NOT NULL,
+
+    age        INT,
+    admin      BOOLEAN      NOT NULL DEFAULT FALSE
     email      VARCHAR(255) NOT NULL,
     password   VARCHAR(255) NOT NULL
+);
+
 
 INSERT INTO users (first_name, last_name, email, password)
 VALUES ('james', 'bench', 'james@gmail.com', '1234'),
        ('marley', 'wine', 'marley@email.com', '456'),
        ('mort', 'lemur', 'mort@lemur.com', 'moveit'),
        ('bat', 'man', 'brucew@batmail.com','scout4ever');
-)
 
 CREATE TABLE IF NOT EXISTS courses
 (
