@@ -125,7 +125,7 @@ app.put('/users', (req,res) => {
 
 app.post('/user/login', (req,res) => {
     console.log(req.body);
-    connection.query(`SELECT * FROM users where email=${req.body.email}`, (err, rows, fields) => {
+    connection.query(`SELECT * FROM users where email = ?`, [req.body.email], (err, rows, fields) => {
         if (err) throw err;
 
         console.log(rows);
@@ -144,6 +144,7 @@ app.post('/user/login', (req,res) => {
 app.post('/courses', (req, res) => {//add course
     const { course_name, semester, year, course_completed, professor_name, student_id } = req.body;
     const query = `INSERT INTO courses (course_name, semester, year, course_completed, professor_name, student_id) VALUES ('${course_name}','${semester}',${year},${course_completed}, '${professor_name}','${student_id}')`;
+
     connection.query(query, (err, rows, fields) => {
         if (err) throw err;
 
@@ -179,7 +180,7 @@ app.get('/courses/:id', (req, res) => {
 
         console.log(rows);
         res.status(200);
-        res.send(rows);
+        res.send(rows[0]);//returnring one record
     });
 }
     catch (err) {
