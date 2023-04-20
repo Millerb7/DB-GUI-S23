@@ -140,8 +140,11 @@ app.post('/user/login', (req,res) => {
     });
 });
 
-
-app.post('/courses', (req, res) => {//add course
+//Calls for Courses 
+//
+//
+//Add a Course
+app.post('/courses', (req, res) => {
     const { course_name, semester, year, course_completed, professor_name, student_id } = req.body;
     const query = `INSERT INTO courses (course_name, semester, year, course_completed, professor_name, student_id) VALUES ('${course_name}','${semester}',${year},${course_completed}, '${professor_name}','${student_id}')`;
 
@@ -171,7 +174,7 @@ app.get('/courses', (req,res) => {
     }
 });
 
-//Get course by ID
+//Retrieve course by ID
 app.get('/courses/:id', (req, res) => {
     try {
       const course_id = req.params.id;
@@ -188,7 +191,7 @@ app.get('/courses/:id', (req, res) => {
     }
 });
 
-//Pull courses on completion status - courses/completed/true or courses/completed/false
+//Retrieve courses on completion status - courses/completed/true or courses/completed/false
 app.get('/courses/completed/:course_completed', (req, res) => {
     try {
       const course_completed = req.params.course_completed === 'true';
@@ -204,8 +207,24 @@ app.get('/courses/completed/:course_completed', (req, res) => {
     }
   });
 
+//Retreive course by user & completon status
+app.get('/user/courses/:id/completed/:course_completed', (req, res) => {
+    try {
+        const user_id = req.params.id;
+        const course_completed = req.params.course_completed === 'true';
+        connection.query('SELECT * FROM courses WHERE student_id = ? AND course_completed = ?', [user_id, course_completed], (err, rows, fields) => { // should pull courses in by student_id and completion status
+            if (err) throw err;
 
-//remove :username - make route on frontend
+            console.log(rows);
+            res.status(200);
+            res.send(rows);
+        });
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+//Retrieve Course by user
 app.get('/user/courses/:id', (req, res) => {
     try {
       const user_id = req.params.id;//req.user.username
@@ -222,7 +241,7 @@ app.get('/user/courses/:id', (req, res) => {
     }
 });
 
-//Can update Course Name and whether or not it is completed 
+//Can update Course Name, Professor, Semester, Year, and whether or not it is completed by Course ID
 app.put('/courses/:course_id', (req, res) => {
     const course_id = req.params.course_id;
     const { course_name,  semester, year, course_completed, professor_name } = req.body;
