@@ -269,3 +269,71 @@ app.delete('/courses/:course_id',(req, res)=> {
 app.listen(port, () => {
     console.log(`listening to port ${port}`);
 });
+
+//Assignments
+
+//Add Assignment
+app.post('/assignments', (req, res)=> {
+    const { assignment_name, assignment_id, assignment_due_date, assignment_work_date, course_number, assignment_description, overdue, student_number} = req.body;
+    const query = `INSERT INTO assignments 
+               (assignment_name, assignment_id, assignment_due_date, assignment_work_date, course_number, assignment_description, overdue, student_number)
+               VALUES 
+               ('${assignment_name}', ${assignment_id}, '${assignment_due_date}', '${assignment_work_date}', ${course_number}, '${assignment_description}', ${overdue}, ${student_number})`;
+    console.log(assignment_id)
+        connection.query(query, (err, rows, fields) => {
+            if (err) throw err;
+
+            console.log(rows);
+            res.status(200);
+            res.send("Successfully added assignment!");
+        })
+
+})
+
+//Retrieve all assignments
+app.get('/assignments', (req, res) => {
+    try{
+        connection.query('SELECT * FROM assignments', (err, rows, fields) => {
+            if (err) throw err;
+
+            console.log(rows);
+            res.status(200);
+            res.send(rows);
+        });
+    }
+        catch (err) {
+            console.log(err);
+        }
+});
+
+
+//Delete all assignments
+//.delete or .put?
+app.delete('/assignments/clear', (req, res) => {
+    connection.query('DELETE FROM assignments;', (err, rows, fields) => {
+        if (err) throw err;
+
+        res.status(200);
+        res.send("Successfully cleared assignments");
+    })
+})
+
+//Retrieve all missing assignments
+app.get('/assignments/missingassignments', (req, res) => {
+    const assignment_id = req.params.assignment_id
+    connection.query('SELECT assignment_id FROM assignments WHERE overdue = TRUE;', [assignment_id], (err, rows, fields) => {
+        try {
+            if (err) throw err;
+            console.log(rows);
+            res.status(200);
+            res.send("Succesfully returned all missing assignments");
+        } catch (err) {
+            console.error(err);
+            res.status(500);
+            res.send(err);
+        }
+    });
+});
+
+
+//all missing assignment by course
