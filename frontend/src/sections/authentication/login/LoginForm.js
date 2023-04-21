@@ -24,6 +24,13 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [ user, setUser ] = useState(undefined);
 
+  useEffect(() => {
+    if(user !== null){
+      sessionStorage.setItem("user", user);
+      navigate('/dashboard/app', { replace: true });
+    } 
+}, [ user ]);
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -37,7 +44,6 @@ export default function LoginForm() {
         sendLogin( values.email, values.password ).then( res =>{
           if(res !== 'invalid login attempt') {
             setUser(res.user);
-            navigate('/dashboard/app', { replace: true });
           } else {
             alert('invalid login credential please try again');
             setUser(null);
