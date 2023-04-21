@@ -1,4 +1,3 @@
-DROP DATABASE DBUI;
 CREATE DATABASE IF NOT EXISTS DBUI;
 USE DBUI;
 
@@ -7,13 +6,9 @@ CREATE TABLE IF NOT EXISTS users
     user_id    INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
     last_name  VARCHAR(255) NOT NULL,
-
-    age        INT,
-    admin      BOOLEAN      NOT NULL DEFAULT FALSE
     email      VARCHAR(255) NOT NULL,
     password   VARCHAR(255) NOT NULL
 );
-
 
 INSERT INTO users (first_name, last_name, email, password)
 VALUES ('james', 'bench', 'james@gmail.com', '1234'),
@@ -54,4 +49,4 @@ CREATE TABLE assignments
 );
 
 INSERT INTO assignments (assignment_name, assignment_id, assignment_due_date, assignment_work_date, course_number, assignment_description, overdue, student_number)
-VALUES ('Test Assignment', 234, '2000-03-24', NULL, 123, 'Assignment Description', false, 1)
+VALUES ('Test Assignment', 234, '2000-03-24', NULL, 123, 'Assignment Description', false, 1);

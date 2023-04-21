@@ -2,8 +2,8 @@ import { Assignment } from '../sections/Assignment';
 import { useEffect, useState } from 'react';
 import { getAssignmentById } from '../api/coursePageApi';
 
-import { Grid } from '@mui/material';
-import { Box } from '@mui/material';
+import { Grid, Box, Button } from '@mui/material';
+import {  } from '@mui/material';
 import { AssignmentLate } from '@mui/icons-material';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -35,7 +35,7 @@ export const MissingAssignments = () => {
                 assignment.missing ?  
                     <Grid item key={id} width={{xs: '50%'}}>
                         <div style={{display:'flex'}}>
-                            <Box sx={{fontWeight: 'bold'}}><AssignmentLate color='error' fontSize='small' sx={{mb:-.5, mr:1}}/>{assignment.assignmentName}</Box>
+                            <Button variant="text" sx={{fontWeight: 'bold'}}><AssignmentLate color='error' fontSize='small' sx={{mb:-.5, mr:1}}/>{assignment.assignmentName}</Button>
                             <Box sx={{color: 'text.secondary', ml: 2}} >Course: {assignment.course}</Box> 
                         </div>
                         This assignment was due on: {assignment.dueDate} 
