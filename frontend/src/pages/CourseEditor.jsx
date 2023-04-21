@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Textfield } from "../components/Textfield";
 import { CheckboxField } from "../components/CheckboxField";
 import { addCourse, editCourse, getCourseById } from "src/api/coursePageApi";
-import { Button, FormGroup, Grid } from "@mui/material";
+import { Button, FormGroup} from "@mui/material";
 
 export const CourseEditor = () => {
     const [course, setCourse] = useState(undefined);
@@ -24,11 +24,9 @@ export const CourseEditor = () => {
     useEffect(() => {
         if (params.course_id) {
             getCourseById(params.course_id).then(x => {
-                //parse the x array to get the course object
                 setCourse(x);
                 //debugging
                 alert(JSON.stringify(x) + " " + params.course_id);
-                //setCourse(x);
 
             });
         } else {
@@ -73,7 +71,6 @@ export const CourseEditor = () => {
                     Submit
                 </Button>
                 <Button type="button" color="error"
-                    className="btn btn-primary btn-lg col-12 mt-4"
                     onClick={() => { navigate('/dashboard/courses');}}>
                     Cancel
                 </Button>
