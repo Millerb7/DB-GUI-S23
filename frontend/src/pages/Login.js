@@ -37,7 +37,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Login() {
+export default function Login({ user, setUser }) {
   return (
     <RootStyle title="Login | Minimal-UI">
       <AuthLayout>
@@ -56,7 +56,7 @@ export default function Login() {
             <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
           </Stack>
 
-          <LoginForm />
+          <LoginForm user={user} setUser={setUser} />
 
           <Typography
             variant="body2"
