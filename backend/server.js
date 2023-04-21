@@ -140,8 +140,11 @@ app.post('/user/login', (req,res) => {
     });
 });
 
-
-app.post('/courses', (req, res) => {//add course
+//Calls for Courses 
+//
+//
+//Add a Course
+app.post('/courses', (req, res) => {
     const { course_name, semester, year, course_completed, professor_name, student_id } = req.body;
     const query = `INSERT INTO courses (course_name, semester, year, course_completed, professor_name, student_id) VALUES ('${course_name}','${semester}',${year},${course_completed}, '${professor_name}','${student_id}')`;
 
@@ -171,7 +174,7 @@ app.get('/courses', (req,res) => {
     }
 });
 
-//Get course by ID
+//Retrieve course by ID
 app.get('/courses/:id', (req, res) => {
     try {
       const course_id = req.params.id;
@@ -188,7 +191,7 @@ app.get('/courses/:id', (req, res) => {
     }
 });
 
-//Pull courses on completion status - courses/completed/true or courses/completed/false
+//Retrieve courses on completion status - courses/completed/true or courses/completed/false
 app.get('/courses/completed/:course_completed', (req, res) => {
     try {
       const course_completed = req.params.course_completed === 'true';
@@ -204,8 +207,24 @@ app.get('/courses/completed/:course_completed', (req, res) => {
     }
   });
 
+//Retreive course by user & completon status
+app.get('/user/courses/:id/completed/:course_completed', (req, res) => {
+    try {
+        const user_id = req.params.id;
+        const course_completed = req.params.course_completed === 'true';
+        connection.query('SELECT * FROM courses WHERE student_id = ? AND course_completed = ?', [user_id, course_completed], (err, rows, fields) => { // should pull courses in by student_id and completion status
+            if (err) throw err;
 
-//remove :username - make route on frontend
+            console.log(rows);
+            res.status(200);
+            res.send(rows);
+        });
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+//Retrieve Course by user
 app.get('/user/courses/:id', (req, res) => {
     try {
       const user_id = req.params.id;//req.user.username
@@ -222,7 +241,7 @@ app.get('/user/courses/:id', (req, res) => {
     }
 });
 
-//Can update Course Name and whether or not it is completed 
+//Can update Course Name, Professor, Semester, Year, and whether or not it is completed by Course ID
 app.put('/courses/:course_id', (req, res) => {
     const course_id = req.params.course_id;
     const { course_name,  semester, year, course_completed, professor_name } = req.body;
@@ -250,3 +269,71 @@ app.delete('/courses/:course_id',(req, res)=> {
 app.listen(port, () => {
     console.log(`listening to port ${port}`);
 });
+
+//Assignments
+
+//Add Assignment
+app.post('/assignments', (req, res)=> {
+    const { assignment_name, assignment_id, assignment_due_date, assignment_work_date, course_number, assignment_description, overdue, student_number} = req.body;
+    const query = `INSERT INTO assignments 
+               (assignment_name, assignment_id, assignment_due_date, assignment_work_date, course_number, assignment_description, overdue, student_number)
+               VALUES 
+               ('${assignment_name}', ${assignment_id}, '${assignment_due_date}', '${assignment_work_date}', ${course_number}, '${assignment_description}', ${overdue}, ${student_number})`;
+    console.log(assignment_id)
+        connection.query(query, (err, rows, fields) => {
+            if (err) throw err;
+
+            console.log(rows);
+            res.status(200);
+            res.send("Successfully added assignment!");
+        })
+
+})
+
+//Retrieve all assignments
+app.get('/assignments', (req, res) => {
+    try{
+        connection.query('SELECT * FROM assignments', (err, rows, fields) => {
+            if (err) throw err;
+
+            console.log(rows);
+            res.status(200);
+            res.send(rows);
+        });
+    }
+        catch (err) {
+            console.log(err);
+        }
+});
+
+
+//Delete all assignments
+//.delete or .put?
+app.delete('/assignments/clear', (req, res) => {
+    connection.query('DELETE FROM assignments;', (err, rows, fields) => {
+        if (err) throw err;
+
+        res.status(200);
+        res.send("Successfully cleared assignments");
+    })
+})
+
+//Retrieve all missing assignments
+app.get('/assignments/missingassignments', (req, res) => {
+    const assignment_id = req.params.assignment_id
+    connection.query('SELECT assignment_id FROM assignments WHERE overdue = TRUE;', [assignment_id], (err, rows, fields) => {
+        try {
+            if (err) throw err;
+            console.log(rows);
+            res.status(200);
+            res.send("Succesfully returned all missing assignments");
+        } catch (err) {
+            console.error(err);
+            res.status(500);
+            res.send(err);
+        }
+    });
+});
+
+
+//all missing assignment by course

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Tile from 'src/components/Calendar/Tile';
 import WeekView from '../components/Calendar/Week';
 import MonthView from 'src/components/Calendar/Month';
+import DayView from 'src/components/Calendar/Day';
 export const Calendar = () => {
 
     const [ currentDate, setCurrentDate ] = useState(new Date());
@@ -94,7 +95,7 @@ export const Calendar = () => {
     }
 
     const handleDayView = (day) => {
-        setView(<Tile day={day.toDateString()} Month={Month} />)
+        setView(<DayView day={day.toDateString()} />)
     }
 
     const handleWeekView = (day) => {
