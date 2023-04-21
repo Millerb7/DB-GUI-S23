@@ -7,7 +7,6 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import DashboardApp from './pages/DashboardApp';
 import {Courses} from './pages/Courses';
-import User from './pages/User';
 import NotFound from './pages/Page404';
 import { Calendar } from './pages/Calendar';
 import { IndividualCoursePage } from './pages/IndividualCoursePage';
@@ -22,7 +21,6 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { path: 'app', element: <DashboardApp /> },
-        { path: 'user', element: <User /> },
         { path: 'courses', element: <Courses /> },
         { path: 'courses/new', element: <CourseEditor/>},
         { path: 'courses/edit/:course_id', element: <CourseEditor/>},
