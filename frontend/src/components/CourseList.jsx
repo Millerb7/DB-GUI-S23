@@ -10,7 +10,8 @@ export const CourseList = ({ courses }) => {
             <Table sx={{mb: 3}}>
                 <TableHead>
                     <TableRow>
-                    <TableCell>Course</TableCell>
+                    <TableCell>Course Name</TableCell>
+                    <TableCell>Course Number</TableCell>
                     <TableCell>Semester</TableCell>
                     <TableCell>Year</TableCell>
                     <TableCell>Professor</TableCell>
@@ -31,7 +32,8 @@ export const CourseList = ({ courses }) => {
         <Table sx={{mb: 3}}>
             <TableHead>
                 <TableRow>
-                <TableCell>Course</TableCell>
+                <TableCell>Course Name</TableCell>
+                <TableCell>Course Number</TableCell>
                 <TableCell>Semester</TableCell>
                 <TableCell>Year</TableCell>
                 <TableCell>Professor</TableCell>
@@ -45,6 +47,7 @@ export const CourseList = ({ courses }) => {
                         <TableCell>
                             <Link href={`courses/${course.course_id}`}> {course.course_name} </Link>
                         </TableCell>
+                        <TableCell>{course.course_number}</TableCell>
                         <TableCell>{course.semester}</TableCell>
                         <TableCell>{course.year}</TableCell>
                         <TableCell>{course.professor_name}</TableCell>
