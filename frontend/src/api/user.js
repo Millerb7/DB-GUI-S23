@@ -30,6 +30,20 @@ export const sendLogin = ( email, password ) => new Promise((resolve, reject) =>
     });
 });
 
+// get specific user
+export const getUser = (id) => new Promise((resolve, reject) => {
+  axios
+    .get(url + `/user/${id}`)
+    .then((res) => {
+        console.log(JSON.stringify(res.data));
+        resolve(res.data.user);
+    })
+    .catch((err) => {
+      console.log(err);
+      reject(err);
+    });
+});
+
 // get all users
 export const getUsers = () => new Promise((resolve, reject) => {
   axios

@@ -47,12 +47,13 @@ export const Home = ({userId}) =>{
                             <Card key={index} sx={{mb: 2}}>
                                 <Box sx={{fontSize: 'large', pl:2, pt:1}}>{course.name}</Box>
                                 <CardActions>
-                                    <Button variant="text">Go to {course.name}'s course page</Button>
+                                    <Button type="button" variant="text">Go to {course.name}'s course page</Button>
                                 </CardActions>
                             </Card>
                         )}
                     </div>
                 </Grid>
+                
                 <Grid item width={{xs:'50%'}} sx={{mt:4}}>
                     <h1>Upcoming Assignments:</h1>
                     {assignments.map((assignment, id) =>
