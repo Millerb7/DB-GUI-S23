@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
 //
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
+import { getUser } from 'src/api/user';
 
 // ----------------------------------------------------------------------
 
@@ -30,18 +31,30 @@ const MainStyle = styled('div')(({ theme }) => ({
   }
 }));
 
-// ----------------------------------------------------------------------
+export const UserContext = createContext(null);
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
+  const [ user, setUser ] = useState(undefined);
+
+  // gets user when dashboard is opened after login :)
+  useEffect(() => {
+    getUser(sessionStorage.getItem('userId')).then(x => setUser(x))
+  }, []);
+
+  if(!user) {
+    return <>Loading...</>
+  }
 
   return (
-    <RootStyle>
-      <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
-      <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
-      <MainStyle>
-        <Outlet />
-      </MainStyle>
-    </RootStyle>
+    <UserContext.Provider value={{ user, setUser }}>
+      <RootStyle>
+        <DashboardNavbar onOpenSidebar={() => setOpen(true)} act={user} />
+        <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)}  act={user}/>
+        <MainStyle>
+          <Outlet context={{ user }}/>
+        </MainStyle>
+      </RootStyle>
+    </UserContext.Provider>
   );
 }
