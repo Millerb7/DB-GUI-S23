@@ -49,10 +49,10 @@ export default function DashboardLayout() {
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <RootStyle>
-        <DashboardNavbar onOpenSidebar={() => setOpen(true) }  />
-        <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)}  />
+        <DashboardNavbar onOpenSidebar={() => setOpen(true) }  act={user}/>
+        <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} act={user} />
         <MainStyle>
-          <Outlet />
+          <Outlet context={{user}}/>
         </MainStyle>
       </RootStyle>
     </UserContext.Provider>
