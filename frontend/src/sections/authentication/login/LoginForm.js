@@ -26,7 +26,7 @@ export default function LoginForm() {
 
   useEffect(() => {
     if(user !== null){
-      sessionStorage.setItem("userId", user.id);
+      sessionStorage.setItem("userId", user.user_id);
       navigate('/dashboard/app', { replace: true });
     } 
 }, [ user ]);
