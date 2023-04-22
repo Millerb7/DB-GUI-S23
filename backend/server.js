@@ -323,7 +323,7 @@ app.get('/assignments/missing/:id', (req, res) => {
     console.log(req.params.id)
     const user_id = req.params.id;
     
-    connection.query('SELECT * FROM assignments WHERE student_number = ? AND overdue = TRUE;', [user_id], (err, rows, fields) => {
+    connection.query('SELECT assignments.*, courses.course_name, courses.instructor_name FROM assignments JOIN courses ON assignments.course_id = courses.id WHERE assignments.user = ? AND assignments.overdue = TRUE', [user_id], (err, rows, fields) => {
         try {
             if (err) throw err;
             console.log(rows);
