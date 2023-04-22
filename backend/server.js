@@ -145,8 +145,8 @@ app.post('/user/login', (req,res) => {
 //
 //Add a Course
 app.post('/courses', (req, res) => {
-    const { course_name, semester, year, course_completed, professor_name, student_id } = req.body;
-    const query = `INSERT INTO courses (course_name, semester, year, course_completed, professor_name, student_id) VALUES ('${course_name}','${semester}',${year},${course_completed}, '${professor_name}','${student_id}')`;
+    const { course_name, course_number, semester, year, course_completed, professor_name, student_id } = req.body;
+    const query = `INSERT INTO courses (course_name, course_number, semester, year, course_completed, professor_name, student_id) VALUES ('${course_name}', '${course_number}'  ,'${semester}',${year},${course_completed}, '${professor_name}','${student_id}')`;
 
     connection.query(query, (err, rows, fields) => {
         if (err) throw err;
@@ -244,9 +244,9 @@ app.get('/user/courses/:id', (req, res) => {
 //Can update Course Name, Professor, Semester, Year, and whether or not it is completed by Course ID
 app.put('/courses/:course_id', (req, res) => {
     const course_id = req.params.course_id;
-    const { course_name,  semester, year, course_completed, professor_name } = req.body;
-    const query = `UPDATE courses SET course_name = ?, course_completed = ?, semester = ?, year = ?, professor_name = ? WHERE course_id = ?`;
-    connection.query(query, [course_name, course_completed, semester, year,  professor_name, course_id], (err, rows, fields) => {
+    const { course_name, course_number, semester, year, course_completed, professor_name } = req.body;
+    const query = `UPDATE courses SET course_name = ?, course_number = ?, course_completed = ?, semester = ?, year = ?, professor_name = ? WHERE course_id = ?`;
+    connection.query(query, [course_name, course_number,course_completed, semester, year,  professor_name, course_id], (err, rows, fields) => {
       if (err) throw err;
   
       console.log(rows);
