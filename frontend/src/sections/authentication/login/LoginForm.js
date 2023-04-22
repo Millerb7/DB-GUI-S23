@@ -22,11 +22,11 @@ import { sendLogin } from '../../../api/user';
 export default function LoginForm() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [ user, setUser ] = useState(undefined);
+  const [ user, setUser ] = useState(null);
 
   useEffect(() => {
-    if(user){
-      sessionStorage.setItem("user", user);
+    if(user !== null){
+      sessionStorage.setItem("userId", user.id);
       navigate('/dashboard/app', { replace: true });
     } 
 }, [ user ]);
@@ -43,6 +43,7 @@ export default function LoginForm() {
         // login api call, should return a user if valid, a string if false
         sendLogin( values.email, values.password ).then( res =>{
           if(res !== 'invalid login attempt') {
+            console.log('logged in: ' + res.user);
             setUser(res.user);
           } else {
             alert('invalid login credential please try again');
