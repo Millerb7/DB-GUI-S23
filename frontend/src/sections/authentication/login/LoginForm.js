@@ -22,14 +22,14 @@ import { sendLogin } from '../../../api/user';
 export default function LoginForm() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [ user, setUser ] = useState(null);
+  const [ userId, setUserId ] = useState(null);
 
   useEffect(() => {
-    if(user !== null){
-      sessionStorage.setItem("userId", user.user_id);
-      navigate('/dashboard/app', { replace: true });
+    if(userId !== null){
+      sessionStorage.setItem("userId", userId);
+      navigate('/dashboard', { replace: true });
     } 
-}, [ user ]);
+}, [ userId ]);
 
   const formik = useFormik({
     initialValues: {
@@ -41,13 +41,14 @@ export default function LoginForm() {
       
       if(values.email && values.password) {
         // login api call, should return a user if valid, a string if false
+        console.log('tee hee')
         sendLogin( values.email, values.password ).then( res =>{
           if(res !== 'invalid login attempt') {
-            console.log('logged in: ' + res.user);
-            setUser(res.user);
+            console.log('logged in: ' + res);
+            setUserId(res.user_id);
           } else {
             alert('invalid login credential please try again');
-            setUser(null);
+            setUserId(null);
           }
         })
       }
