@@ -320,13 +320,13 @@ app.delete('/assignments/clear', (req, res) => {
 
 //Retrieve all missing assignments
 app.get('/assignments/missingassignments', (req, res) => {
-    const assignment_id = req.params.assignment_id
-    connection.query('SELECT assignment_id FROM assignments WHERE overdue = TRUE;', [assignment_id], (err, rows, fields) => {
+    const assignment_id = req.body.user_id
+    connection.query('SELECT * FROM assignments WHERE user = ? AND overdue = TRUE;', [user_id], (err, rows, fields) => {
         try {
             if (err) throw err;
             console.log(rows);
             res.status(200);
-            res.send("Succesfully returned all missing assignments");
+            res.send(rows);
         } catch (err) {
             console.error(err);
             res.status(500);
