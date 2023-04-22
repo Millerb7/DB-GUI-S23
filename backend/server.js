@@ -96,7 +96,7 @@ app.get('/users', (req,res) => {
 
 
 //get user by id
-app.get('/users/:id', (req, res) => {
+app.get('/user/:id', (req, res) => {
     try {
       const user_id = req.params.id;
       connection.query('SELECT * FROM users WHERE user_id = ?', [user_id], (err, rows, fields) => {
