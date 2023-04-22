@@ -25,7 +25,7 @@ export default function LoginForm() {
   const [ user, setUser ] = useState(undefined);
 
   useEffect(() => {
-    if(user !== null){
+    if(user){
       sessionStorage.setItem("user", user);
       navigate('/dashboard/app', { replace: true });
     } 

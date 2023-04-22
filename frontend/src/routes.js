@@ -20,7 +20,7 @@ export default function Router() {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { path: 'app', element: <DashboardApp /> },
+        { path: '', element: <DashboardApp /> },
         { path: 'courses', element: <Courses /> },
         { path: 'courses/new', element: <CourseEditor/>},
         { path: 'courses/edit/:course_id', element: <CourseEditor/>},
