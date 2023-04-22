@@ -13,13 +13,7 @@ import { useNavigate } from 'react-router-dom';
 export const MissingAssignments = () => {
     const [ missingAssignments, setMissingAssignments ] = useState([]);
     const navigate = useNavigate();
-    // const assignments = [
-    //     new Assignment(1, 'Review', 1004, 'ML', '', true),
-    //     new Assignment(2, 'Review2', 1005, 'Ethical', '', true),
-    //     new Assignment(3, 'Review3', 1006, 'UI', '', false),
-    //     new Assignment(4, 'Review4', 1007, 'EGNRMGMNT', '', true),
-    // ]
-
+    
     useEffect(() => {
         getMissingAssignments().then(x => setMissingAssignments(x));
     }, []);
