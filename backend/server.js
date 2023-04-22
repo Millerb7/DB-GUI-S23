@@ -102,9 +102,9 @@ app.get('/users/:id', (req, res) => {
       connection.query('SELECT * FROM users WHERE user_id = ?', [user_id], (err, rows, fields) => {
         if (err) throw err;
 
-        console.log(rows);
+        console.log(rows[0]);
         res.status(200);
-        res.send(rows);
+        res.send(rows[0]);
     });
 }
     catch (err) {
