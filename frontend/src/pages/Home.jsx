@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { getCourses } from "src/api/coursePageApi";
 import { Course } from "src/sections/Course";
 import { Assignment } from '../sections/Assignment'
-
+import { getUser } from '../api/user';
 import { CardHeader, Grid } from '@mui/material';
 import { Box } from '@mui/material';
 import Card from '@mui/material/Card';
@@ -11,20 +12,19 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';import { MissingAssignments } from "src/components/MissingAssignments";
 import { grey } from "@mui/material/colors";
+import { getMissingAssignments } from "src/api/AssignmentApi";
 
-export const Home = ({userId}) =>{
-    // const [ user, setUser ] = useState(undefined);
+export const Home = () =>{
+    // const [ user, setUser ] = useState(undefined); const [ missingAssignments, setMissingAssignments ] = useState([])
 
     // useEffect(() => {
-    //     getUserById(userId).then(data => setUser(data));
-    // })
+    //     getUser(userId).then(data => setUser(data));
+    // }, []);
 
-    const courses = [
-        new Course('Machine Learning in Python', 'Spring', 2023, false),
-        new Course('Math of Machine Learning', 'Spring', 2023, false),
-        new Course('Engineering Management', 'Spring', 2023, false),
-        new Course('User Interfaces', 'Spring', 2023, false),
-    ]; //change this into api route later
+    const [ missingAssignments, setMissingAssignments ] = useState([]);
+    const [ courses, setCourses ] = useState([]);
+
+    console.log("here");
 
     const assignments = [
         new Assignment(1, 'Review', 1004, 'ML', '', true),
@@ -56,8 +56,9 @@ export const Home = ({userId}) =>{
                 
                 <Grid item width={{xs:'50%'}} sx={{mt:4}}>
                     <h1>Upcoming Assignments:</h1>
-                    {assignments.map((assignment, id) =>
-                        <Card sx={{mb:2}}>
+                    {assignments ?  
+                    assignments.map((assignment, index) => (
+                        <Card key={index} sx={{mb:2}}>
                             <CardContent>
                                 <Box fontWeight='bold'>{assignment.assignmentName}
                                     <span style={{color: 'GrayText', float: 'right', marginRight: 2}} > Due Date: {assignment.dueDate}</span>
@@ -68,7 +69,8 @@ export const Home = ({userId}) =>{
                             </CardContent>
                             
                         </Card>
-                    )}
+                    ))  :  <></>}
+                    
                 </Grid>
                 
         </Grid>
