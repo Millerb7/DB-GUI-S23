@@ -1,15 +1,29 @@
 import { useEffect, useState } from "react"
-import Page from '../components/Page'
+import { useNavigate } from "react-router-dom";
+import { getCourseById } from "src/api/coursePageApi";
+import { getUserAssignments } from "src/api/AssignmentApi";
+import { AssignmentList } from "src/components/AssignmentList";
+import { Button } from "@mui/material";
 
 export const IndividualCoursePage = () => {
 
-    const [course, setCourse] = useState(undefined);
+    const [course, setCourse] = useState([]);
+    const [assignments, setAssignments] = useState([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
-        // getCourseByID(courseId).then(x => setCourse(x));
+        getCourseById(course).then(x => setCourse(x));
+        // getUserAssignments(userid).then(x => setAssignments(x))
     }, []);
 
-    return <>
-        <h2>Individual Course Page</h2>
-    </>;
+    return<>
+        <Button type="button" onClick={()=>{
+        }}>Add Assignment</Button>
+
+        <h2 align="center">Missing Assignments</h2>
+        {/* <AssignmentList assignments={assignments}/> */}
+
+        <h2 align="center">Current Assignments</h2>
+    </>
 }
