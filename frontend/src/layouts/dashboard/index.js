@@ -38,23 +38,23 @@ export default function DashboardLayout() {
   const [ user, setUser ] = useState(undefined);
 
   // gets user when dashboard is opened after login :)
-  // useEffect(() => {
-  //   getUser(sessionStorage.getItem('userId')).then(x => setUser(x))
-  // }, []);
+  useEffect(() => {
+    getUser(sessionStorage.getItem('userId')).then(x => setUser(x))
+  }, []);
 
-  // if(!user) {
-  //   return <>Loading...</>
-  // }
+  if(!user) {
+    return <>Loading...</>
+  }
 
   return (
-    // <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser }}>
       <RootStyle>
-        <DashboardNavbar onOpenSidebar={() => setOpen(true)}  />
+        <DashboardNavbar onOpenSidebar={() => setOpen(true) }  />
         <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)}  />
         <MainStyle>
           <Outlet />
         </MainStyle>
       </RootStyle>
-    // </UserContext.Provider>
+    </UserContext.Provider>
   );
 }
