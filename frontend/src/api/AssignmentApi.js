@@ -29,3 +29,12 @@ export const getMissingAssignments = () => new Promise((resolve, reject) => {
             reject(error);
         })
 });
+
+export const getUpcomingAssignments = () => new Promise((resolve, reject) => {
+    axios.get(`${url}/duesoon`)
+        .then(resp => resolve(resp.data))
+        .catch(error => {
+            alert(error);
+            reject(error);
+        })
+});

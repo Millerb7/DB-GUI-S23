@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 export const MissingAssignments = () => {
-    const [ missingAssignments, setMissingAssignments ] = useState(undefined);
+    const [ missingAssignments, setMissingAssignments ] = useState([]);
     const navigate = useNavigate();
     // const assignments = [
     //     new Assignment(1, 'Review', 1004, 'ML', '', true),

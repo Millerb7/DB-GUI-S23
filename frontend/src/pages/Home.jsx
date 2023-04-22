@@ -14,21 +14,17 @@ import Button from '@mui/material/Button';import { MissingAssignments } from "sr
 import { grey } from "@mui/material/colors";
 import { getMissingAssignments } from "src/api/AssignmentApi";
 
-export const Home = ({userId}) =>{
-    const [ user, setUser ] = useState(undefined); const [ missingAssignments, setMissingAssignments ] = useState([])
+export const Home = () =>{
+    // const [ user, setUser ] = useState(undefined); const [ missingAssignments, setMissingAssignments ] = useState([])
 
-    useEffect(() => {
-        getUser(userId).then(data => setUser(data));
-    }, []);
+    // useEffect(() => {
+    //     getUser(userId).then(data => setUser(data));
+    // }, []);
 
-    
+    const [ missingAssignments, setMissingAssignments ] = useState([]);
+    const [ courses, setCourses ] = useState([]);
 
-    const courses = [
-        new Course('Machine Learning in Python', 'Spring', 2023, false),
-        new Course('Math of Machine Learning', 'Spring', 2023, false),
-        new Course('Engineering Management', 'Spring', 2023, false),
-        new Course('User Interfaces', 'Spring', 2023, false),
-    ]; //change this into api route later
+    console.log("here");
 
     const assignments = [
         new Assignment(1, 'Review', 1004, 'ML', '', true),
@@ -60,8 +56,9 @@ export const Home = ({userId}) =>{
                 
                 <Grid item width={{xs:'50%'}} sx={{mt:4}}>
                     <h1>Upcoming Assignments:</h1>
-                    {assignments.map((assignment, id) =>
-                        <Card sx={{mb:2}}>
+                    {assignments ?  
+                    assignments.map((assignment, index) => (
+                        <Card key={index} sx={{mb:2}}>
                             <CardContent>
                                 <Box fontWeight='bold'>{assignment.assignmentName}
                                     <span style={{color: 'GrayText', float: 'right', marginRight: 2}} > Due Date: {assignment.dueDate}</span>
@@ -72,7 +69,8 @@ export const Home = ({userId}) =>{
                             </CardContent>
                             
                         </Card>
-                    )}
+                    ))  :  <></>}
+                    
                 </Grid>
                 
         </Grid>
