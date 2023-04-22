@@ -128,14 +128,14 @@ app.post('/user/login', (req,res) => {
     connection.query(`SELECT * FROM users where email = ?`, [req.body.email], (err, rows, fields) => {
         if (err) throw err;
 
-        console.log(rows);
-        if(rows.password == req.body.password) {
+        console.log(req.body.password + " " + rows[0].password);
+        if(rows[0].password == req.body.password) {
             res.status(200);
-            res.send(rows);
+            res.send(rows[0]);
 
         } else {
             res.status(201);
-            res.send('Incorrect Login!');
+            res.send('invalid login attempt');
         }
     });
 });
