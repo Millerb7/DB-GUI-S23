@@ -33,9 +33,9 @@ export const MissingAssignments = () => {
                     <Grid item key={id} width={{xs: '50%'}}>
                         <div style={{display:'flex'}}>
                             <span variant="text" sx={{fontWeight: 'bold', color: 'black'}}><AssignmentLate color='error' fontSize='small' sx={{mb:-.5, mr:1}}/>{assignment.assignment_name}</span>
-                            <Box sx={{color: 'text.secondary', ml: 2}} >Course: {assignment.course}</Box> 
+                            <Box sx={{color: 'text.secondary', ml: 2}} >Course: {assignment.course_name}</Box> 
                         </div>
-                        This assignment was due on: {assignment.dueDate} 
+                        This assignment was due on: {assignment.assignment_due_date} 
                     </Grid>
                 : null     
             )}
