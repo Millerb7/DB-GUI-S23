@@ -36,7 +36,7 @@ export const getUser = (id) => new Promise((resolve, reject) => {
     .get(url + `/user/${id}`)
     .then((res) => {
         console.log(JSON.stringify(res.data));
-        resolve(res.data.user);
+        resolve(res.data);
     })
     .catch((err) => {
       console.log(err);
