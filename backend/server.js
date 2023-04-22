@@ -319,9 +319,11 @@ app.delete('/assignments/clear', (req, res) => {
 })
 
 //Retrieve all missing assignments
-app.get('/assignments/missingassignments', (req, res) => {
-    const assignment_id = req.body.user_id
-    connection.query('SELECT * FROM assignments WHERE user = ? AND overdue = TRUE;', [user_id], (err, rows, fields) => {
+app.get('/assignments/missing/:id', (req, res) => {
+    console.log(req.params.id)
+    const user_id = req.params.id;
+    
+    connection.query('SELECT * FROM assignments WHERE student_number = ? AND overdue = TRUE;', [user_id], (err, rows, fields) => {
         try {
             if (err) throw err;
             console.log(rows);

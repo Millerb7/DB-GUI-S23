@@ -10,9 +10,10 @@ import { Box } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';import { MissingAssignments } from "src/components/MissingAssignments";
-import { grey } from "@mui/material/colors";
-import { getMissingAssignments } from "src/api/AssignmentApi";
+import Button from '@mui/material/Button';
+import { MissingAssignments } from "src/components/MissingAssignments";
+import { UserContext } from "src/layouts/dashboard";
+import {useContext} from 'react';
 
 export const Home = () =>{
     // const [ user, setUser ] = useState(undefined); const [ missingAssignments, setMissingAssignments ] = useState([])
@@ -20,6 +21,8 @@ export const Home = () =>{
     // useEffect(() => {
     //     getUser(userId).then(data => setUser(data));
     // }, []);
+    const userContext = useContext(UserContext);
+    const navigate = useNavigate();
 
     const [ missingAssignments, setMissingAssignments ] = useState([]);
     const [ courses, setCourses ] = useState([]);

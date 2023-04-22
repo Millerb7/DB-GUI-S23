@@ -1,5 +1,5 @@
 import { Assignment } from '../sections/Assignment';
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useContext } from 'react';
 import { getMissingAssignments } from 'src/api/AssignmentApi';
 import { Grid, Box, Button } from '@mui/material';
 import {  } from '@mui/material';
@@ -8,14 +8,16 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from 'src/layouts/dashboard';
 
 
 export const MissingAssignments = () => {
     const [ missingAssignments, setMissingAssignments ] = useState([]);
+    const userContext = useContext(UserContext);
     const navigate = useNavigate();
     
     useEffect(() => {
-        getMissingAssignments().then(x => setMissingAssignments(x));
+        getMissingAssignments(userContext.user.user_id).then(x => setMissingAssignments(x));
     }, []);
 
     return<>
@@ -27,10 +29,10 @@ export const MissingAssignments = () => {
         
         <Grid container spacing={2}> 
             {missingAssignments.map((assignment, id) => 
-                assignment.missing ?  
+                assignment ?  
                     <Grid item key={id} width={{xs: '50%'}}>
                         <div style={{display:'flex'}}>
-                            <Button variant="text" sx={{fontWeight: 'bold'}}><AssignmentLate color='error' fontSize='small' sx={{mb:-.5, mr:1}}/>{assignment.assignmentName}</Button>
+                            <span variant="text" sx={{fontWeight: 'bold', color: 'black'}}><AssignmentLate color='error' fontSize='small' sx={{mb:-.5, mr:1}}/>{assignment.assignment_name}</span>
                             <Box sx={{color: 'text.secondary', ml: 2}} >Course: {assignment.course}</Box> 
                         </div>
                         This assignment was due on: {assignment.dueDate} 
