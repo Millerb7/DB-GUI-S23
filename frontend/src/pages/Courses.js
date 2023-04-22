@@ -1,19 +1,21 @@
 import { Button } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCurrentCourses, getPastCourses } from "src/api/coursePageApi";
+import { getCurrentCoursesByID, getPastCoursesByID } from "src/api/coursePageApi";
 import { CourseList } from "src/components/CourseList";
+import { UserContext } from "src/layouts/dashboard";
 
 
 export const Courses = () => {
     const [currentCourses, setCurrentCourses] = useState([]);
     const [pastCourses, setPastCourses] = useState([]);
+    const userContext = useContext(UserContext);
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        getCurrentCourses().then(x => setCurrentCourses(x))
-        getPastCourses().then(x => setPastCourses(x))
+        getCurrentCoursesByID(userContext.user.user_id).then(x => setCurrentCourses(x))
+        getPastCoursesByID(userContext.user.user_id).then(x => setPastCourses(x))
     }, []);
 
     return <>
