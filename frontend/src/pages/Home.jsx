@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { getCourses } from "src/api/coursePageApi";
 import { Course } from "src/sections/Course";
 import { Assignment } from '../sections/Assignment'
-
+import { getUser } from '../api/user';
 import { CardHeader, Grid } from '@mui/material';
 import { Box } from '@mui/material';
 import Card from '@mui/material/Card';
@@ -11,13 +12,16 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';import { MissingAssignments } from "src/components/MissingAssignments";
 import { grey } from "@mui/material/colors";
+import { getMissingAssignments } from "src/api/AssignmentApi";
 
 export const Home = ({userId}) =>{
-    // const [ user, setUser ] = useState(undefined);
+    const [ user, setUser ] = useState(undefined); const [ missingAssignments, setMissingAssignments ] = useState([])
 
-    // useEffect(() => {
-    //     getUserById(userId).then(data => setUser(data));
-    // })
+    useEffect(() => {
+        getUser(userId).then(data => setUser(data));
+    }, []);
+
+    
 
     const courses = [
         new Course('Machine Learning in Python', 'Spring', 2023, false),

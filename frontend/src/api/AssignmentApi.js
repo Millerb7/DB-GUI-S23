@@ -20,3 +20,12 @@ export const getUserAssignments = (id) => new Promise((resolve,reject) => {
             reject(error);
         })
 });
+
+export const getMissingAssignments = () => new Promise((resolve, reject) => {
+    axios.get(`${url}/missingassignments`)
+        .then(resp => resolve(resp.data))
+        .catch(error => {
+            alert(error);
+            reject(error);
+        })
+});
