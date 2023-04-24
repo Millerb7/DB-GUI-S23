@@ -42,6 +42,8 @@ VALUES ('English I', 1243, 'Mr.James', 2023, 'Fall', true, 1),
        ('Spanish I', 1010, 'Ms.Hiyla', 2022, 'Fall', true, 1),
        ('Graphical User Interface', 3345, 'Sir Lawrimore', 2023, 'Spring', false, 1);
 
+DROP TABLE assignments;
+
 CREATE TABLE IF NOT EXISTS assignments
 (
     assignment_id           INT AUTO_INCREMENT PRIMARY KEY,

@@ -306,6 +306,25 @@ app.get('/assignments', (req, res) => {
         }
 });
 
+//Get assignemnts by course id
+app.get('/assignments/courses/:course_id', (req, res) => { // Change :course_number to :course_id
+    const course_id = req.params.course_id;
+    console.log('Course ID:', course_id);
+    connection.query('SELECT * FROM assignments WHERE course_number = ?', [course_id], (err, rows, fields) => {
+        try {
+            if (err) throw err;
+            console.log('Rows: ', rows);
+            res.status(200);
+            res.send(rows);
+        } catch (err) {
+            console.error(err);
+            res.status(500);
+            res.send(err);
+        }
+    });
+});
+
+
 
 //Delete all assignments
 //.delete or .put?
@@ -337,5 +356,37 @@ app.get('/assignments/missing/:id', (req, res) => {
     });
 });
 
+//Retrieve all missing assignments by course_id
+app.get('/assignments/missingassignments/:course_id', (req, res) => {
+    const course_id = req.params.course_id;
+    console.log('Course ID:', course_id);
+    connection.query('SELECT * FROM assignments WHERE course_number = 100 AND overdue = 1', [course_id], (err, rows, fields) => {
+        try {
+            if (err) throw err;
+            console.log('Rows: ', rows);
+            res.status(200);
+            res.send(rows);
+        } catch (err) {
+            console.error(err);
+            res.status(500);
+            res.send(err);
+        }
+    });
+});
 
-//all missing assignment by course
+app.get('/assignments/duesoon', (req, res) => {
+    connection.query('SELECT * FROM assignments WHERE assignment_due_date >= CURDATE() AND assignment_due_date <= DATE_ADD(CURDATE(), INTERVAL 1 WEEK)', [], (err, rows, fields) => {
+        try {
+            if (err) throw err;
+            console.log('Rows: ', rows);
+            res.status(200);
+            res.send(rows);
+        } catch (err) {
+            console.error(err);
+            res.status(500);
+            res.send(err);
+        }
+    });
+});
+
+//do all those by course id
