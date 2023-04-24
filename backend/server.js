@@ -373,9 +373,11 @@ app.get('/assignments/missingassignments/:course_id', (req, res) => {
 });
 
 app.get('/assignments/duesoon', (req, res) => {
+    // const upcoming = req.params.
     console.log('duesoon');
     connection.query('SELECT * FROM assignments WHERE assignment_due_date >= CURDATE() AND assignment_due_date <= DATE_ADD(CURDATE(), INTERVAL 1 WEEK)', (err, rows, fields) => {
         try {
+            console.log(rows);
             if (err) throw err;
             res.status(200);
             res.send(rows);
