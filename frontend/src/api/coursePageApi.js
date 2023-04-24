@@ -46,11 +46,9 @@ export const getCourses = () => new Promise((resolve, reject) => {
 });
 
 export const getCourseById = (course_id) => new Promise((resolve, reject) => {
-  axios.get(url + '/courses/' + course_id)
+  axios.get(url + `/courses/${course_id}`)
     .then(resp => {
       resolve(resp.data);
-      //debugging
-      //alert(JSON.stringify(resp.data));
     })
     .catch(error => {
       alert(error);
@@ -82,8 +80,8 @@ export const addCourse = (course) => new Promise((resolve, reject) => {
     });
 });
 
-export const getCurrentCourses = (id) => new Promise((resolve, reject) => {
-  axios.get(url + '/courses/completed/' + false)
+export const getCurrentCourses = () => new Promise((resolve, reject) => {
+  axios.get(url + `/courses/completed/${false}`)
     .then(resp => resolve(resp.data))
     .catch(error => {
       alert(error);
@@ -92,7 +90,7 @@ export const getCurrentCourses = (id) => new Promise((resolve, reject) => {
 });
 
 export const getPastCourses = () => new Promise((resolve, reject) => {
-  axios.get(url + '/courses/completed/' + true)
+  axios.get(url + `/courses/completed/${true}`)
     .then(resp => resolve(resp.data))
     .catch(error => {
       alert(error);
@@ -101,7 +99,7 @@ export const getPastCourses = () => new Promise((resolve, reject) => {
 });
 
 export const getPastCoursesByID = (student_id) => new Promise((resolve, reject) => {
-  axios.get(url + '/user/courses/' + student_id + '/completed/' + true)
+  axios.get(url + `/user/courses/${student_id}/completed/${true}`)
     .then(resp => resolve(resp.data))
     .catch(error => {
       alert(error);
@@ -110,7 +108,7 @@ export const getPastCoursesByID = (student_id) => new Promise((resolve, reject) 
 });
 
 export const getCurrentCoursesByID = (student_id) => new Promise((resolve, reject) => {
-  axios.get(url + '/user/courses/' + student_id + '/completed/' + false)
+  axios.get(url + `/user/courses/${student_id}/completed/${false}`)
     .then(resp => resolve(resp.data))
     .catch(error => {
       alert(error);
