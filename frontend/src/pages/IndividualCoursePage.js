@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react"
 import { useNavigate, useParams } from "react-router-dom";
 import { getCourseById } from "src/api/coursePageApi";
-import { getUserAssignments } from "src/api/AssignmentApi";
+import { getAssignmentsByCourse, getUserAssignments } from "src/api/AssignmentApi";
 import { AssignmentList } from "src/components/AssignmentList";
 import { Button } from "@mui/material";
 import { UserContext } from "src/layouts/dashboard";
@@ -11,13 +11,14 @@ export const IndividualCoursePage = () => {
 
     const [course, setCourse] = useState([]);
     const [assignments, setAssignments] = useState([]);
+    const userContext = useContext(UserContext);
 
     const navigate = useNavigate();
     const params = useParams();
 
     useEffect(() => {
         getCourseById(params.course_id).then(x => setCourse(x));
-        // getUserAssignments(userid).then(x => setAssignments(x))
+        getAssignmentsByCourse(params.course_id, userContext.user.user_id, 0).then(x => setAssignments(x).sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date)))
     }, []);
 
     const testAssignments = [
