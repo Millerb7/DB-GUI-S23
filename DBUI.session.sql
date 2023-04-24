@@ -32,15 +32,15 @@ CREATE TABLE IF NOT EXISTS courses
 
 INSERT INTO courses (course_name, course_number, professor_name, year, semester, course_completed, student_id)
 VALUES ('English I', 1243, 'Mr.James', 2023, 'Fall', true, 1),
-       ('History II', 1511, 'Mrs.Teach', 2023, 'Spring', false, 2),
-       ('Calculus I', 1160, 'Mr.Yuko', 2022, 'Fall', true, 3),
+       ('History II', 1511, 'Mrs.Teach', 2023, 'Spring', false, 1),
+       ('Calculus I', 1160, 'Mr.Yuko', 2022, 'Fall', true, 1),
        ('Spanish II', 1020, 'Ms.Hiyla', 2023, 'Fall', false, 1),
        ('English III', 1400, 'Ms.Miyagi', 2022, 'Spring', true, 1),
        ('Algebra II', 3330, 'Mr.Romeo', 2021, 'Fall', true, 1),
-       ('History I', 1411, 'Ms.Hitory', 2020, 'Spring', true, 2),
-       ('Differential Equations', 4320, 'Ms.Maf', 2024, 'Spring', false, 3),
+       ('History I', 1411, 'Ms.Hitory', 2020, 'Spring', true, 1),
+       ('Differential Equations', 4320, 'Ms.Maf', 2024, 'Spring', false, 1),
        ('Spanish I', 1010, 'Ms.Hiyla', 2022, 'Fall', true, 1),
-       ('Graphical User Interface', 3345, 'Sir Lawrimore', 2023, 'Spring', false, 2);
+       ('Graphical User Interface', 3345, 'Sir Lawrimore', 2023, 'Spring', false, 1);
 
 CREATE TABLE IF NOT EXISTS assignments
 (
