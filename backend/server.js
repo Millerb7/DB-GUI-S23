@@ -372,7 +372,6 @@ app.get('/assignments/missingassignments/:course_id', (req, res) => {
     });
 });
 
-//Retrieve all assignments due within a week
 app.get('/assignments/duesoon', (req, res) => {
     connection.query('SELECT * FROM assignments WHERE assignment_due_date >= CURDATE() AND assignment_due_date <= DATE_ADD(CURDATE(), INTERVAL 1 WEEK)', [], (err, rows, fields) => {
         try {
