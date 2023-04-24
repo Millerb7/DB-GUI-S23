@@ -1,4 +1,3 @@
-
 export class Assignment {
     constructor(id, assignmentName, dueDate, course, description, missing){
         this.id = id;
