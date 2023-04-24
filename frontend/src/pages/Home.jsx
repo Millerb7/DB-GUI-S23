@@ -40,7 +40,7 @@ export const Home = () => {
 
 
     return<>
-        <Typography variant="h4" style={{textAlign: 'center'}}>Hi, Welcome back {userContext.user.first_name}</Typography>
+        <Typography variant="h4" style={{textAlign: 'center'}}>Hi, Welcome Back {userContext.user.first_name}</Typography>
             <br/>
             <Paper elevation={3} alignItems={'center'}>
                 <Grid item width={{xs: '100%'}}>
@@ -89,11 +89,13 @@ export const Home = () => {
                             upcomingAssignments.map((assignment, index) => (
                                 <Paper elevation={10}>
                                     <Card key={index} sx={{mb:2}}>
-                                        <CardContent>
+                                        <CardContent display='flex'>
                                             <Box fontWeight='bold'>{assignment.assignment_name}
                                                 <span style={{color: 'GrayText', float: 'right', marginRight: 2}} > 
                                                     Due Date: {formatDate(assignment.assignment_due_date)}
                                                 </span>
+                                                <br/>
+                                                <span></span>
                                                 <br/>
                                                 <p  style={{color: 'GrayText', padding: 2}}>{assignment.assignment_description}</p>
                                             </Box>
