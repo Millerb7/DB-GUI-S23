@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getCourseById } from "src/api/coursePageApi";
 import { getUserAssignments } from "src/api/AssignmentApi";
 import { AssignmentList } from "src/components/AssignmentList";
@@ -13,9 +13,10 @@ export const IndividualCoursePage = () => {
     const [assignments, setAssignments] = useState([]);
 
     const navigate = useNavigate();
+    const params = useParams();
 
     useEffect(() => {
-        getCourseById(course).then(x => setCourse(x));
+        getCourseById(params.course_id).then(x => setCourse(x));
         // getUserAssignments(userid).then(x => setAssignments(x))
     }, []);
 
@@ -27,9 +28,10 @@ export const IndividualCoursePage = () => {
     ];
 
     return<>
-        <h1 align="center">Assignments for ----</h1>
-        
+        <h1 align="center">Assignments for {course.course_name}</h1>
+
         <Button type="button" onClick={()=>{
+            navigate('new')
         }}>Add Assignment</Button>
 
         <h2 align="center">Missing Assignments</h2>
