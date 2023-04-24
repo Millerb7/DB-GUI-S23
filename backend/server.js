@@ -17,7 +17,7 @@ const connection = mysql.createConnection({
 connection.connect();
 
 app.get('/', (req,res) => {
-    res.send('hello world');
+    res.send('STUDI');
 });
 
 app.put('/parse', (req,res) => {
