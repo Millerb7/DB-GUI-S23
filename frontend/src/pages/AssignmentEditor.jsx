@@ -1,8 +1,12 @@
 import { useEffect, useState, useContext} from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FormGroup, TextField, TextareaAutosize } from "@mui/material"
+import { FormGroup, Button, InputLabel } from "@mui/material"
+import { Textfield } from "../components/Textfield";
 import { UserContext } from "src/layouts/dashboard";
-import { Textfield } from "src/components/Textfield"
+import { getAssignmentById } from "src/api/AssignmentApi";
+import { getCourseById } from "src/api/coursePageApi";
+import { TextField } from "@mui/material";
+
 
 
 
@@ -16,6 +20,16 @@ export const AssignmentEditor = () => {
 
     const mergeAccount = delta => setAssignment({ ...assignment, ...delta });
     
+    useEffect(() => {
+        if (params.id) {
+            getAssignmentById(params.id).then(x => {
+                setAssignment(x);
+            })
+        }
+        else {
+            setAssignment({ assignmentName: '', dueDate: '', course : getCourseById(params.course_id), description : '', missing : false});
+        }
+    }, []);
     if (!assignment) {
         return <>Loading...</>;
     }
@@ -29,17 +43,22 @@ export const AssignmentEditor = () => {
                     value = {assignment.assignmentName}
                     setValue = {assignmentName => mergeAccount({ assignmentName })}>
                 </Textfield>
-                <TextField id = "description"
+                <Textfield id = "description"
                     label = "Assignment Description"
                     value = {assignment.description}
                     setValue = {description => mergeAccount({ description })}>
-                </TextField>
-                <TextField id = "dueDate"
-                    label = "Due Date"
-                    type = "datetime-local"
+                </Textfield>
+                <InputLabel>Due Date</InputLabel>
+                <TextField autoFocus id = "dueDate"
+                    type = "date"
                     value = {assignment.dueDate}
                     setValue = {dueDate => mergeAccount({ dueDate })}>
                 </TextField>
+
+                <Button type="button" color="error"
+                    onClick={() => { navigate(`/dashboard/courses/${params.course_id}`)}}>
+                    Cancel
+                </Button>
             </FormGroup>
         </form>
     </>
