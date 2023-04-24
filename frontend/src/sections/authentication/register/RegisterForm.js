@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { useNavigate } from 'react-router-dom';
 // material
@@ -7,12 +7,14 @@ import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
+import { sendLogin } from 'src/api/user';
 
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [ userId, setUserId ] = useState(null);
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -32,10 +34,31 @@ export default function RegisterForm() {
       password: ''
     },
     validationSchema: RegisterSchema,
-    onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+    onSubmit: (values, actions) => {
+      if(values.email && values.password) {
+        // login api call, should return a user if valid, a string if false
+        console.log('tee hee')
+        sendLogin( values.email, values.password ).then( res =>{
+          if(res !== 'invalid login attempt') {
+            console.log('logged in: ' + res);
+            setUserId(res.user_id);
+          } else {
+            alert('invalid login credential please try again');
+            setUserId(null);
+          }
+        })
+      }
+
+      actions.resetForm(); 
     }
   });
+
+  useEffect(() => {
+    if(userId !== null){
+      sessionStorage.setItem("userId", userId);
+      navigate('/dashboard', { replace: true });
+    } 
+}, [ userId ]);
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
 
