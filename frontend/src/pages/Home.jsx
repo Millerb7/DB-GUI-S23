@@ -1,23 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getCourses, getCurrentCourses, getCurrentCoursesByID } from "src/api/coursePageApi";
-import { Course } from "src/sections/Course";
-import { Assignment } from '../sections/Assignment'
-import { getUser } from '../api/user';
-import { CardHeader, Grid, Typography, Paper } from '@mui/material';
-import { Box } from '@mui/material';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
+import { Grid, Typography, Paper } from '@mui/material';
+import { Box, Card, CardActions, CardContent, Button } from '@mui/material';
+
 import { MissingAssignments } from "src/components/MissingAssignments";
 import { UserContext } from "src/layouts/dashboard";
-import {useContext} from 'react';
 import { getUpcomingAssignments } from "src/api/AssignmentApi";
+import { getCurrentCoursesByID } from "src/api/coursePageApi";
 
 export const Home = () => {
-    const [ user, setUser ] = useState(undefined);
 
     const userContext = useContext(UserContext);
     const navigate = useNavigate();
@@ -57,7 +49,7 @@ export const Home = () => {
             </Paper>
             <br/>
             <Paper elevation={3} alignItems={'center'} sx={{p:2}}>
-                <Grid container spacing={2}>
+                <Grid container spacing={3}>
                     <Grid item width={{xs: '50%'}}>
                         <h1>Current Courses: </h1>
                         <h3 style={{color: 'GrayText'}}>{currSemester()}</h3>
