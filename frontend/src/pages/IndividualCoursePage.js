@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { useNavigate } from "react-router-dom";
 import { getCourseById } from "src/api/coursePageApi";
 import { getUserAssignments } from "src/api/AssignmentApi";
 import { AssignmentList } from "src/components/AssignmentList";
 import { Button } from "@mui/material";
+import { UserContext } from "src/layouts/dashboard";
 import { Assignment } from '../sections/Assignment'
 
 export const IndividualCoursePage = () => {
@@ -26,6 +27,8 @@ export const IndividualCoursePage = () => {
     ];
 
     return<>
+        <h1 align="center">Assignments for ----</h1>
+        
         <Button type="button" onClick={()=>{
         }}>Add Assignment</Button>
 
@@ -33,6 +36,6 @@ export const IndividualCoursePage = () => {
         <AssignmentList assignments={testAssignments}/>
 
         <h2 align="center">Current Assignments</h2>
-        <AssignmentList assignments={testAssignments}/>
+        <AssignmentList assignments={[]}/>
     </>
 }
