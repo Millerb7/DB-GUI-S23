@@ -12,7 +12,7 @@ export const AssignmentList = ({ assignments }) => {
                 <TableHead>
                     <TableRow>
                         <TableCell>Assignment Name</TableCell>
-                        <TableCell>Assignment Number</TableCell>
+                        <TableCell>Description</TableCell>
                         <TableCell>Due Date</TableCell>
                     </TableRow>
                 </TableHead>
@@ -22,6 +22,38 @@ export const AssignmentList = ({ assignments }) => {
                         <TableCell>No assignments found.</TableCell>
                     </TableRow>
                 </TableBody>
+            </Table>
+        </>
+    }
+
+    else{
+
+        return <>
+            <Table sx = {{mb: 3}}>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Assignment Name</TableCell>
+                        <TableCell>Description</TableCell>
+                        <TableCell>Due Date</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {
+                        assignments.map(assignment => <TableRow key={assignment.id}>
+                            <TableCell>{assignment.assignmentName}</TableCell>
+                            <TableCell>{assignment.description}</TableCell>
+                            <TableCell>{assignment.dueDate}</TableCell>
+                            <TableCell>
+                                <Button type = "button"
+                                    onClick = {() => {
+                                        // navigate()
+                                    }}>
+                                    <ModeEditIcon></ModeEditIcon>
+                                </Button>
+                            </TableCell>
+                        </TableRow>)
+                    }
+                </TableBody>                
             </Table>
         </>
     }
