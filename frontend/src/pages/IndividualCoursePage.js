@@ -22,8 +22,9 @@ export const IndividualCoursePage = () => {
         }}>Add Assignment</Button>
 
         <h2 align="center">Missing Assignments</h2>
-        {/* <AssignmentList assignments={assignments}/> */}
+        <AssignmentList assignments={[]}/>
 
         <h2 align="center">Current Assignments</h2>
+        <AssignmentList assignments={[]}/>
     </>
 }
