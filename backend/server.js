@@ -377,8 +377,10 @@ app.get('/assignments/duesoon', (req, res) => {
         try {
             if (err) throw err;
             console.log('Rows: ', rows);
+            const assignmentsDueSoon = rows;
+
             res.status(200);
-            res.send(rows);
+            res.send(assignmnetsDueSoon);
         } catch (err) {
             console.error(err);
             res.status(500);
