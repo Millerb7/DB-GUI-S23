@@ -97,7 +97,7 @@ export default function LoginForm() {
           />
         </Stack>
 
-        <LoadingButton
+        <LoadingButton sx={{ mt: 3 }}
           fullWidth
           size="large"
           type="submit"

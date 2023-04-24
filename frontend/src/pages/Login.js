@@ -53,7 +53,6 @@ export default function Login() {
             <Typography variant="h4" gutterBottom>
               Sign in to STUDI
             </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
           </Stack>
 
           <LoginForm />
