@@ -2,8 +2,8 @@ import axios from "axios";
 
 const url = "http://localhost:8000";
 
-// send user
-export const sendUser = (user) => new Promise((resolve, reject) => {
+// create a new user
+export const createUser = (user) => new Promise((resolve, reject) => {
   axios
     .post(url + "/user", user)
     .then((res) => {
@@ -17,12 +17,26 @@ export const sendUser = (user) => new Promise((resolve, reject) => {
 });
 
 // login for specific user
-export const sendLogin = (email, password) => new Promise((resolve, reject) => {
+export const sendLogin = ( email, password ) => new Promise((resolve, reject) => {
   axios
-    .post(url + "/user/", { email, password })
+    .post(url + "/user/login", { email, password })
     .then((res) => {
       console.log(res.data);
       resolve(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+      reject(err);
+    });
+});
+
+// get specific user
+export const getUser = (id) => new Promise((resolve, reject) => {
+  axios
+    .get(url + `/user/${id}`)
+    .then((res) => {
+        console.log(JSON.stringify(res.data));
+        resolve(res.data.user);
     })
     .catch((err) => {
       console.log(err);

@@ -2,6 +2,14 @@
 
 // const router = express.Router();
 
+
+/**
+ * https://expressjs.com/en/guide/routing.html#express-router
+ * 
+ * A router is a special Express object that can be used to define how to route and manage
+ * requests. We configure a router here to handle a few routes specific to students
+ */
+
 // const bodyParser = require('body-parser');
 // router.use(bodyParser.json());
 

@@ -56,20 +56,34 @@ app.get('/db', (req,res) => {
 //     });
 // });
 
-//ryans stuff
-
 app.post('/user', (req,res) => {
     console.log(req.body);
-    const { user_id, first_name, last_name, age, admin, courses, totalAssigns, completedAssigns} = req.body;
-    const query = `INSERT INTO users (user_id, first_name, last_name, age, admin, courses, totalAssigns, completedAssigns) VALUES ('${user_id}', '${first_name}','${last_name}','${age}','${admin}','${courses}','${totalAssigns}','${completedAssigns}')`;
+    const { first_name, last_name, email, password } = req.body;
+    const query = `INSERT INTO users (first_name, last_name, email, password) VALUES ('${user_id}', '${first_name}','${last_name}','${email}','${password}')`;
         connection.query(query, (err,rows,fields) => {
             if (err) throw err;
             console.log(rows);
             res.status(200);
-            res.send("Added user");
+            res.send(rows);
         });
 });
 
+//ryans stuff
+
+//add user
+app.post('/user', (req,res) => {
+    console.log(req.body);
+    const { first_name, last_name, email, password} = req.body;
+    const query = `INSERT INTO users (first_name, last_name, email, password) VALUES ('${user_id}', '${first_name}','${last_name}','${email}','${password}')`;
+        connection.query(query, (err,rows,fields) => {
+            if (err) throw err;
+            console.log(rows);
+            res.status(200);
+            res.send(rows);
+        });
+});
+
+//get all users
 app.get('/users', (req,res) => {
     connection.query('SELECT * FROM users', (err,rows,fields) => {
         if (err) throw err;
@@ -79,6 +93,24 @@ app.get('/users', (req,res) => {
         res.send(rows);
     })
 })
+
+
+//get user by id
+app.get('/users/:id', (req, res) => {
+    try {
+      const user_id = req.params.id;
+      connection.query('SELECT * FROM users WHERE user_id = ?', [user_id], (err, rows, fields) => {
+        if (err) throw err;
+
+        console.log(rows);
+        res.status(200);
+        res.send(rows);
+    });
+}
+    catch (err) {
+        console.log(err);
+    }
+});
 
 //end of ryans stuff
 
@@ -91,9 +123,9 @@ app.put('/users', (req,res) => {
     });
 });
 
-app.post('/login', (req,res) => {
+app.post('/user/login', (req,res) => {
     console.log(req.body);
-    connection.query(`SELECT email=${req.body.email} FROM users`, (err, rows, fields) => {
+    connection.query(`SELECT * FROM users where email = ?`, [req.body.email], (err, rows, fields) => {
         if (err) throw err;
 
         console.log(rows);
@@ -108,11 +140,14 @@ app.post('/login', (req,res) => {
     });
 });
 
+//Calls for Courses 
+//
+//
+//Add a Course
+app.post('/courses', (req, res) => {
+    const { course_name, semester, year, course_completed, professor_name, student_id } = req.body;
+    const query = `INSERT INTO courses (course_name, semester, year, course_completed, professor_name, student_id) VALUES ('${course_name}','${semester}',${year},${course_completed}, '${professor_name}','${student_id}')`;
 
-app.post('/courses', (req, res) => {//add course
-    const { course_name, course_id, semester, year, course_completed, professor_name, student_id } = req.body;
-    const query = `INSERT INTO courses (course_name, course_id, semester, year, course_completed, professor_name, student_id) VALUES ('${course_name}','${course_id}','${semester}',${year},${course_completed}, '${professor_name}','${student_id}')`;
-console.log(course_id)
     connection.query(query, (err, rows, fields) => {
         if (err) throw err;
 
@@ -139,7 +174,7 @@ app.get('/courses', (req,res) => {
     }
 });
 
-//Get course by ID
+//Retrieve course by ID
 app.get('/courses/:id', (req, res) => {
     try {
       const course_id = req.params.id;
@@ -148,7 +183,7 @@ app.get('/courses/:id', (req, res) => {
 
         console.log(rows);
         res.status(200);
-        res.send(rows);
+        res.send(rows[0]);//returnring one record
     });
 }
     catch (err) {
@@ -156,7 +191,7 @@ app.get('/courses/:id', (req, res) => {
     }
 });
 
-//Pull courses on completion status - courses/completed/true or courses/completed/false
+//Retrieve courses on completion status - courses/completed/true or courses/completed/false
 app.get('/courses/completed/:course_completed', (req, res) => {
     try {
       const course_completed = req.params.course_completed === 'true';
@@ -172,8 +207,24 @@ app.get('/courses/completed/:course_completed', (req, res) => {
     }
   });
 
+//Retreive course by user & completon status
+app.get('/user/courses/:id/completed/:course_completed', (req, res) => {
+    try {
+        const user_id = req.params.id;
+        const course_completed = req.params.course_completed === 'true';
+        connection.query('SELECT * FROM courses WHERE student_id = ? AND course_completed = ?', [user_id, course_completed], (err, rows, fields) => { // should pull courses in by student_id and completion status
+            if (err) throw err;
 
-//remove :username - make route on frontend
+            console.log(rows);
+            res.status(200);
+            res.send(rows);
+        });
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+//Retrieve Course by user
 app.get('/user/courses/:id', (req, res) => {
     try {
       const user_id = req.params.id;//req.user.username
@@ -190,12 +241,12 @@ app.get('/user/courses/:id', (req, res) => {
     }
 });
 
-//Can update Course Name and whether or not it is completed 
+//Can update Course Name, Professor, Semester, Year, and whether or not it is completed by Course ID
 app.put('/courses/:course_id', (req, res) => {
     const course_id = req.params.course_id;
-    const { course_name, course_completed } = req.body;
-    const query = `UPDATE courses SET course_name = ?, course_completed = ? WHERE course_id = ?`;
-    connection.query(query, [course_name, course_completed, course_id], (err, rows, fields) => {
+    const { course_name,  semester, year, course_completed, professor_name } = req.body;
+    const query = `UPDATE courses SET course_name = ?, course_completed = ?, semester = ?, year = ?, professor_name = ? WHERE course_id = ?`;
+    connection.query(query, [course_name, course_completed, semester, year,  professor_name, course_id], (err, rows, fields) => {
       if (err) throw err;
   
       console.log(rows);
