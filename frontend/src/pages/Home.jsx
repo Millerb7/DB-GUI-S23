@@ -7,7 +7,7 @@ import { Box, Card, CardActions, CardContent, Button } from '@mui/material';
 import { MissingAssignments } from "src/components/MissingAssignments";
 import { UserContext } from "src/layouts/dashboard";
 import { getUpcomingAssignments } from "src/api/AssignmentApi";
-import { getCurrentCoursesByID } from "src/api/coursePageApi";
+import { getCourseById, getCurrentCoursesByID } from "src/api/coursePageApi";
 
 export const Home = () => {
 
@@ -15,6 +15,7 @@ export const Home = () => {
     const navigate = useNavigate();
     const [ currentCourses, setCurrentCourses ] = useState([]);
     const [ upcomingAssignments, setUpcomingAssignments ] = useState([]);
+    const [ courseName, setCourseName ] = useState([]);
        
     useEffect(() => {
         getCurrentCoursesByID(userContext.user.user_id).then(x => setCurrentCourses(x));
@@ -37,7 +38,11 @@ export const Home = () => {
             return "Fall " + date.getFullYear();
     }
 
-
+    function GetCourseName(assignment) {
+        useEffect(() => {
+            getCourseById(assignment.course_id).then(x => setCourseName(x));
+        }, [])
+    }
 
     return<>
         <Typography variant="h4" style={{textAlign: 'center'}}>Hi, Welcome Back {userContext.user.first_name}</Typography>
@@ -94,11 +99,11 @@ export const Home = () => {
                                                 <span style={{color: 'GrayText', float: 'right', marginRight: 2}} > 
                                                     Due Date: {formatDate(assignment.assignment_due_date)}
                                                 </span>
-                                                <br/>
-                                                <span></span>
+                                            </Box>
+                                                <span>Course: {assignment.course_name}</span>
                                                 <br/>
                                                 <p  style={{color: 'GrayText', padding: 2}}>{assignment.assignment_description}</p>
-                                            </Box>
+                                            
                                         </CardContent>
                                         
                                     </Card>
