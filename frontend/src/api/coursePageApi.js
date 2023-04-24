@@ -82,7 +82,7 @@ export const addCourse = (course) => new Promise((resolve, reject) => {
     });
 });
 
-export const getCurrentCourses = () => new Promise((resolve, reject) => {
+export const getCurrentCourses = (id) => new Promise((resolve, reject) => {
   axios.get(url + '/courses/completed/' + false)
     .then(resp => resolve(resp.data))
     .catch(error => {

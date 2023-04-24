@@ -32,7 +32,7 @@ export const CourseEditor = () => {
 
             });
         } else {
-            setCourse({ student_id: userContext.user.user_id, course_name: '', course_number: '', semester: '', year: '', course_completed: false });
+            setCourse({ student_id: userContext.user.user_id, course_name: '', semester: '', year: '', course_completed: false });
         }
     }, []);
 
@@ -48,10 +48,6 @@ export const CourseEditor = () => {
                     label="Course Name"
                     value={course.course_name}
                     setValue={course_name => mergeAccount({ course_name })} />
-                <Textfield id="course_number"
-                    label="Course Number"
-                    value={course.course_number}
-                    setValue={course_number => mergeAccount({ course_number })} />
                 <Textfield id="professor_name"
                     label="Professor Name"
                     value={course.professor_name}
