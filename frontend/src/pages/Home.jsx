@@ -14,6 +14,7 @@ import Button from '@mui/material/Button';
 import { MissingAssignments } from "src/components/MissingAssignments";
 import { UserContext } from "src/layouts/dashboard";
 import {useContext} from 'react';
+import { getUpcomingAssignments } from "src/api/AssignmentApi";
 
 export const Home = () =>{
     const [ user, setUser ] = useState(undefined);
@@ -27,8 +28,10 @@ export const Home = () =>{
        
     useEffect(() => {
         getCurrentCoursesByID(userContext.user.user_id).then(x => setCurrentCourses(x));
-        
+        getUpcomingAssignments().then(x => setUpcomingAssignments(x));
     }, []);
+
+    console.log(upcomingAssignments);
 
     
     
@@ -65,11 +68,11 @@ export const Home = () =>{
                     upcomingAssignments.map((assignment, index) => (
                         <Card key={index} sx={{mb:2}}>
                             <CardContent>
-                                <Box fontWeight='bold'>{assignment.assignmentName}
+                                <Box fontWeight='bold'>{assignment.assignment_name}
                                     <span style={{color: 'GrayText', float: 'right', marginRight: 2}} > Due Date: {assignment.dueDate}</span>
                                 </Box>
                                 <CardActions>
-                                    <Button>Go to {assignment.assignmentName}</Button>
+                                    <Button>Go to {assignment.assignment_name}</Button>
                                 </CardActions>
                             </CardContent>
                             
