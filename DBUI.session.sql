@@ -21,7 +21,6 @@ CREATE TABLE IF NOT EXISTS courses
 (
     course_id        INT AUTO_INCREMENT PRIMARY KEY,
     course_name      VARCHAR(255) NOT NULL,
-    course_number    INT          NOT NULL,
     professor_name   VARCHAR(255),
     year             INT          NOT NULL,
     semester         VARCHAR(255) NOT NULL,
@@ -29,6 +28,7 @@ CREATE TABLE IF NOT EXISTS courses
     student_id       INT,
     FOREIGN KEY (student_id) REFERENCES users (user_id)
 );
+
 
 INSERT INTO courses (course_name, course_number, professor_name, year, semester, course_completed, student_id)
 VALUES ('English I', 1243, 'Mr. James', 2023, 'Fall', true, 1),
@@ -45,6 +45,7 @@ VALUES ('English I', 1243, 'Mr. James', 2023, 'Fall', true, 1),
 
 
 -- DROP TABLE assignments;
+
 
 CREATE TABLE IF NOT EXISTS assignments
 (
