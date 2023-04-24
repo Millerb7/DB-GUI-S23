@@ -128,7 +128,7 @@ app.post('/user/login', (req,res) => {
     connection.query(`SELECT * FROM users where email = ?`, [req.body.email], (err, rows, fields) => {
         if (err) throw err;
 
-        console.log(req.body.password + " " + rows[0].password);
+        
         if(rows[0].password == req.body.password) {
             res.status(200);
             res.send(rows[0]);
@@ -145,8 +145,8 @@ app.post('/user/login', (req,res) => {
 //
 //Add a Course
 app.post('/courses', (req, res) => {
-    const { course_name, course_number, semester, year, course_completed, professor_name, student_id } = req.body;
-    const query = `INSERT INTO courses (course_name, course_number, semester, year, course_completed, professor_name, student_id) VALUES ('${course_name}', '${course_number}'  ,'${semester}',${year},${course_completed}, '${professor_name}','${student_id}')`;
+    const { course_name, semester, year, course_completed, professor_name, student_id } = req.body;
+    const query = `INSERT INTO courses (course_name, semester, year, course_completed, professor_name, student_id) VALUES ('${course_name}','${semester}',${year},${course_completed}, '${professor_name}','${student_id}')`;
 
     connection.query(query, (err, rows, fields) => {
         if (err) throw err;
@@ -244,9 +244,9 @@ app.get('/user/courses/:id', (req, res) => {
 //Can update Course Name, Professor, Semester, Year, and whether or not it is completed by Course ID
 app.put('/courses/:course_id', (req, res) => {
     const course_id = req.params.course_id;
-    const { course_name, course_number, semester, year, course_completed, professor_name } = req.body;
-    const query = `UPDATE courses SET course_name = ?, course_number = ?, course_completed = ?, semester = ?, year = ?, professor_name = ? WHERE course_id = ?`;
-    connection.query(query, [course_name, course_number,course_completed, semester, year,  professor_name, course_id], (err, rows, fields) => {
+    const { course_name, semester, year, course_completed, professor_name } = req.body;
+    const query = `UPDATE courses SET course_name = ?, course_completed = ?, semester = ?, year = ?, professor_name = ? WHERE course_id = ?`;
+    connection.query(query, [course_name,course_completed, semester, year,  professor_name, course_id], (err, rows, fields) => {
       if (err) throw err;
   
       console.log(rows);
@@ -274,11 +274,11 @@ app.listen(port, () => {
 
 //Add Assignment
 app.post('/assignments', (req, res)=> {
-    const { assignment_name, assignment_id, assignment_due_date, assignment_work_date, course_number, assignment_description, overdue, student_number} = req.body;
+    const { assignment_name, assignment_id, assignment_due_date, assignment_work_date, assignment_description, overdue, student_number} = req.body;
     const query = `INSERT INTO assignments 
-               (assignment_name, assignment_id, assignment_due_date, assignment_work_date, course_number, assignment_description, overdue, student_number)
+               (assignment_name, assignment_id, assignment_due_date, assignment_work_date, assignment_description, overdue, student_number)
                VALUES 
-               ('${assignment_name}', ${assignment_id}, '${assignment_due_date}', '${assignment_work_date}', ${course_number}, '${assignment_description}', ${overdue}, ${student_number})`;
+               ('${assignment_name}', ${assignment_id}, '${assignment_due_date}', '${assignment_work_date}', '${assignment_description}', ${overdue}, ${student_number})`;
     console.log(assignment_id)
         connection.query(query, (err, rows, fields) => {
             if (err) throw err;
@@ -306,6 +306,25 @@ app.get('/assignments', (req, res) => {
         }
 });
 
+//Get assignemnts by course id
+app.get('/assignments/courses/:course_id', (req, res) => { // Change :course_number to :course_id
+    const course_id = req.params.course_id;
+    console.log('Course ID:', course_id);
+    connection.query('SELECT * FROM assignments WHERE course_id = ?', [course_id], (err, rows, fields) => {
+        try {
+            if (err) throw err;
+            console.log('Rows: ', rows);
+            res.status(200);
+            res.send(rows);
+        } catch (err) {
+            console.error(err);
+            res.status(500);
+            res.send(err);
+        }
+    });
+});
+
+
 
 //Delete all assignments
 //.delete or .put?
@@ -323,7 +342,7 @@ app.get('/assignments/missing/:id', (req, res) => {
     console.log(req.params.id)
     const user_id = req.params.id;
     
-    connection.query('SELECT assignments.*, courses.course_name, courses.instructor_name FROM assignments JOIN courses ON assignments.course_id = courses.id WHERE assignments.user = ? AND assignments.overdue = TRUE', [user_id], (err, rows, fields) => {
+    connection.query('SELECT * FROM assignments JOIN courses ON assignments.course_id = courses.course_id WHERE assignments.student_number = ? AND assignments.overdue = TRUE', [user_id], (err, rows, fields) => {
         try {
             if (err) throw err;
             console.log(rows);
@@ -337,5 +356,35 @@ app.get('/assignments/missing/:id', (req, res) => {
     });
 });
 
+//Retrieve all missing assignments by course_id
+app.get('/assignments/missingassignments/:course_id', (req, res) => {
+    const course_id = req.params.course_id;
+    connection.query('SELECT * FROM assignments WHERE course_id = ? AND overdue = 1', [course_id], (err, rows, fields) => {
+        try {
+            if (err) throw err;
+            res.status(200);
+            res.send(rows);
+        } catch (err) {
+            console.error(err);
+            res.status(500);
+            res.send(err);
+        }
+    });
+});
 
-//all missing assignment by course
+app.get('/assignments/duesoon', (req, res) => {
+    console.log('duesoon');
+    connection.query('SELECT * FROM assignments WHERE assignment_due_date >= CURDATE() AND assignment_due_date <= DATE_ADD(CURDATE(), INTERVAL 1 WEEK)', (err, rows, fields) => {
+        try {
+            if (err) throw err;
+            res.status(200);
+            res.send(rows);
+        } catch (err) {
+            console.error(err);
+            res.status(500);
+            res.send(err);
+        }
+    });
+});
+
+//do all those by course id
