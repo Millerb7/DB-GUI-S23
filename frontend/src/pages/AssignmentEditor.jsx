@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FormGroup, TextField, TextareaAutosize } from "@mui/material"
 import { UserContext } from "src/layouts/dashboard";
 import { Textfield } from "src/components/Textfield"
-import { DatePicker } from "@mui/lab";
 
 
 
@@ -35,13 +34,12 @@ export const AssignmentEditor = () => {
                     value = {assignment.description}
                     setValue = {description => mergeAccount({ description })}>
                 </TextField>
-                <DatePicker />
-                {/* <DatePicker id = "dueDate"
+                <TextField id = "dueDate"
                     label = "Due Date"
+                    type = "datetime-local"
                     value = {assignment.dueDate}
-                    // onChange = {(assignment.dueDate) => mergeAccount( dueDate )}>
-                >
-                </DatePicker> */}
+                    setValue = {dueDate => mergeAccount({ dueDate })}>
+                </TextField>
             </FormGroup>
         </form>
     </>
