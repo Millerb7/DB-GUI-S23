@@ -374,7 +374,7 @@ app.get('/assignments/missing/:course_id/:user_id/:overdue', (req, res) => {
 //Retrieve all missing assignments by course_id
 app.get('/assignments/missingassignments/:course_id', (req, res) => {
     const course_id = req.params.course_id;
-    connection.query('SELECT * FROM assignments WHERE course_id = ? AND overdue = 1', [course_id], (err, rows, fields) => {
+    connection.query('SELECT * FROM assignments JOIN courses ON assignments.course_id = courses.course_id WHERE course_id = ? AND overdue = 1', [course_id], (err, rows, fields) => {
         try {
             if (err) throw err;
             res.status(200);
@@ -390,7 +390,7 @@ app.get('/assignments/missingassignments/:course_id', (req, res) => {
 app.get('/assignments/duesoon', (req, res) => {
     // const upcoming = req.params.
     console.log('duesoon');
-    connection.query('SELECT * FROM assignments WHERE assignment_due_date >= CURDATE() AND assignment_due_date <= DATE_ADD(CURDATE(), INTERVAL 1 WEEK)', (err, rows, fields) => {
+    connection.query('SELECT * FROM assignments JOIN courses ON assignments.course_id = courses.course_id WHERE assignment_due_date >= CURDATE() AND assignment_due_date <= DATE_ADD(CURDATE(), INTERVAL 1 WEEK)', (err, rows, fields) => {
         try {
             console.log(rows);
             if (err) throw err;
