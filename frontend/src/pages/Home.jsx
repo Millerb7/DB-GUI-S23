@@ -67,7 +67,7 @@ export const Home = () => {
                                     <CardActions>
                                         <Button type="button" variant="text"
                                             onClick={() => {
-                                                navigate(`courses/${course.couse_id}`);
+                                                navigate(`courses/${course.course_id}`);
                                             }}>
                                             Go to {course.course_name}'s course page
                                         </Button>

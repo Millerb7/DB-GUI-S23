@@ -274,12 +274,11 @@ app.listen(port, () => {
 
 //Add Assignment
 app.post('/assignments', (req, res)=> {
-    const { assignment_name, assignment_id, assignment_due_date, assignment_work_date, assignment_description, overdue, student_number} = req.body;
+    const { assignment_name, assignment_due_date, assignment_work_date, assignment_description, overdue, student_number} = req.body;
     const query = `INSERT INTO assignments 
-               (assignment_name, assignment_id, assignment_due_date, assignment_work_date, assignment_description, overdue, student_number)
+               (assignment_name, assignment_due_date, assignment_work_date, assignment_description, overdue, student_number)
                VALUES 
-               ('${assignment_name}', ${assignment_id}, '${assignment_due_date}', '${assignment_work_date}', '${assignment_description}', ${overdue}, ${student_number})`;
-    console.log(assignment_id)
+               ('${assignment_name}', '${assignment_due_date}', '${assignment_work_date}', '${assignment_description}', ${overdue}, ${student_number})`;
         connection.query(query, (err, rows, fields) => {
             if (err) throw err;
 
@@ -324,8 +323,6 @@ app.get('/assignments/courses/:course_id', (req, res) => { // Change :course_num
     });
 });
 
-
-
 //Delete all assignments
 //.delete or .put?
 app.delete('/assignments/clear', (req, res) => {
@@ -343,6 +340,24 @@ app.get('/assignments/missing/:id', (req, res) => {
     const user_id = req.params.id;
     
     connection.query('SELECT * FROM assignments JOIN courses ON assignments.course_id = courses.course_id WHERE assignments.student_number = ? AND assignments.overdue = TRUE', [user_id], (err, rows, fields) => {
+        try {
+            if (err) throw err;
+            console.log(rows);
+            res.status(200);
+            res.send(rows);
+        } catch (err) {
+            console.error(err);
+            res.status(500);
+            res.send(err);
+        }
+    });
+});
+
+//Retrieve all of a students missing assignments for a course
+app.get('/assignments/missing/:course_id/:user_id/:overdue', (req, res) => {
+    console.log(req.params.user_id + " " + req.params.course_id)
+    
+    connection.query('SELECT * FROM assignments WHERE assignments.student_number = ? AND assignments.course_id = ? AND overdue = ?', [req.params.user_id, req.params.course_id, req.params.overdue], (err, rows, fields) => {
         try {
             if (err) throw err;
             console.log(rows);
