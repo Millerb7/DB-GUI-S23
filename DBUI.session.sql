@@ -56,6 +56,12 @@ CREATE TABLE IF NOT EXISTS assignments
 );
 
 INSERT INTO assignments (assignment_name, assignment_due_date, assignment_work_date, course_id, assignment_description, overdue, student_number)
-VALUES ('Test Assignment', '2000-03-24', '2000-03-28', 1, 'Assignment Description', true, 1),
-       ('Unit Circle', '2022-03-24', '2022-03-20', 5, 'Draw the unit circle!', true, 1),
-       ('Test Assignment', '2000-03-24', '2000-03-28', 1, 'Assignment Description', true, 1);
+VALUES ('Homework 3', '2023-04-27', '2000-03-28', 1, 'Assignment Description', false, 1),
+       ('Unit Circle', '2023-04-26', '2022-03-20', 5, 'Draw the unit circle!', false, 1),
+       ('Lab 4', '2023-04-01', '2000-03-28', 4, 'Assignment Description', true, 1),
+        ('Program 5', '2023-04-30', '2000-03-28', 11, 'Write a recursive program to find fibonacci numbers', true, 1),
+        ('Ethical Argument Essay', '2023-05-01', '2000-03-28', 2, 'Assignment Description', false, 1),
+        ('Quiz 6', '2023-04-08', '2000-03-28', 11, 'Assignment Description', true, 1),
+        ('Research Paper Review', '2023-04-29', '2000-03-28', 1, 'Pick an article about epidemiology and write a review', false, 1),
+        ('Assignment 10', '2023-05-03', '2000-03-28', 1, 'Assignment Description', false, 1);
+

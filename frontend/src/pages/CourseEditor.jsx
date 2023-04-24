@@ -27,9 +27,6 @@ export const CourseEditor = () => {
         if (params.course_id) {
             getCourseById(params.course_id).then(x => {
                 setCourse(x);
-                //debugging
-                alert(JSON.stringify(x) + " " + params.course_id);
-
             });
         } else {
             setCourse({ student_id: userContext.user.user_id, course_name: '', semester: '', year: '', course_completed: false });

@@ -324,8 +324,6 @@ app.get('/assignments/courses/:course_id', (req, res) => { // Change :course_num
     });
 });
 
-
-
 //Delete all assignments
 //.delete or .put?
 app.delete('/assignments/clear', (req, res) => {
@@ -356,6 +354,25 @@ app.get('/assignments/missing/:id', (req, res) => {
     });
 });
 
+//Retrieve all of a students missing assignments for a course
+app.get('/assignments/missing/:course_id/:user_id', (req, res) => {
+    console.log(req.params.user_id + req.params.course_id)
+    const user_id = req.params.id;
+    
+    connection.query('SELECT * FROM assignments WHERE assignments.student_number = ? AND assignments.course_id = ?', [req.params.user_id, req.params.course_id], (err, rows, fields) => {
+        try {
+            if (err) throw err;
+            console.log(rows);
+            res.status(200);
+            res.send(rows);
+        } catch (err) {
+            console.error(err);
+            res.status(500);
+            res.send(err);
+        }
+    });
+});
+
 //Retrieve all missing assignments by course_id
 app.get('/assignments/missingassignments/:course_id', (req, res) => {
     const course_id = req.params.course_id;
@@ -373,9 +390,11 @@ app.get('/assignments/missingassignments/:course_id', (req, res) => {
 });
 
 app.get('/assignments/duesoon', (req, res) => {
+    // const upcoming = req.params.
     console.log('duesoon');
     connection.query('SELECT * FROM assignments WHERE assignment_due_date >= CURDATE() AND assignment_due_date <= DATE_ADD(CURDATE(), INTERVAL 1 WEEK)', (err, rows, fields) => {
         try {
+            console.log(rows);
             if (err) throw err;
             res.status(200);
             res.send(rows);
