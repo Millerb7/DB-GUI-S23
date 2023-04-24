@@ -51,7 +51,7 @@ export default function Login() {
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Sign in to Studi
+              Sign in to STUDI
             </Typography>
           </Stack>
 

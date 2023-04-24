@@ -21,7 +21,6 @@ CREATE TABLE IF NOT EXISTS courses
 (
     course_id        INT AUTO_INCREMENT PRIMARY KEY,
     course_name      VARCHAR(255) NOT NULL,
-    course_number    INT          NOT NULL,
     professor_name   VARCHAR(255),
     year             INT          NOT NULL,
     semester         VARCHAR(255) NOT NULL,
@@ -30,17 +29,17 @@ CREATE TABLE IF NOT EXISTS courses
     FOREIGN KEY (student_id) REFERENCES users (user_id)
 );
 
-INSERT INTO courses (course_name, course_number, professor_name, year, semester, course_completed, student_id)
-VALUES ('English I', 1243, 'Mr.James', 2023, 'Fall', true, 1),
-       ('History II', 1511, 'Mrs.Teach', 2023, 'Spring', false, 2),
-       ('Calculus I', 1160, 'Mr.Yuko', 2022, 'Fall', true, 3),
-       ('Spanish II', 1020, 'Ms.Hiyla', 2023, 'Fall', false, 1),
-       ('English III', 1400, 'Ms.Miyagi', 2022, 'Spring', true, 1),
-       ('Algebra II', 3330, 'Mr.Romeo', 2021, 'Fall', true, 1),
-       ('History I', 1411, 'Ms.Hitory', 2020, 'Spring', true, 2),
-       ('Differential Equations', 4320, 'Ms.Maf', 2024, 'Spring', false, 3),
-       ('Spanish I', 1010, 'Ms.Hiyla', 2022, 'Fall', true, 1),
-       ('Graphical User Interface', 3345, 'Sir Lawrimore', 2023, 'Spring', false, 2);
+INSERT INTO courses (course_name, professor_name, year, semester, course_completed, student_id)
+VALUES ('English I', 'Mr.James', 2023, 'Fall', true, 1),
+       ('History II', 'Mrs.Teach', 2023, 'Spring', false, 1),
+       ('Calculus I', 'Mr.Yuko', 2022, 'Fall', true, 1),
+       ('Spanish II', 'Ms.Hiyla', 2023, 'Fall', false, 1),
+       ('English III', 'Ms.Miyagi', 2022, 'Spring', true, 1),
+       ('Algebra II', 'Mr.Romeo', 2021, 'Fall', true, 1),
+       ('History I', 'Ms.Hitory', 2020, 'Spring', true, 1),
+       ('Differential Equations', 'Ms.Maf', 2024, 'Spring', false, 1),
+       ('Spanish I', 'Ms.Hiyla', 2022, 'Fall', true, 1),
+       ('Graphical User Interface', 'Sir Lawrimore', 2023, 'Spring', false, 1);
 
 CREATE TABLE IF NOT EXISTS assignments
 (
@@ -57,6 +56,6 @@ CREATE TABLE IF NOT EXISTS assignments
 );
 
 INSERT INTO assignments (assignment_name, assignment_due_date, assignment_work_date, course_id, assignment_description, overdue, student_number)
-VALUES ('Test Assignment', '2000-03-24', '2000-03-28', 1, 'Assignment Description', false, 1),
-       ('Unit Circle', '2022-03-24', '2022-03-20', 5, 'Draw the unit circle!', false, 1),
-       ('Test Assignment', '2000-03-24', '2000-03-28', 1, 'Assignment Description', false, 1),
+VALUES ('Test Assignment', '2000-03-24', '2000-03-28', 1, 'Assignment Description', true, 1),
+       ('Unit Circle', '2022-03-24', '2022-03-20', 5, 'Draw the unit circle!', true, 1),
+       ('Test Assignment', '2000-03-24', '2000-03-28', 1, 'Assignment Description', true, 1);
