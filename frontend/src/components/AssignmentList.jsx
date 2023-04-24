@@ -1,4 +1,4 @@
-import { Link, Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { useNavigate } from "react-router-dom";
 
@@ -27,7 +27,6 @@ export const AssignmentList = ({ assignments }) => {
     }
 
     else{
-
         return <>
             <Table sx = {{mb: 3}}>
                 <TableHead>

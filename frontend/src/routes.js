@@ -11,6 +11,7 @@ import NotFound from './pages/Page404';
 import { Calendar } from './pages/Calendar';
 import { IndividualCoursePage } from './pages/IndividualCoursePage';
 import { CourseEditor } from './pages/CourseEditor';
+import { AssignmentEditor } from './pages/AssignmentEditor';
 
 // ----------------------------------------------------------------------
 
@@ -25,6 +26,7 @@ export default function Router() {
         { path: 'courses/new', element: <CourseEditor/>},
         { path: 'courses/edit/:course_id', element: <CourseEditor/>},
         { path: 'courses/:course_id', element: <IndividualCoursePage/>},
+        { path: 'courses/:course_id/new', element: <AssignmentEditor/>},
         { path: 'calendar', element: <Calendar /> }
       ]
     },
