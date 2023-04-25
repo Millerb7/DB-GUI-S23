@@ -8,7 +8,7 @@ import { getAssignmentsByDay } from 'src/api/AssignmentApi';
 
     useEffect(() => {
         console.log(day + " " + convertToDateObject(day))
-        getAssignmentsByDay(convertToDateObject(day)).then(x => setAssignments(x));
+        //getAssignmentsByDay(convertToDateObject(day)).then(x => setAssignments(x));
     }, []);
 
     const handleCompare = () => {
