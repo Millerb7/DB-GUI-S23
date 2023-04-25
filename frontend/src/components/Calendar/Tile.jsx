@@ -46,8 +46,6 @@ export default function Tile({ Month, day }) {
   //     return `${dateParts[3]}-${month < 10 ? '0' + month : month}-${dateParts[2]}`;
   //   }
 
-  console.log(day.assignments)
-
   return (
     <Grid item xs="auto">
       {handleCompare() ? (

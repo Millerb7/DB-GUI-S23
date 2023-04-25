@@ -23,6 +23,7 @@ import DayView from "src/components/Calendar/Day";
 import { getUserAssignments } from "src/api/AssignmentApi";
 import { UserContext } from "src/layouts/dashboard";
 import Cal from "src/utils/Calendar";
+import { ConstructionOutlined } from "@mui/icons-material";
 
 export const Calendar = () => {
   const userContext = useContext(UserContext);
@@ -36,87 +37,106 @@ export const Calendar = () => {
   );
   const [weeks, setWeeks] = useState([]);
   const [view, setView] = useState(null);
-  const [assignments, setAssignments] = useState([]);
 
   // useeffect
+  // useeffect
   useEffect(() => {
-    getUserAssignments(userContext.user.user_id).then(x => setAssignments(x));
-    handleMonthChange(new Date());
-    setView(<MonthView weeks={weeks} Month={Month} />);
+    getUserAssignments(userContext.user.user_id)
+      .then((x) => {
+        handleMonthChange(new Date(), x);
+      })
+      .catch((error) => {
+        console.error("Error fetching assignments:", error);
+      });
   }, []);
 
-  function handleMonthChange(newDate) {
+  function handleMonthChange(newDate, assignments) {
     // update current date
     setCurrentDate(newDate);
+  
     // update month
-    setMonth(newDate.getMonth());
+    const newMonth = newDate.getMonth();
+    setMonth(newMonth);
+  
     // update the first day of the month
-    setFirstDay(new Date(newDate.getFullYear(), Month, 1));
+    const firstDay = new Date(newDate.getFullYear(), newMonth, 1);
+    setFirstDay(firstDay);
+  
     // update the last day of the month
-    setLastDay(new Date(newDate.getFullYear(), Month + 1, 0));
-
+    const lastDay = new Date(newDate.getFullYear(), newMonth + 1, 0);
+    setLastDay(lastDay);
+  
     let cal = [];
     let i = 0;
-
+  
+    console.log(assignments);
+  
     for (let w = 0; w < 6; w++) {
       const week = [];
+  
       for (let d = 0; d < 7; d++) {
-        // if the day is in the preious month
+        // if the day is in the previous month
         if (w === 0 && d < firstDay.getDay()) {
+          const day = new Date(
+            newDate.getFullYear(),
+            newMonth - 1,
+            new Date(newDate.getFullYear(), newMonth, 0).getDate() - 5 + d
+          );
+  
           week.push(
             new Cal(
-              new Date(
-                currentDate.getFullYear(),
-                Month - 1,
-                new Date(currentDate.getFullYear(), Month, 0).getDate() - 5 + d
-              ).toDateString()
-            ,
-            assignments.filter((assignment) => {
-              return (
-                new Date(assignment.date).getDate() ===
-                new Date(currentDate.getFullYear(), Month, 0).getDate() - 5 + d
-              );
-            })
-          ));
+              day.toDateString(),
+              assignments.filter(
+                (assignment) =>
+                  new Date(assignment.assignment_due_date).toDateString() ===
+                  day.toDateString()
+              )
+            )
+          );
         }
         // if the day is in the next month
-        else if (w === 6 && d > lastDay.getDate()) {
+        else if (w === 5 && d > lastDay.getDate()) {
+          const day = new Date(newDate.getFullYear(), newMonth + 1, d);
+  
           week.push(
             new Cal(
-              new Date(currentDate.getFullYear(), Month + 1, d).toDateString()
-            ,
-            assignments.filter((assignment) => {
-              return (
-                new Date(assignment.date).getDate() ===
-                new Date(currentDate.getFullYear(), Month, 0).getDate() - 5 + d
-              );
-            })
-          ));
+              day.toDateString(),
+              assignments.filter(
+                (assignment) =>
+                  new Date(assignment.assignment_due_date).toDateString() ===
+                  day.toDateString()
+              )
+            )
+          );
         }
-        // in the month
+        // in the current month
         else {
           i++;
+          const day = new Date(newDate.getFullYear(), newMonth, i);
+  
           week.push(
             new Cal(
-              new Date(currentDate.getFullYear(), Month, i).toDateString()
-            ,
-            assignments.filter((assignment) => {
-              return (
-                new Date(assignment.date).getDate() ===
-                new Date(currentDate.getFullYear(), Month, 0).getDate() - 5 + d
-              );
-            })
-          ));
+              day.toDateString(),
+              assignments.filter(
+                (assignment) =>
+                  new Date(assignment.assignment_due_date).toDateString() ===
+                  day.toDateString()
+              )
+            )
+          );
         }
       }
       cal.push(week);
     }
-
-    console.log(cal)
-
+  
+    console.log(cal);
+  
     // set the value for the arrays of weeks and days
     setWeeks(cal);
+  
+    setView(<MonthView weeks={weeks} Month={newMonth} />);
   }
+  
 
   function handleWeekChange(newDate) {
     // update current date
@@ -273,9 +293,7 @@ export const Calendar = () => {
                     </CardContent>
                   </Card>
                 </Grid>
-                <Grid>
-                    {view}
-                </Grid>
+                <Grid>{view}</Grid>
                 <Grid>
                   <Typography>Date: {currentDate.toDateString()}</Typography>
                 </Grid>
