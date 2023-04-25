@@ -27,10 +27,10 @@ export const AssignmentPage = () => {
     console.log(assignment);
 
     return <>
-    <Grid container width='inherit' justifyContent='center' sx={{border: 'solid', margin: 5}} display='flex'>
+    <Grid container width='inherit' alignContent='center' sx={{border: 'solid', margin: 5}} display='flex'>
         
             {assignment.map((a) => 
-                <Grid item key={a.course_id} style={{width:'100%', textAlign: 'center'}} sx={{m:2}} width='50%' >
+                <Grid item key={a.course_id} style={{width:'100%', textAlign: 'center'}} sx={{m:2}} width='50%'>
                     <Typography variant="h1">{a.assignment_name}</Typography>
                     <Typography>Assignment Page</Typography> 
                     <Typography variant="h5">Due Date: {formatDate(a.assignment_due_date)}</Typography>
@@ -42,7 +42,7 @@ export const AssignmentPage = () => {
                         <Button type="button" variant="outlined" size="large"
                             onClick={() => {
                                 console.log(a.course_id)
-                                navigate(`courses/${a.course_id}`);
+                                navigate(`/dashboard/courses/${a.course_id}`);
                             }}>
                             {a.course_name} 
                         </Button>

@@ -58,15 +58,14 @@ export const Home = () => {
             </Paper>
             <br/>
             <Paper elevation={3} sx={{p:2}}>
-                <Grid container direction='row' pacing={1} sx={{p: 4}}>
-                    <Box width='100%'>
-                        <h1>Current Courses: </h1>
-                        <h3 style={{color: 'GrayText'}}>{currSemester()}</h3>
-                        <br/>
-                    </Box>
-                    <Grid item display='inline-block' sx={{margin: 1}} width='45%' >
-                        
-                        {currentCourses.map((course) => 
+                <Box width='100%' sx={{padding:3}}>
+                    <h1>Current Courses: </h1>
+                    <h3 style={{color: 'GrayText'}}>{currSemester()}</h3>
+                    <br/>
+                </Box>
+                <Grid container item sx={{mx: 1}} spacing={3} justifyContent='center'> 
+                    {currentCourses.map((course) => 
+                        <Grid item key={course.course_id} width={{xs: '45%'}}>
                             <Paper elevation={10} >
                                 <Card sx={{mb: 2, padding:1}} key={course.course_id}>
                                     <Box sx={{fontSize: 'large', pt:2, pl:2}} style={{fontWeight: 'bold'}}>
@@ -85,17 +84,16 @@ export const Home = () => {
                                     </CardActions>
                                 </Card>
                             </Paper>
-                        )}
-                    </Grid>
+                        </Grid>
+                    )}
                 </Grid>
-            </Paper>
-            <Paper elevation={3} sx={{marginTop: 2}}>
-                <Grid container sx={{padding: 3}}>
-                   <Box width='100%' >
+            </Paper> <br/>
+            <Paper elevation={3} sx={{p: 2}}>
+                   <Box width='100%' sx={{padding: 3}}>
                     <h1>Upcoming Assignments:</h1>
                         <h3 style={{color: 'GrayText'}} >Assignments due in the next week 
                             <span style={{float: 'right'}}>
-                                <FormControl size='small' sx={{width: 120, mb:2}} >
+                                <FormControl size='small' sx={{width: 120}} >
                                     <InputLabel id='course-select-label'>Courses</InputLabel>
                                     <Select
                                         style={{float: 'right', width: ''}}
@@ -115,47 +113,41 @@ export const Home = () => {
                         </h3>
                    </Box>
                     <br/>
-                    <Grid container item spacing={3} display='block' sx={{margin: 3}}>
-                        
+
+                    <Grid container spacing={3} sx={{mx: 3}} justifyContent='center'>
                         {upcomingAssignments ? upcomingAssignments.map((assignment) => (
-                            <div syle={{margin: 3}} >
-                                <Grid item key={assignment.assignment_id} >
-                                    <Paper elevation={5} >
-                                    
-                                        <Card key={assignment.assignment_id} sx={{mb:2, p:2}} >
-                                            <CardContent>
-                                                <Box fontWeight='bold' fontSize='large' >
-                                                    <Button type="contained" variant="text" sx={{fontSize: 20, color: 'black'}}
-                                                        onClick={() => {
-                                                            navigate(`assignments/${assignment.assignment_id}`);
-                                                        }}>
-                                                        {assignment.assignment_name} 
-                                                    </Button>
-                                                    <span style={{color: 'GrayText', float: 'right', marginRight: 2, fontWeight: 'lighter'}} >
-                                                        Due Date: {formatDate(assignment.assignment_due_date)}
-                                                    </span>
-                                                </Box> 
-                                                <span> {assignment.course_name}</span>
-                                                <br/>
-                                                <span style={{color: 'GrayText', padding: 2}}>{assignment.assignment_description}</span>
-                                                <br/>
-                                                <Button type="button" variant="text" 
+                            <Grid item key={assignment.assignment_id} width={{xs: '80%'}}>
+                                <Paper elevation={5} >
+                                    <Card key={assignment.assignment_id} sx={{mb:2, p:1}} >
+                                        <CardContent>
+                                        
+                                            <Box fontWeight='bold' fontSize='large' >
+                                                <Button type="contained" variant="text" sx={{fontSize: 20, color: 'black'}}
                                                     onClick={() => {
                                                         navigate(`assignments/${assignment.assignment_id}`);
                                                     }}>
-                                                    Go to {assignment.assignment_name}'s assignment page
+                                                    {assignment.assignment_name} 
                                                 </Button>
-                                            </CardContent>
-                                
-                                        </Card>
-                                          
-                                    </Paper>
-                                </Grid>
-                            </div>
+                                                <span style={{color: 'GrayText', float: 'right', marginRight: 2, fontWeight: 'lighter'}} >
+                                                    Due Date: {formatDate(assignment.assignment_due_date)}
+                                                </span>
+                                            </Box> 
+                                            <span> {assignment.course_name}</span>
+                                            <br/>
+                                            <span style={{color: 'GrayText', padding: 2, marginTop: 1}}>{assignment.assignment_description}</span>
+                                            <br/>
+                                            {/* <Button type="button" variant="text" 
+                                                onClick={() => {
+                                                    navigate(`assignments/${assignment.assignment_id}`);
+                                                }}>
+                                                Go to {assignment.assignment_name}'s assignment page
+                                            </Button> */}
+                                        </CardContent>
+                                    </Card>
+                                </Paper>
+                            </Grid>
                         ))  :  <></>}
-                        </Grid>
-                </Grid>
-                
+                    </Grid>                
             </Paper>                   
     </>
 }
