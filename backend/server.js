@@ -289,6 +289,24 @@ app.post('/assignments', (req, res)=> {
 
 })
 
+//Retrieve a assignments
+app.get('/assignments/:id', (req, res) => {
+    console.log(req.params.id)
+    
+    connection.query('SELECT * FROM assignments JOIN courses ON assignments.course_id = courses.course_id WHERE assignments.assignment_id = ?', [req.params.id], (err, rows, fields) => {
+        try {
+            if (err) throw err;
+            console.log(rows);
+            res.status(200);
+            res.send(rows);
+        } catch (err) {
+            console.error(err);
+            res.status(500);
+            res.send(err);
+        }
+    });
+});
+
 //Retrieve all assignments
 app.get('/assignments', (req, res) => {
     try{
