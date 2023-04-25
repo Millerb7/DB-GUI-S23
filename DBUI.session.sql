@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS DBUI;
+--DROP DATABASE IF EXISTS DBUI;
 CREATE DATABASE IF NOT EXISTS DBUI;
 USE DBUI;
 
@@ -69,4 +69,5 @@ VALUES ('Homework 3', '2023-04-27', '2000-03-28', 10, 'Assignment Description', 
         ('Quiz 6', '2023-04-08', '2000-03-28', 11, 'Assignment Description', true, 1),
         ('Talk Abroad', '2023-04-29', '2000-03-28', 4, 'Pick an article about epidemiology and write a review', false, 1),
         ('Assignment 10', '2023-05-03', '2000-03-28', 1, 'Assignment Description', false, 1);
+
 

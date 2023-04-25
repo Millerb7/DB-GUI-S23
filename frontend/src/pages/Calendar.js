@@ -12,12 +12,12 @@ export const Calendar = () => {
     const [ firstDay, setFirstDay ] = useState(new Date(currentDate.getFullYear(), Month, 1));
     const [ lastDay, setLastDay ] = useState(new Date(currentDate.getFullYear(), Month+1, 0))
     const [ weeks, setWeeks ] = useState([]);
-    const [ view, setView ] = useState(<MonthView weeks={weeks} Month={Month} />);
-
+    const [ view, setView ] = useState(null);
 
     // useeffect
     useEffect(() => {
         handleMonthChange( new Date() );
+        setView(<MonthView weeks={weeks} Month={Month} />)
     }, []);
 
     function handleMonthChange ( newDate ) {
