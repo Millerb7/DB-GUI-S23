@@ -1,3 +1,4 @@
+import { Assignment } from '@mui/icons-material';
 import axios from 'axios';
 
 const url = 'http://localhost:8000/assignments';
@@ -66,6 +67,30 @@ export const getUpcoming = (userId) => new Promise((resolve, reject) => {
 
 export const getAssignmentsByDay = (date) => new Promise((resolve, reject) => {
     axios.get(`${url}/date/${date}`)
+        .then(resp => {
+            console.log(resp)
+            resolve(resp.data)
+        })
+        .catch(error => {
+            alert(error);
+            reject(error);
+        })
+});
+
+export const addAssignment = (assignment) => new Promise((resolve, reject) => {
+    axios.post(`${url}`, assignment)
+        .then(resp => {
+            console.log(resp)
+            resolve(resp.data)
+        })
+        .catch(error => {
+            alert(error);
+            reject(error);
+        })
+});
+
+export const editAssignment = (id, assignment) => new Promise((resolve, reject) => {
+    axios.put(`${url}/${id}`, assignment)
         .then(resp => {
             console.log(resp)
             resolve(resp.data)
