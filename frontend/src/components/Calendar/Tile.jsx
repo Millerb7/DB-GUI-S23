@@ -7,8 +7,8 @@ import { getAssignmentsByDay } from 'src/api/AssignmentApi';
     const [ assignemnts, setAssignments ] = useState(null);
 
     useEffect(() => {
-        console.log(day)
-        getAssignmentsByDay(day).then(x => setAssignments(x));
+        console.log(day + " " + convertToDateObject(day))
+        getAssignmentsByDay(convertToDateObject(day)).then(x => setAssignments(x));
     }, []);
 
     const handleCompare = () => {
@@ -21,10 +21,8 @@ import { getAssignmentsByDay } from 'src/api/AssignmentApi';
 
     function convertToDateObject(dateString) {
         const dateParts = dateString.split(' ');
-        const year = dateParts[2];
         const month = months.indexOf(dateParts[1]) + 1;
-        const day = dateParts[0];
-        return `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+        return `${dateParts[3]}-${month < 10 ? '0' + month : month}-${dateParts[2]}`;
       }
 
     return (
