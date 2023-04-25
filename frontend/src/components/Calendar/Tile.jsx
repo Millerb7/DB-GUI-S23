@@ -1,47 +1,85 @@
-import { Card, Paper, Container, InputLabel, FormControl, Button, Typography, MenuItem, CardContent, CardActionArea } from '@mui/material';
-import { useEffect, useState } from 'react';
-// import { getAssignmentsByDay } from 'src/api/AssignmentApi';
 
-  export default function Tile({ Month, day }) {
-    const months = ['Jan','Feb','Mar','Apr','May',"Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    const [ assignemnts, setAssignments ] = useState(null);
+import {
+  Grid,
+  Paper,
+  Container,
+  InputLabel,
+  FormControl,
+  Button,
+  Typography,
+  MenuItem,
+  CardContent,
+  CardActionArea,
+} from "@mui/material";
+import { useEffect, useState } from "react";
+import { getAssignmentsByDay } from "src/api/AssignmentApi";
+import Content from "./Content";
 
-    useEffect(() => {
-        console.log(day + " " + convertToDateObject(day))
-        // getAssignmentsByDay(convertToDateObject(day)).then(x => setAssignments(x));
-    }, []);
+export default function Tile({ Month, day }) {
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
 
-    const handleCompare = () => {
-        
-        if(months[Month] === day.split(' ')[1])
-            return true;
-        else
-            return false;
-    }
 
-    function convertToDateObject(dateString) {
-        const dateParts = dateString.split(' ');
-        const month = months.indexOf(dateParts[1]) + 1;
-        return `${dateParts[3]}-${month < 10 ? '0' + month : month}-${dateParts[2]}`;
-      }
+  // useEffect(() => {
+  //     console.log(day + " " + convertToDateObject(day))
+  //     getAssignmentsByDay(convertToDateObject(day)).then(x => setAssignments(x));
+  // }, []);
 
-    return (
-        <Paper style={{ padding: 15, margin: 1}}>
-                {handleCompare() ? 
-                    <>
-                        <Typography variant="h5">{day.split(' ')[2]}</Typography>
-                        <Typography>homework</Typography>
-                    </>
-                    :
-                    <>
-                    <Typography variant="h5" color="text.secondary">{day.split(' ')[2]}</Typography>
-                    {
-                        assignemnts.map((assignment) => (
-                            <Typography key={assignment.assignment_id}>{assignment.assignment_name}</Typography>
-                        ))
-                    }
-                </>
-                }
-         </Paper>
-    );
-  }
+  const handleCompare = () => {
+    if (months[Month] === day.date.split(" ")[1]) return true;
+    else return false;
+  };
+
+  // function convertToDateObject(dateString) {
+  //     const dateParts = dateString.split(' ');
+  //     const month = months.indexOf(dateParts[1]) + 1;
+  //     return `${dateParts[3]}-${month < 10 ? '0' + month : month}-${dateParts[2]}`;
+  //   }
+
+  console.log(day.assignments)
+
+  return (
+    <Grid item xs="auto">
+      {handleCompare() ? (
+        <>
+          <Typography variant="h5">{day.date.split(" ")[2]}</Typography>
+          {day.assignments.length > 0 ? (
+            day.assignments.map((assignment) => (
+              <Content assignment={assignment}></Content>
+            ))
+          ) : (
+            <Typography>Add Assignment</Typography>
+          )}
+        </>
+      ) : (
+        <>
+          <Typography variant="h5" color="text.secondary">
+            {day.date.split(" ")[2]}
+          </Typography>
+          {day.assignments.length > 0 ? (
+            day.assignments.map((assignment) => (
+              <Content
+                assignment={assignment}
+                color={"text.secondary"}
+              ></Content>
+            ))
+          ) : (
+            <Typography color="text.secondary">Add Assignment</Typography>
+          )}
+        </>
+      )}
+    </Grid>
+  );
+}

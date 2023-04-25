@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FormGroup, Button, InputLabel } from "@mui/material"
 import { Textfield } from "../components/Textfield";
 import { UserContext } from "src/layouts/dashboard";
-import { getAssignmentById } from "src/api/AssignmentApi";
+import { addAssignment, editAssignment, getAssignmentById } from "src/api/AssignmentApi";
 import { getCourseById } from "src/api/coursePageApi";
 import { TextField } from "@mui/material";
 
@@ -19,6 +19,15 @@ export const AssignmentEditor = () => {
     const params = useParams();
 
     const mergeAccount = delta => setAssignment({ ...assignment, ...delta });
+
+    const handleSave = () => {
+        if (params.id){
+            editAssignment(params.id, assignment).then(() => navigate(`/dashboard/courses/${params.course_id}`));
+        }
+        else{
+            addAssignment(assignment).then(() => navigate(`/dashboard/courses/${params.course_id}`));
+        }
+    }
     
     useEffect(() => {
         if (params.id) {
@@ -52,9 +61,12 @@ export const AssignmentEditor = () => {
                 <TextField autoFocus id = "dueDate"
                     type = "date"
                     value = {assignment.dueDate}
-                    setValue = {dueDate => mergeAccount({ dueDate })}>
+                    onChange = {(dueDate) => mergeAccount({ dueDate })}>
                 </TextField>
-
+                <Button type="button"
+                    onClick={() => { handleSave();}}>
+                    Submit
+                </Button>
                 <Button type="button" color="error"
                     onClick={() => { navigate(`/dashboard/courses/${params.course_id}`)}}>
                     Cancel
