@@ -15,11 +15,11 @@ export const Home = () => {
     const navigate = useNavigate();
     const [ currentCourses, setCurrentCourses ] = useState([]);
     const [ upcomingAssignments, setUpcomingAssignments ] = useState([]);
-    const [ filteredCourse ] = useState([]);
+    const [ filteredCourse, setFilteredCourse ] = useState('');
        
     useEffect(() => {
         getCurrentCoursesByID(userContext.user.user_id).then(x => setCurrentCourses(x));
-        getUpcoming(1).then(x => setUpcomingAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))));
+        getUpcoming(userContext.user.user_id).then(x => setUpcomingAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))));
         console.log(upcomingAssignments);
     }, []);
 
@@ -38,12 +38,14 @@ export const Home = () => {
     }
 
     const filterUpcomingAssignments = (event) => {
+        console.log(event.target.value);
         if(event.target.value === ''){
-            getUpcoming(1).then(x => setUpcomingAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))));
+            getUpcoming(userContext.user.user_id).then(x => setUpcomingAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))));
         } else{
             getAssignmentsByCourse(event.target.value, userContext.user.user_id, 0)
                 .then(x => setUpcomingAssignments(x));
         }
+        setFilteredCourse(event.target.value);
     }
 
     return<>
@@ -56,16 +58,16 @@ export const Home = () => {
             </Paper>
             <br/>
             <Paper elevation={3} sx={{p:2}}>
-                <Grid container spacing={3}>
-                    <Grid item width={{xs: '50%'}}>
-                        <h1>Current Courses: </h1>
-                        <h3 style={{color: 'GrayText'}}>{currSemester()}</h3>
-                        <br/>
-                        
-                        {currentCourses.map((course) => 
-                        <div key={course.course_id}>
+                <Box width='100%' sx={{padding:3}}>
+                    <h1>Current Courses: </h1>
+                    <h3 style={{color: 'GrayText'}}>{currSemester()}</h3>
+                    <br/>
+                </Box>
+                <Grid container item sx={{mx: 1}} spacing={3} justifyContent='center'> 
+                    {currentCourses.map((course) => 
+                        <Grid item key={course.course_id} width={{xs: '45%'}}>
                             <Paper elevation={10} >
-                                <Card sx={{mb: 2, padding:1}}>
+                                <Card sx={{mb: 2, padding:1}} key={course.course_id}>
                                     <Box sx={{fontSize: 'large', pt:2, pl:2}} style={{fontWeight: 'bold'}}>
                                         {course.course_name}
                                         <span style={{fontSize: 15, color: 'GrayText', float: 'right', marginRight: '2vw'}}>
@@ -82,15 +84,14 @@ export const Home = () => {
                                     </CardActions>
                                 </Card>
                             </Paper>
-                        </div>
-                        )}
-                      
-                    </Grid>
-        
-                    <Grid item width={{xs:'50%'}}>
-                        <div>
-                            <h1>Upcoming Assignments:</h1>
-                            <h3 style={{color: 'GrayText'}} >Assignments due in the next week 
+                        </Grid>
+                    )}
+                </Grid>
+            </Paper> <br/>
+            <Paper elevation={3} sx={{p: 2}}>
+                   <Box width='100%' sx={{padding: 3}}>
+                    <h1>Upcoming Assignments:</h1>
+                        <h3 style={{color: 'GrayText'}} >Assignments due in the next week 
                             <span style={{float: 'right'}}>
                                 <FormControl size='small' sx={{width: 120}} >
                                     <InputLabel id='course-select-label'>Courses</InputLabel>
@@ -100,7 +101,7 @@ export const Home = () => {
                                         value={filteredCourse}
                                         onChange={filterUpcomingAssignments}
                                         placeholder="Course">
-                                            <MenuItem value=''>All Courses</MenuItem>
+                                            <MenuItem value="">All Courses</MenuItem>
                                             {currentCourses.map((course) => (
                                                 <MenuItem key={course.course_id} value={course.course_id}>
                                                     {course.course_name}
@@ -109,38 +110,44 @@ export const Home = () => {
                                     </Select>
                                 </FormControl>
                             </span>
-                            </h3>
-                        </div>
-                        <br/>
-                        <div syle={{marginTop: 3}}>
-                            {upcomingAssignments ?  
-                                upcomingAssignments.map((assignment) => (
-                                <Paper elevation={10}>
-                                    <Card key={assignment.assignment_id} sx={{mb:2}}>
-                                        <CardContent display='flex'>
-                                            <Box fontWeight='bold'>{assignment.assignment_name}
-                                                <span style={{color: 'GrayText', float: 'right', marginRight: 2}} > 
+                        </h3>
+                   </Box>
+                    <br/>
+
+                    <Grid container spacing={3} sx={{mx: 3}} justifyContent='center'>
+                        {upcomingAssignments ? upcomingAssignments.map((assignment) => (
+                            <Grid item key={assignment.assignment_id} width={{xs: '80%'}}>
+                                <Paper elevation={5} >
+                                    <Card key={assignment.assignment_id} sx={{mb:2, p:1}} >
+                                        <CardContent>
+                                        
+                                            <Box fontWeight='bold' fontSize='large' >
+                                                <Button type="contained" variant="text" sx={{fontSize: 20, color: 'black'}}
+                                                    onClick={() => {
+                                                        navigate(`assignments/${assignment.assignment_id}`);
+                                                    }}>
+                                                    {assignment.assignment_name} 
+                                                </Button>
+                                                <span style={{color: 'GrayText', float: 'right', marginRight: 2, fontWeight: 'lighter'}} >
                                                     Due Date: {formatDate(assignment.assignment_due_date)}
                                                 </span>
-                                            </Box>
-                                                <span> {assignment.course_name}</span>
-                                                <br/>
-                                                <p  style={{color: 'GrayText', padding: 2}}>{assignment.assignment_description}</p>
-                                        </CardContent>
-                                        <CardActions>
-                                            <Button type="button" variant="text"
+                                            </Box> 
+                                            <span> {assignment.course_name}</span>
+                                            <br/>
+                                            <span style={{color: 'GrayText', padding: 2, marginTop: 1}}>{assignment.assignment_description}</span>
+                                            <br/>
+                                            {/* <Button type="button" variant="text" 
                                                 onClick={() => {
                                                     navigate(`assignments/${assignment.assignment_id}`);
                                                 }}>
-                                                Go to {assignment.assignment_name}'s course page
-                                            </Button>
-                                        </CardActions>
+                                                Go to {assignment.assignment_name}'s assignment page
+                                            </Button> */}
+                                        </CardContent>
                                     </Card>
                                 </Paper>
-                            ))  :  <></>}
-                        </div>  
-                    </Grid>
-                </Grid>
+                            </Grid>
+                        ))  :  <></>}
+                    </Grid>                
             </Paper>                   
     </>
 }
