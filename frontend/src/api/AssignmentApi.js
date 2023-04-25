@@ -51,15 +51,3 @@ export const getUpcomingAssignments = () => new Promise((resolve, reject) => {
             reject(error);
         })
 });
-
-export const getAssignmentsByDay = (date) => new Promise((resolve, reject) => {
-    axios.get(`${url}/${date}`)
-        .then(resp => {
-            console.log(resp)
-            resolve(resp.data)
-        })
-        .catch(error => {
-            alert(error);
-            reject(error);
-        })
-});
