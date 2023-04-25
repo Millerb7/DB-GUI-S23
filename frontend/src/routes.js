@@ -28,7 +28,7 @@ export default function Router() {
         { path: 'courses/edit/:course_id', element: <CourseEditor/>},
         { path: 'courses/:course_id', element: <IndividualCoursePage/>},
         { path: 'courses/:course_id/new', element: <AssignmentEditor/>},
-        { path: 'assignment/:assignment_id', element: <AssignmentPage/>},
+        { path: 'assignments/:assignment_id', element: <AssignmentPage/>},
         { path: 'calendar', element: <Calendar /> }
       ]
     },

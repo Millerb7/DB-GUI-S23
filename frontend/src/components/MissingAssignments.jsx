@@ -1,12 +1,10 @@
 import { Assignment } from '../sections/Assignment';
 import { useEffect, useState,useContext } from 'react';
 import { getMissingAssignments } from 'src/api/AssignmentApi';
-import { Grid, Box, Paper } from '@mui/material';
+import { Grid, Box, Paper, Typography } from '@mui/material';
 import {  } from '@mui/material';
 import { AssignmentLate } from '@mui/icons-material';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
+
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from 'src/layouts/dashboard';
 
@@ -36,15 +34,15 @@ export const MissingAssignments = () => {
         <br/>
         
         
-        <Grid container px={3} py={2} alignContent='center' justifyContent='center'> 
+        <Grid container px={3} py={2} minWidth='86vw'>  
             {missingAssignments.map((assignment, id) => 
                 assignment ?  
                     <Grid item key={id} width={{xs: '33.3%'}}>
-                        <div style={{display:'flex'}}>
-                            <span variant="text" sx={{color: 'black'}} style={{fontWeight: 'bold'}}>
+                        <div style={{display:'flex'}} >
+                            <Typography variant="text" style={{fontWeight: 'bold'}} display='flex' align='center'>
                                 <AssignmentLate color='error' fontSize='small' sx={{mb:-.5, mr:1}}/>
                                 {assignment.assignment_name}
-                            </span>
+                            </Typography>
                             <Box sx={{color: 'text.secondary', ml: 2}} >Course: {assignment.course_name}</Box> 
                         </div>
                         This assignment was due on: {formatDate(assignment.assignment_due_date)} 
