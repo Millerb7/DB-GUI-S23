@@ -4,7 +4,7 @@ import WeekView from './Week';
   export default function MonthView({ weeks, Month }) {
 
     return (
-        <Grid container item spacing={2}>
+        <Grid container spacing={0}>
             {
                 weeks ? 
                 weeks.map((week, index) => (

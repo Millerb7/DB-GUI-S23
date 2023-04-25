@@ -323,6 +323,22 @@ app.get('/assignments', (req, res) => {
         }
 });
 
+//Retrieve all assignments for a user
+app.get('/assignments/user/:id', (req, res) => {
+    try{
+        connection.query('SELECT * FROM assignments WHERE student_number = ?', [req.params.id], (err, rows, fields) => {
+            if (err) throw err;
+
+            console.log(rows);
+            res.status(200);
+            res.send(rows);
+        });
+    }
+        catch (err) {
+            console.log(err);
+        }
+});
+
 //Get assignemnts by course id
 app.get('/assignments/courses/:course_id', (req, res) => { // Change :course_number to :course_id
     const course_id = req.params.course_id;
@@ -375,7 +391,7 @@ app.get('/assignments/missing/:id', (req, res) => {
 app.get('/assignments/missing/:id/:overdue', (req, res) => {
     console.log(req.params.id)
     const user_id = req.params.id;
-    console.log("new route")
+    console.log("new")
     connection.query('SELECT * FROM assignments JOIN courses ON assignments.course_id = courses.course_id WHERE assignments.student_number = ? AND assignments.overdue = ?', [user_id, req.params.overdue], (err, rows, fields) => {
         try {
             if (err) throw err;
