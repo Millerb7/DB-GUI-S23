@@ -61,7 +61,7 @@ export const AssignmentEditor = () => {
                 <TextField autoFocus id = "dueDate"
                     type = "date"
                     value = {assignment.dueDate}
-                    setValue = {dueDate => mergeAccount({ dueDate })}>
+                    onChange = {(dueDate) => mergeAccount({ dueDate })}>
                 </TextField>
                 <Button type="button"
                     onClick={() => { handleSave();}}>
