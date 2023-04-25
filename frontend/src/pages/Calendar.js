@@ -36,7 +36,7 @@ export const Calendar = () => {
     new Date(currentDate.getFullYear(), Month + 1, 0)
   );
   const [weeks, setWeeks] = useState([]);
-  const [view, setView] = useState(null);
+  const [view, setView] = useState();
   const [assignments, setAssignments] = useState([]);
 
   // useeffect
@@ -102,7 +102,7 @@ export const Calendar = () => {
           );
         }
         // if the day is in the next month
-        else if (w === 5 && d > lastDay.getDate()) {
+        else if (i > lastDay.getDate()) {
           const day = new Date(newDate.getFullYear(), newMonth + 1, d);
 
           week.push(
@@ -142,64 +142,42 @@ export const Calendar = () => {
     setWeeks(cal);
   }
 
-  function handleWeekChange(newDate) {
-    // update current date
-    setCurrentDate(newDate);
-    // update month
-    setMonth(newDate.getMonth());
-    // update the first day of the month
-    setFirstDay(new Date(newDate.getFullYear(), Month, 1));
-    // update the last day of the month
-    setLastDay(new Date(newDate.getFullYear(), Month + 1, 0));
-
-    let cal = [];
-    let i = 0;
-
-    for (let w = 0; w < 6; w++) {
-      const week = [];
-      for (let d = 0; d < 7; d++) {
-        // if the day is in the preious month
-        if (w === 0 && d < firstDay.getDay()) {
-          week.push(
-            new Date(
-              currentDate.getFullYear(),
-              Month - 1,
-              new Date(currentDate.getFullYear(), Month, 0).getDate() - 5 + d
-            ).toDateString()
-          );
-        }
-        // if the day is in the next month
-        else if (w === 6 && d > lastDay.getDate()) {
-          week.push(
-            new Date(currentDate.getFullYear(), Month + 1, d).toDateString()
-          );
-        }
-        // in the month
-        else {
-          i++;
-          week.push(
-            new Date(currentDate.getFullYear(), Month, i).toDateString()
-          );
-        }
-      }
-      cal.push(week);
+  function getCurrentViewType() {
+    if (view && view.type === DayView) {
+      return "day";
+    } else if (view && view.type === WeekView) {
+      return "week";
+    } else if (view && view.type === MonthView) {
+      return "month";
     }
-    // set the value for the arrays of weeks and days
-    setWeeks(cal);
+    return null;
   }
 
   const handleDayView = (day) => {
     setView(<DayView day={day.toDateString()} />);
   };
 
-  const handleWeekView = (day) => {
-    for (let i = 0; i < 6; i++) {
-      if (weeks[i].includes(day.toDateString())) {
-        setView(<WeekView week={weeks[i]} Month={Month} />);
-        return;
-      }
+  const handleWeekView = (newDate) => {
+    setCurrentDate(newDate);
+    const startDate = newDate.getDate() - newDate.getDay();
+    const week = [];
+  
+    for (let i = 0; i < 7; i++) {
+      const day = new Date(newDate.getFullYear(), newDate.getMonth(), startDate + i);
+      week.push(
+        new Cal(
+          day.toDateString(),
+          assignments.filter(
+            (assignment) =>
+              new Date(assignment.assignment_due_date).toDateString() ===
+              day.toDateString()
+          )
+        )
+      );
     }
+    setView(<WeekView week={week} Month={Month} />);
   };
+  
 
   const handleMonthView = () => {
     setView(<MonthView weeks={weeks} Month={Month} />);
@@ -227,12 +205,19 @@ export const Calendar = () => {
           <Container spacing={1}>
             <Box item container>
               <Button
-                onClick={() =>
-                  handleMonthChange(
-                    new Date(currentDate.getFullYear(), Month - 1, 1),
-                    assignments
-                  )
-                }
+                onClick={() => {
+                  const viewType = getCurrentViewType();
+                  if (viewType === "week") {
+                    handleWeekView(
+                        new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 7)
+                      )
+                  } else {
+                    handleMonthChange(
+                      new Date(currentDate.getFullYear(), Month - 1, 1),
+                      assignments
+                    );
+                  }
+                }}
               >
                 previous
               </Button>
@@ -241,7 +226,7 @@ export const Calendar = () => {
                 aria-label="small cotained button group"
               >
                 <Button key="day" onClick={() => handleDayView(currentDate)}>
-                  Day
+                  Days
                 </Button>
                 <Button key="week" onClick={() => handleWeekView(currentDate)}>
                   Week
@@ -251,12 +236,19 @@ export const Calendar = () => {
                 </Button>
               </ButtonGroup>
               <Button
-                onClick={() =>
-                  handleMonthChange(
-                    new Date(currentDate.getFullYear(), Month + 1, 1),
-                    assignments
-                  )
-                }
+                onClick={() => {
+                  const viewType = getCurrentViewType();
+                  if (viewType === "week") {
+                    handleWeekView(
+                        new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 7)
+                      )
+                  } else {
+                    handleMonthChange(
+                      new Date(currentDate.getFullYear(), Month + 1, 1),
+                      assignments
+                    );
+                  }
+                }}
               >
                 next
               </Button>

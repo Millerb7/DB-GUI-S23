@@ -56,25 +56,13 @@ app.get('/db', (req,res) => {
 //     });
 // });
 
-app.post('/user', (req,res) => {
-    console.log(req.body);
-    const { first_name, last_name, email, password } = req.body;
-    const query = `INSERT INTO users (first_name, last_name, email, password) VALUES ('${user_id}', '${first_name}','${last_name}','${email}','${password}')`;
-        connection.query(query, (err,rows,fields) => {
-            if (err) throw err;
-            console.log(rows);
-            res.status(200);
-            res.send(rows);
-        });
-});
-
 //ryans stuff
 
 //add user
 app.post('/user', (req,res) => {
     console.log(req.body);
     const { first_name, last_name, email, password} = req.body;
-    const query = `INSERT INTO users (first_name, last_name, email, password) VALUES ('${user_id}', '${first_name}','${last_name}','${email}','${password}')`;
+    const query = `INSERT INTO users (first_name, last_name, email, password) VALUES ('${first_name}','${last_name}','${email}','${password}')`;
         connection.query(query, (err,rows,fields) => {
             if (err) throw err;
             console.log(rows);

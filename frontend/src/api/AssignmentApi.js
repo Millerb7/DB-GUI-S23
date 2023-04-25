@@ -45,9 +45,7 @@ export const getAssignmentsByCourse = (course_id, user_id, overdue) => new Promi
 
 export const getUpcomingAssignments = () => new Promise((resolve, reject) => {
     axios.get(`${url}/duesoon`)
-        .then(resp => {
-            console.log(resp)
-            resolve(resp.data)})
+        .then(resp => resolve(resp.data))
         .catch(error => {
             alert(error);
             reject(error);
