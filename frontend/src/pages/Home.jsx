@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Grid, Typography, Paper, FormControl, InputLabel, Menu } from '@mui/material';
+import { Grid, Typography, Paper, FormControl, InputLabel } from '@mui/material';
 import { Box, Card, CardActions, CardContent, Button, Select, MenuItem } from '@mui/material';
 
 import { MissingAssignments } from "src/components/MissingAssignments";
@@ -15,14 +15,13 @@ export const Home = () => {
     const navigate = useNavigate();
     const [ currentCourses, setCurrentCourses ] = useState([]);
     const [ upcomingAssignments, setUpcomingAssignments ] = useState([]);
-    const [ filteredCourse, setFilteredCourse ] = useState([]);
+    const [ filteredCourse ] = useState([]);
        
     useEffect(() => {
         getCurrentCoursesByID(userContext.user.user_id).then(x => setCurrentCourses(x));
         getUpcomingAssignments().then(x => setUpcomingAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))));
+        console.log(upcomingAssignments);
     }, []);
-
-    console.log(upcomingAssignments);
 
     function formatDate (dateStr) {
         const newdate = new Date (dateStr);
@@ -39,7 +38,7 @@ export const Home = () => {
     }
 
     const filterUpcomingAssignments = (event) => {
-        if(event.target.value == ''){
+        if(event.target.value === ''){
             getUpcomingAssignments().then(x => setUpcomingAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))));
         } else{
             getAssignmentsByCourse(event.target.value, userContext.user.user_id, 0)
@@ -115,9 +114,9 @@ export const Home = () => {
                         <br/>
                         <div syle={{marginTop: 3}}>
                             {upcomingAssignments ?  
-                                upcomingAssignments.map((assignment, index) => (
+                                upcomingAssignments.map((assignment) => (
                                 <Paper elevation={10}>
-                                    <Card key={index} sx={{mb:2}}>
+                                    <Card key={assignment.assignment_id} sx={{mb:2}}>
                                         <CardContent display='flex'>
                                             <Box fontWeight='bold'>{assignment.assignment_name}
                                                 <span style={{color: 'GrayText', float: 'right', marginRight: 2}} > 
@@ -131,7 +130,7 @@ export const Home = () => {
                                         <CardActions>
                                             <Button type="button" variant="text"
                                                 onClick={() => {
-                                                    navigate(`assignment/${assignment.assignment_id}`);
+                                                    navigate(`assignments/${assignment.assignment_id}`);
                                                 }}>
                                                 Go to {assignment.assignment_name}'s course page
                                             </Button>
