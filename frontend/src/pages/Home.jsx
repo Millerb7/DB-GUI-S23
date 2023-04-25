@@ -15,7 +15,7 @@ export const Home = () => {
     const navigate = useNavigate();
     const [ currentCourses, setCurrentCourses ] = useState([]);
     const [ upcomingAssignments, setUpcomingAssignments ] = useState([]);
-    const [ filteredCourse ] = useState([]);
+    const [ filteredCourse, setFilteredCourse ] = useState('');
        
     useEffect(() => {
         getCurrentCoursesByID(userContext.user.user_id).then(x => setCurrentCourses(x));
@@ -38,12 +38,14 @@ export const Home = () => {
     }
 
     const filterUpcomingAssignments = (event) => {
+        console.log(event.target.value);
         if(event.target.value === ''){
             getUpcomingAssignments().then(x => setUpcomingAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))));
         } else{
             getAssignmentsByCourse(event.target.value, userContext.user.user_id, 0)
                 .then(x => setUpcomingAssignments(x));
         }
+        setFilteredCourse(event.target.value);
     }
 
     return<>
@@ -100,7 +102,7 @@ export const Home = () => {
                                         value={filteredCourse}
                                         onChange={filterUpcomingAssignments}
                                         placeholder="Course">
-                                            <MenuItem value=''>All Courses</MenuItem>
+                                            <MenuItem value="``">All Courses</MenuItem>
                                             {currentCourses.map((course) => (
                                                 <MenuItem key={course.course_id} value={course.course_id}>
                                                     {course.course_name}
@@ -132,7 +134,7 @@ export const Home = () => {
                                                 onClick={() => {
                                                     navigate(`assignments/${assignment.assignment_id}`);
                                                 }}>
-                                                Go to {assignment.assignment_name}'s course page
+                                                Go to {assignment.assignment_name}'s assignment page
                                             </Button>
                                         </CardActions>
                                     </Card>

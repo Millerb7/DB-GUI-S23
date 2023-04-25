@@ -1,6 +1,6 @@
 import { Card, Paper, Container, InputLabel, FormControl, Button, Typography, MenuItem, CardContent, CardActionArea } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { getAssignmentsByDay } from 'src/api/AssignmentApi';
+// import { getAssignmentsByDay } from 'src/api/AssignmentApi';
 
   export default function Tile({ Month, day }) {
     const months = ['Jan','Feb','Mar','Apr','May',"Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -8,7 +8,7 @@ import { getAssignmentsByDay } from 'src/api/AssignmentApi';
 
     useEffect(() => {
         console.log(day + " " + convertToDateObject(day))
-        getAssignmentsByDay(convertToDateObject(day)).then(x => setAssignments(x));
+        // getAssignmentsByDay(convertToDateObject(day)).then(x => setAssignments(x));
     }, []);
 
     const handleCompare = () => {
