@@ -38,14 +38,14 @@ export const AssignmentList = ({ assignments }) => {
                 </TableHead>
                 <TableBody>
                     {
-                        assignments.map(assignment => <TableRow key={assignment.id}>
-                            <TableCell>{assignment.assignmentName}</TableCell>
-                            <TableCell>{assignment.description}</TableCell>
-                            <TableCell>{assignment.dueDate}</TableCell>
+                        assignments.map(assignment => <TableRow key={assignment.assignment_id}>
+                            <TableCell>{assignment.assignment_name}</TableCell>
+                            <TableCell>{assignment.assignment_description}</TableCell>
+                            <TableCell>{assignment.assignment_due_date.substring(0,10)}</TableCell>
                             <TableCell>
                                 <Button type = "button"
                                     onClick = {() => {
-                                        // navigate()
+                                        navigate(`edit/${assignment.assignment_id}`);
                                     }}>
                                     <ModeEditIcon></ModeEditIcon>
                                 </Button>

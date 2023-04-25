@@ -3,11 +3,9 @@
 export default class Cal {
     
     // coming from db
-    constructor(date, time=date.getMonth(), name='', id='') {
+    constructor(date=new Date(), assignments=[]) {
       this.date = date;
-      this.time = time;
-      this.name = name;
-      this.id = id;
+      this.assignments = assignments;
     }
 
 
