@@ -10,7 +10,8 @@ import { Assignment } from '../sections/Assignment'
 export const IndividualCoursePage = () => {
 
     const [course, setCourse] = useState([]);
-    const [assignments, setAssignments] = useState([]);
+    const [currentAssignments, setCurrentAssignments] = useState([]);
+    const [missingAssignments, setMissingAssignments] = useState([]);
     const userContext = useContext(UserContext);
 
     const navigate = useNavigate();
@@ -18,7 +19,8 @@ export const IndividualCoursePage = () => {
 
     useEffect(() => {
         getCourseById(params.course_id).then(x => setCourse(x));
-        getAssignmentsByCourse(params.course_id, userContext.user.user_id, 0).then(x => setAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))))
+        getAssignmentsByCourse(params.course_id, userContext.user.user_id, 0).then(x => setCurrentAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))));
+        getAssignmentsByCourse(params.course_id, userContext.user.user_id, 1).then(x => setMissingAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))))
     }, []);
 
     const testAssignments = [
@@ -36,9 +38,9 @@ export const IndividualCoursePage = () => {
         }}>Add Assignment</Button>
 
         <h2 align="center">Missing Assignments</h2>
-        <AssignmentList assignments={testAssignments}/>
+        <AssignmentList assignments={currentAssignments}/>
 
         <h2 align="center">Current Assignments</h2>
-        <AssignmentList assignments={[]}/>
+        <AssignmentList assignments={missingAssignments}/>
     </>
 }
