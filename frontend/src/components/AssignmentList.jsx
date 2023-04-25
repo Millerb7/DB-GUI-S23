@@ -41,11 +41,11 @@ export const AssignmentList = ({ assignments }) => {
                         assignments.map(assignment => <TableRow key={assignment.assignment_id}>
                             <TableCell>{assignment.assignment_name}</TableCell>
                             <TableCell>{assignment.assignment_description}</TableCell>
-                            <TableCell>{assignment.assignmnet_due_date}</TableCell>
+                            <TableCell>{assignment.assignment_due_date.substring(0,10)}</TableCell>
                             <TableCell>
                                 <Button type = "button"
                                     onClick = {() => {
-                                        // navigate()
+                                        navigate(`edit/${assignment.assignment_id}`);
                                     }}>
                                     <ModeEditIcon></ModeEditIcon>
                                 </Button>

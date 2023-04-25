@@ -19,16 +19,9 @@ export const IndividualCoursePage = () => {
 
     useEffect(() => {
         getCourseById(params.course_id).then(x => setCourse(x));
-        getAssignmentsByCourse(params.course_id, userContext.user.user_id, 0).then(x => setCurrentAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))));
-        getAssignmentsByCourse(params.course_id, userContext.user.user_id, 1).then(x => setMissingAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))))
+        getAssignmentsByCourse(params.course_id, userContext.user.user_id, 1).then(x => setCurrentAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))));
+        getAssignmentsByCourse(params.course_id, userContext.user.user_id, 0).then(x => setMissingAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))))
     }, []);
-
-    const testAssignments = [
-        new Assignment(1, 'Review', 1004, 'ML', 'Study 1 hour every night', true),
-        new Assignment(2, 'Review2', 1005, 'Ethical', 'Read chapters 2 and 3', true),
-        new Assignment(3, 'Review3', 1006, 'UI', 'Code assignment', false),
-        new Assignment(4, 'Review4', 1007, 'EGNRMGMNT', 'Manage Engineers', true),
-    ];
 
     return<>
         <h1 align="center">Assignments for {course.course_name}</h1>
