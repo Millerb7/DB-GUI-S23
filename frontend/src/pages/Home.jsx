@@ -6,7 +6,7 @@ import { Box, Card, CardActions, CardContent, Button, Select, MenuItem } from '@
 
 import { MissingAssignments } from "src/components/MissingAssignments";
 import { UserContext } from "src/layouts/dashboard";
-import { getAssignmentsByCourse, getUpcomingAssignments } from "src/api/AssignmentApi";
+import { getAssignmentsByCourse, getUpcoming, getUpcomingAssignments } from "src/api/AssignmentApi";
 import { getCurrentCoursesByID } from "src/api/coursePageApi";
 
 export const Home = () => {
@@ -19,7 +19,7 @@ export const Home = () => {
        
     useEffect(() => {
         getCurrentCoursesByID(userContext.user.user_id).then(x => setCurrentCourses(x));
-        getUpcomingAssignments().then(x => setUpcomingAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))));
+        getUpcoming(1).then(x => setUpcomingAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))));
         console.log(upcomingAssignments);
     }, []);
 
@@ -40,7 +40,7 @@ export const Home = () => {
     const filterUpcomingAssignments = (event) => {
         console.log(event.target.value);
         if(event.target.value === ''){
-            getUpcomingAssignments().then(x => setUpcomingAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))));
+            getUpcoming(1).then(x => setUpcomingAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))));
         } else{
             getAssignmentsByCourse(event.target.value, userContext.user.user_id, 0)
                 .then(x => setUpcomingAssignments(x));
