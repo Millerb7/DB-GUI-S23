@@ -18,7 +18,7 @@ export const IndividualCoursePage = () => {
 
     useEffect(() => {
         getCourseById(params.course_id).then(x => setCourse(x));
-        getAssignmentsByCourse(params.course_id, userContext.user.user_id, 0).then(x => setAssignments(x).sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date)))
+        getAssignmentsByCourse(params.course_id, userContext.user.user_id, 0).then(x => setAssignments(x.sort((a,b) => new Date(a.assignment_due_date) - new Date(b.assignment_due_date))))
     }, []);
 
     const testAssignments = [
