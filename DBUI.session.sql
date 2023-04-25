@@ -31,14 +31,14 @@ CREATE TABLE IF NOT EXISTS courses
 );
 
 INSERT INTO courses (course_name, course_number, professor_name, year, semester, course_completed, student_id)
-VALUES ('English I', 1243, 'Mr. James', 2023, 'Fall', true, 1),
+VALUES ('Mathematical Biology', 1243, 'Mr. James', 2023, 'Fall', true, 1),
        ('History II', 1511, 'Mrs. Teach', 2023, 'Spring', false, 1),
        ('Calculus I', 1160, 'Mr. Yuko', 2022, 'Fall', true, 1),
        ('Spanish II', 1020, 'Ms. Hiyla', 2023, 'Fall', false, 1),
        ('English III', 1400, 'Ms. Miyagi', 2022, 'Spring', true, 1),
        ('Algebra II', 3330, 'Mr. Romeo', 2021, 'Fall', true, 1),
        ('History I', 1411, 'Ms .Hitory', 2020, 'Spring', true, 1),
-       ('Differential Equations', 4320, 'Ms .Maf', 2024, 'Spring', false, 1),
+       ('Differential Equations', 4320, 'Ms .Maf', 2023, 'Spring', false, 1),
        ('Spanish I', 1010, 'Ms. Hiyla', 2022, 'Fall', true, 1),
        ('Graphical User Interface', 3345, 'Sir Lawrimore', 2023, 'Spring', false, 1),
        ('Algorithms', 3353, 'Mr. Lin', 2023, 'Spring', false, 1);
@@ -61,12 +61,12 @@ CREATE TABLE IF NOT EXISTS assignments
 );
 
 INSERT INTO assignments (assignment_name, assignment_due_date, assignment_work_date, course_id, assignment_description, overdue, student_number)
-VALUES ('Homework 3', '2023-04-27', '2000-03-28', 1, 'Assignment Description', false, 1),
-       ('Unit Circle', '2023-04-26', '2022-03-20', 5, 'Draw the unit circle!', false, 1),
+VALUES ('Homework 3', '2023-04-27', '2000-03-28', 10, 'Assignment Description', false, 1),
+       ('Unit Circle', '2023-04-26', '2022-03-20', 8, 'Draw the unit circle!', false, 1),
        ('Lab 4', '2023-04-01', '2000-03-28', 4, 'Assignment Description', true, 1),
         ('Program 5', '2023-04-30', '2000-03-28', 11, 'Write a recursive program to find fibonacci numbers', true, 1),
-        ('Ethical Argument Essay', '2023-05-01', '2000-03-28', 2, 'Assignment Description', false, 1),
+        ('American Revolution Essay', '2023-05-01', '2000-03-28', 2, 'Assignment Description', false, 1),
         ('Quiz 6', '2023-04-08', '2000-03-28', 11, 'Assignment Description', true, 1),
-        ('Research Paper Review', '2023-04-29', '2000-03-28', 1, 'Pick an article about epidemiology and write a review', false, 1),
+        ('Talk Abroad', '2023-04-29', '2000-03-28', 4, 'Pick an article about epidemiology and write a review', false, 1),
         ('Assignment 10', '2023-05-03', '2000-03-28', 1, 'Assignment Description', false, 1);
 
