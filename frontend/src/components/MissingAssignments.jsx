@@ -1,7 +1,7 @@
 import { Assignment } from '../sections/Assignment';
 import { useEffect, useState,useContext } from 'react';
 import { getMissingAssignments } from 'src/api/AssignmentApi';
-import { Grid, Box, Paper, Typography } from '@mui/material';
+import { Grid, Box, Paper, Typography, Button } from '@mui/material';
 import {  } from '@mui/material';
 import { AssignmentLate } from '@mui/icons-material';
 
@@ -41,7 +41,12 @@ export const MissingAssignments = () => {
                         <div style={{display:'flex'}} >
                             <Typography variant="text" style={{fontWeight: 'bold'}} display='flex' align='center'>
                                 <AssignmentLate color='error' fontSize='small' sx={{mb:-.5, mr:1}}/>
-                                {assignment.assignment_name}
+                                <Button sx={{color: 'black', p: 0}}
+                                    onClick={() => {
+                                        navigate(`assignments/${assignment.assignment_id}`)
+                                    }}>
+                                    {assignment.assignment_name}
+                                </Button>
                             </Typography>
                             <Box sx={{color: 'text.secondary', ml: 2}} >Course: {assignment.course_name}</Box> 
                         </div>
