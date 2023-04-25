@@ -38,10 +38,10 @@ export const AssignmentList = ({ assignments }) => {
                 </TableHead>
                 <TableBody>
                     {
-                        assignments.map(assignment => <TableRow key={assignment.id}>
-                            <TableCell>{assignment.assignmentName}</TableCell>
-                            <TableCell>{assignment.description}</TableCell>
-                            <TableCell>{assignment.dueDate}</TableCell>
+                        assignments.map(assignment => <TableRow key={assignment.assignment_id}>
+                            <TableCell>{assignment.assignment_name}</TableCell>
+                            <TableCell>{assignment.assignment_description}</TableCell>
+                            <TableCell>{assignment.assignmnet_due_date}</TableCell>
                             <TableCell>
                                 <Button type = "button"
                                     onClick = {() => {
