@@ -4,7 +4,7 @@ import Tile from './Tile';
   export default function WeekView({ week, Month }) {
 
     return (
-        <Grid container item spacing={2}>
+        <Grid container item spacing={2} xs={12}>
             {week.map((day, index) => (
                 <Tile item key={index} Month={Month} day={day} />
             ))}

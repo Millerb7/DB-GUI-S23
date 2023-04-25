@@ -30,24 +30,13 @@ export default function Tile({ Month, day }) {
     "Dec",
   ];
 
-  // useEffect(() => {
-  //     console.log(day + " " + convertToDateObject(day))
-  //     getAssignmentsByDay(convertToDateObject(day)).then(x => setAssignments(x));
-  // }, []);
-
   const handleCompare = () => {
     if (months[Month] === day.date.split(" ")[1]) return true;
     else return false;
   };
 
-  // function convertToDateObject(dateString) {
-  //     const dateParts = dateString.split(' ');
-  //     const month = months.indexOf(dateParts[1]) + 1;
-  //     return `${dateParts[3]}-${month < 10 ? '0' + month : month}-${dateParts[2]}`;
-  //   }
-
   return (
-    <Grid item xs="auto">
+    <Grid item xs={12/7}>
       {handleCompare() ? (
         <>
           <Typography variant="h5">{day.date.split(" ")[2]}</Typography>

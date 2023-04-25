@@ -37,12 +37,13 @@ export const Calendar = () => {
   );
   const [weeks, setWeeks] = useState([]);
   const [view, setView] = useState(null);
+  const [assignments, setAssignments] = useState([]);
 
-  // useeffect
   // useeffect
   useEffect(() => {
     getUserAssignments(userContext.user.user_id)
       .then((x) => {
+        setAssignments(x);
         handleMonthChange(new Date(), x);
       })
       .catch((error) => {
@@ -50,30 +51,36 @@ export const Calendar = () => {
       });
   }, []);
 
+  useEffect(() => {
+    if (weeks.length > 0) {
+      setView(<MonthView weeks={weeks} />);
+    }
+  }, [weeks, Month]);
+
   function handleMonthChange(newDate, assignments) {
     // update current date
     setCurrentDate(newDate);
-  
+
     // update month
     const newMonth = newDate.getMonth();
     setMonth(newMonth);
-  
+
     // update the first day of the month
     const firstDay = new Date(newDate.getFullYear(), newMonth, 1);
     setFirstDay(firstDay);
-  
+
     // update the last day of the month
     const lastDay = new Date(newDate.getFullYear(), newMonth + 1, 0);
     setLastDay(lastDay);
-  
+
     let cal = [];
     let i = 0;
-  
+
     console.log(assignments);
-  
+
     for (let w = 0; w < 6; w++) {
       const week = [];
-  
+
       for (let d = 0; d < 7; d++) {
         // if the day is in the previous month
         if (w === 0 && d < firstDay.getDay()) {
@@ -82,7 +89,7 @@ export const Calendar = () => {
             newMonth - 1,
             new Date(newDate.getFullYear(), newMonth, 0).getDate() - 5 + d
           );
-  
+
           week.push(
             new Cal(
               day.toDateString(),
@@ -97,7 +104,7 @@ export const Calendar = () => {
         // if the day is in the next month
         else if (w === 5 && d > lastDay.getDate()) {
           const day = new Date(newDate.getFullYear(), newMonth + 1, d);
-  
+
           week.push(
             new Cal(
               day.toDateString(),
@@ -113,7 +120,7 @@ export const Calendar = () => {
         else {
           i++;
           const day = new Date(newDate.getFullYear(), newMonth, i);
-  
+
           week.push(
             new Cal(
               day.toDateString(),
@@ -128,15 +135,12 @@ export const Calendar = () => {
       }
       cal.push(week);
     }
-  
+
     console.log(cal);
-  
+
     // set the value for the arrays of weeks and days
     setWeeks(cal);
-  
-    setView(<MonthView weeks={weeks} Month={newMonth} />);
   }
-  
 
   function handleWeekChange(newDate) {
     // update current date
@@ -225,7 +229,8 @@ export const Calendar = () => {
               <Button
                 onClick={() =>
                   handleMonthChange(
-                    new Date(currentDate.getFullYear(), Month - 1, 1)
+                    new Date(currentDate.getFullYear(), Month - 1, 1),
+                    assignments
                   )
                 }
               >
@@ -248,55 +253,42 @@ export const Calendar = () => {
               <Button
                 onClick={() =>
                   handleMonthChange(
-                    new Date(currentDate.getFullYear(), Month + 1, 1)
+                    new Date(currentDate.getFullYear(), Month + 1, 1),
+                    assignments
                   )
                 }
               >
                 next
               </Button>
+              <Typography>
+                {currentDate.toLocaleString("en-US", { month: "long" })}
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12 / 7}>
+                  <Typography variant="h5">Sunday</Typography>
+                </Grid>
+                <Grid item xs={12 / 7}>
+                  <Typography variant="h5">Monday</Typography>
+                </Grid>
+                <Grid item xs={12 / 7}>
+                  <Typography variant="h5">Tuesday</Typography>
+                </Grid>
+                <Grid item xs={12 / 7}>
+                  <Typography variant="h5">Wednesday</Typography>
+                </Grid>
+                <Grid item xs={12 / 7}>
+                  <Typography variant="h5">Thursday</Typography>
+                </Grid>
+                <Grid item xs={12 / 7}>
+                  <Typography variant="h5">Friday</Typography>
+                </Grid>
+                <Grid item xs={12 / 7}>
+                  <Typography variant="h5">Saturday</Typography>
+                </Grid>
+              </Grid>
+              <Grid>{view}</Grid>
               <Grid>
-                <Typography>
-                  {currentDate.toLocaleString("en-US", { month: "long" })}
-                </Typography>
-                <Grid item container size={2}>
-                  <Paper>
-                    <Typography variant="h5">Sunday</Typography>
-                  </Paper>
-                  <Card>
-                    <CardContent>
-                      <Typography>Monday</Typography>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardContent>
-                      <Typography>Tuesday</Typography>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardContent>
-                      <Typography>Wednesday</Typography>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardContent>
-                      <Typography>Thursday</Typography>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardContent>
-                      <Typography>Friday</Typography>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardContent>
-                      <Typography>Saturday</Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid>{view}</Grid>
-                <Grid>
-                  <Typography>Date: {currentDate.toDateString()}</Typography>
-                </Grid>
+                <Typography>Date: {currentDate.toDateString()}</Typography>
               </Grid>
             </Box>
           </Container>
