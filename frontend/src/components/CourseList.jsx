@@ -11,7 +11,6 @@ export const CourseList = ({ courses }) => {
                 <TableHead>
                     <TableRow>
                     <TableCell>Course Name</TableCell>
-                    <TableCell>Course Number</TableCell>
                     <TableCell>Semester</TableCell>
                     <TableCell>Year</TableCell>
                     <TableCell>Professor</TableCell>

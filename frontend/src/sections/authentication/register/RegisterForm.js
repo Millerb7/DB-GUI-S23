@@ -7,7 +7,7 @@ import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
-import { sendLogin } from 'src/api/user';
+import { createUser, sendLogin } from 'src/api/user';
 
 // ----------------------------------------------------------------------
 
@@ -37,16 +37,15 @@ export default function RegisterForm() {
     onSubmit: (values, actions) => {
       if(values.email && values.password) {
         // login api call, should return a user if valid, a string if false
-        console.log('tee hee')
-        sendLogin( values.email, values.password ).then( res =>{
-          if(res !== 'invalid login attempt') {
-            console.log('logged in: ' + res);
-            setUserId(res.user_id);
-          } else {
-            alert('invalid login credential please try again');
-            setUserId(null);
-          }
-        })
+        createUser({ first_name: values.firstName, last_name: values.lastName, email: values.email, password: values.password  })
+          sendLogin( values.email, values.password ).then( res =>{
+            if(res !== 'invalid login attempt') {
+              setUserId(res.user_id);
+            } else {
+              alert('invalid login credential please try again');
+              setUserId(null);
+            }
+          });
       }
 
       actions.resetForm(); 
