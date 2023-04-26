@@ -1,5 +1,6 @@
 // component
 import Iconify from '../../components/Iconify';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 // ----------------------------------------------------------------------
 
@@ -24,7 +25,7 @@ const sidebarConfig = [
   {
     title: 'Logout',
     path: '/Login',
-    icon: getIcon('eva:book-fill')
+    icon: LogoutIcon()
   }
 ];
 
