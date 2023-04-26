@@ -63,9 +63,9 @@ export const Home = () => {
                     <h3 style={{color: 'GrayText'}}>{currSemester()}</h3>
                     <br/>
                 </Box>
-                <Grid container item sx={{mx: 1}} spacing={3} justifyContent='center'> 
+                <Grid container spacing={3} justifyContent='center'> 
                     {currentCourses.map((course) => 
-                        <Grid item key={course.course_id} width={{xs: '45%'}}>
+                        <Grid item key={course.course_id} xs={12} sm={8} md={6} lg={6}>
                             <Paper elevation={10} >
                                 <Card sx={{mb: 2, padding:1}} key={course.course_id}>
                                     <Box sx={{fontSize: 'large', pt:2, pl:2}} style={{fontWeight: 'bold'}}>
@@ -114,7 +114,7 @@ export const Home = () => {
                    </Box>
                     <br/>
 
-                    <Grid container spacing={3} sx={{mx: 3}} justifyContent='center'>
+                    <Grid container spacing={3} justifyContent='center'>
                         {upcomingAssignments ? upcomingAssignments.map((assignment) => (
                             <Grid item key={assignment.assignment_id} width={{xs: '80%'}}>
                                 <Paper elevation={5} >
@@ -136,12 +136,6 @@ export const Home = () => {
                                             <br/>
                                             <span style={{color: 'GrayText', padding: 2, marginTop: 1}}>{assignment.assignment_description}</span>
                                             <br/>
-                                            {/* <Button type="button" variant="text" 
-                                                onClick={() => {
-                                                    navigate(`assignments/${assignment.assignment_id}`);
-                                                }}>
-                                                Go to {assignment.assignment_name}'s assignment page
-                                            </Button> */}
                                         </CardContent>
                                     </Card>
                                 </Paper>

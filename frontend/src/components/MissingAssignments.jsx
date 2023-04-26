@@ -26,7 +26,7 @@ export const MissingAssignments = () => {
 
     return<>
         <Grid paddingTop={2}>
-            <h1 style={{textAlign: 'center'}}>
+            <h1 style={{padding: '1rem'}}>
                 <AssignmentLate fontSize='large' color='error' sx={{mb: -1, ml: 1}}/>
                 Missing Assignments
             </h1>
@@ -34,10 +34,10 @@ export const MissingAssignments = () => {
         <br/>
         
         
-        <Grid container px={3} py={2} minWidth='86vw'>  
+        <Grid container px={3} maxWidth='100vw'>  
             {missingAssignments.map((assignment, id) => 
                 assignment ?  
-                    <Grid item key={id} width={{xs: '33.3%'}}>
+                    <Grid item key={id} sx={{p: '1rem'}}>
                         <div style={{display:'flex'}} >
                             <Typography variant="text" style={{fontWeight: 'bold'}} display='flex' align='center'>
                                 <AssignmentLate color='error' fontSize='small' sx={{mb:-.5, mr:1}}/>
@@ -48,9 +48,9 @@ export const MissingAssignments = () => {
                                     {assignment.assignment_name}
                                 </Button>
                             </Typography>
-                            <Box sx={{color: 'text.secondary', ml: 2}} >Course: {assignment.course_name}</Box> 
+                            <Box sx={{color: 'text.secondary', ml: 2}} >{assignment.course_name}</Box> 
                         </div>
-                        This assignment was due on: {formatDate(assignment.assignment_due_date)} 
+                        Due {formatDate(assignment.assignment_due_date)} 
                     </Grid>
                 : null     
             )}

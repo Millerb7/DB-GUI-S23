@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS courses
 );
 
 INSERT INTO courses (course_name, professor_name, year, semester, course_completed, student_id)
-VALUES ('Mathematical Biology', 'Mr. James', 2023, 'Fall', true, 1),
+VALUES ('Mathematical Biology', 'Mr. James', 2023, 'Fall', false, 1),
        ('History II', 'Mrs. Teach', 2023, 'Spring', false, 1),
        ('Calculus I', 'Mr. Yuko', 2022, 'Fall', true, 1),
        ('Spanish II', 'Ms. Hiyla', 2023, 'Fall', false, 1),
@@ -67,6 +67,6 @@ VALUES ('Homework 3', '2023-04-27', '2000-03-28', 10, 'Assignment Description', 
         ('American Revolution Essay', '2023-05-01', '2000-03-28', 2, 'Assignment Description', false, 1),
         ('Quiz 6', '2023-04-08', '2000-03-28', 11, 'Assignment Description', true, 1),
         ('Talk Abroad', '2023-04-29', '2000-03-28', 4, 'Pick an article about epidemiology and write a review', false, 1),
-        ('Assignment 10', '2023-05-03', '2000-03-28', 1, 'Assignment Description', false, 1);
+        ('Assignment 10', '2023-05-03', '2000-03-28', 1, 'Assignment Description', true, 1);
 
 
