@@ -20,6 +20,11 @@ const sidebarConfig = [
     title: 'Courses',
     path: '/dashboard/courses',
     icon: getIcon('eva:book-fill')
+  },
+  {
+    title: 'Logout',
+    path: '/Login',
+    icon: getIcon('eva:book-fill')
   }
 ];
 
