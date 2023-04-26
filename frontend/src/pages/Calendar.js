@@ -39,12 +39,25 @@ export const Calendar = () => {
   const [view, setView] = useState();
   const [assignments, setAssignments] = useState([]);
 
+  const initialCourseColors = JSON.parse(localStorage.getItem('courseColors')) || [];
+  const colors = [
+    "#ffd1dc", "#81b71a", "#eeac99", "#e06377", "#c83349",
+    "#5b9aa0", "#d6d4e0", "#b8a9c9", "#622569", "#c9a0dc",
+    "#a7ffeb", "#ace5ff", "#f9d5e5", "#b0dd16", "#e3b49a",
+    "#f0e68c", "#d3b88c", "#f0e0b8", "#e6af2e", "#c38d9e"
+  ];
+  const [courseColors, setCourseColors] = useState(initialCourseColors);
+
   // useeffect
   useEffect(() => {
     getUserAssignments(userContext.user.user_id)
       .then((x) => {
-        setAssignments(x);
-        handleMonthChange(new Date(), x);
+        const modifiedAssignments = x.map((assignment) => ({
+          ...assignment,
+          color: getOrAssignColor(assignment.course_id),
+        }));
+        setAssignments(modifiedAssignments);
+        handleMonthChange(new Date(), modifiedAssignments);
       })
       .catch((error) => {
         console.error("Error fetching assignments:", error);
@@ -56,6 +69,23 @@ export const Calendar = () => {
       setView(<MonthView weeks={weeks} />);
     }
   }, [weeks, Month]);
+
+  function getOrAssignColor(course_id) {
+    // Check if a color is already assigned to the courseId
+    const colorIndex = courseColors.indexOf(course_id);
+  
+    if (colorIndex === -1) {
+      // not assigned
+      const updatedColors = [...courseColors, course_id];
+      setCourseColors(updatedColors);
+      localStorage.setItem('courseColors', JSON.stringify(updatedColors));
+      return colors[updatedColors.length - 1];
+    }
+  
+    return colors[colorIndex];
+  }
+  
+  
 
   function handleMonthChange(newDate, assignments) {
     // update current date
@@ -97,7 +127,7 @@ export const Calendar = () => {
                 (assignment) =>
                   new Date(assignment.assignment_due_date).toDateString() ===
                   day.toDateString()
-              )
+              ),
             )
           );
         }
@@ -112,7 +142,7 @@ export const Calendar = () => {
                 (assignment) =>
                   new Date(assignment.assignment_due_date).toDateString() ===
                   day.toDateString()
-              )
+              ),
             )
           );
         }
@@ -128,7 +158,7 @@ export const Calendar = () => {
                 (assignment) =>
                   new Date(assignment.assignment_due_date).toDateString() ===
                   day.toDateString()
-              )
+              ),
             )
           );
         }
