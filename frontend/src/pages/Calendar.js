@@ -298,12 +298,6 @@ export const Calendar = () => {
                       aria-label="small cotained button group"
                     >
                       <Button
-                        key="day"
-                        onClick={() => handleDayView(currentDate)}
-                      >
-                        Days
-                      </Button>
-                      <Button
                         key="week"
                         onClick={() => handleWeekView(currentDate)}
                       >
