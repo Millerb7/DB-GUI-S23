@@ -57,9 +57,11 @@ export default function Tile({ Month, day }) {
           </Typography>
           {day.assignments.length > 0 ? (
             day.assignments.map((assignment) => (
-              <Content
+              <Grid container>
+                <Content
                 assignment={assignment}
               ></Content>
+              </Grid>
             ))
           ) : (
             <></>

@@ -22,7 +22,7 @@ export default function Content({ assignment }) {
   console.log(assignment)
 
   return (
-    <Grid item>
+    <Grid item sx={{ mb: 2 }}>
         <Typography color={'textPrimary'} component={RouterLink} to={`../assignments/${assignment.assignment_id}`} style={{
           textDecoration: 'none',
           backgroundColor: assignment.color,
