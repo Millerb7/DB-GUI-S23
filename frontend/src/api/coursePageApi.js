@@ -60,7 +60,6 @@ export const editCourse = (course_id, course) => new Promise((resolve, reject) =
   axios.put(url + `/courses/${course_id}`, course)
     .then(resp => {
       resolve(resp.data);
-      alert(JSON.stringify(resp.data));
     })
     .catch(error => {
       alert(error);
@@ -72,7 +71,6 @@ export const addCourse = (course) => new Promise((resolve, reject) => {
   axios.post(url + '/courses', course)
     .then(resp => {
       resolve(resp.data);
-      alert(JSON.stringify(resp.data));
     })
     .catch(error => {
       alert(error);
