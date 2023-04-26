@@ -6,14 +6,22 @@ import { UserContext } from "src/layouts/dashboard";
 import { addAssignment, editAssignment, getAssignmentById } from "src/api/AssignmentApi";
 import { getCourseById } from "src/api/coursePageApi";
 
+const initialAssignmentState = {
+  assignment_name: '',
+  assignment_due_date: '',
+  assignment_work_date: '',
+  assignment_description: '',
+  overdue: false,
+  student_number: null,
+  course_id: null
+};
+
 export const AssignmentEditor = () => {
-    const navigate = useNavigate();
-    const params = useParams();
-    const userContext = useContext(UserContext);
+  const navigate = useNavigate();
+  const params = useParams();
+  const userContext = useContext(UserContext);
 
-  const [assignment, setAssignment] = useState({});
-
- 
+  const [assignment, setAssignment] = useState(initialAssignmentState);
 
   const mergeAccount = delta => setAssignment(prevState => ({ ...prevState, ...delta }));
 
@@ -38,21 +46,18 @@ export const AssignmentEditor = () => {
 
   useEffect(() => {
     if (params.assignment_id) {
+      console.log(params.assignment_id)
       getAssignmentById(params.assignment_id)
         .then(x => {
-          setAssignment(x);
+          setAssignment(...x);
         })
     }
     else {
-      setAssignment({
-      assignment_name: '',
-      assignment_due_date: '',
-      assignment_work_date: '',
-      assignment_description: '',
-      overdue: false,
-      student_number: userContext.user.user_id,
-      course_id: params.course_id
-    });
+      setAssignment(prevState => ({
+        ...prevState,
+        student_number: userContext.user.user_id,
+        course_id: params.course_id
+      }));
     }
   }, []);
 
@@ -83,6 +88,13 @@ export const AssignmentEditor = () => {
             label="Due Date (YYYY-MM-DD)"
             value={assignment.assignment_due_date}
             setValue={assignment_due_date => mergeAccount({ assignment_due_date })}
+          />
+          <Textfield
+            autoFocus
+            id="workDate"
+            label="Work Date (YYYY-MM-DD)"
+            value={assignment.assignment_work_date}
+            setValue={assignment_work_date => mergeAccount({ assignment_work_date })}
           />
           <FormControlLabel
             control={

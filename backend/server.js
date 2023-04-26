@@ -277,11 +277,24 @@ app.post('/assignments', (req, res)=> {
 
 })
 
+app.put('/assignments/:id', (req, res)=> {
+    const { assignment_name, assignment_due_date, assignment_work_date, assignment_description, course_id, overdue, student_number} = req.body;
+    const query = `UPDATE assignments SET assignment_name='${assignment_name}', assignment_due_date='${assignment_due_date}', assignment_work_date='${assignment_work_date}', assignment_description='${assignment_description}', course_id='${course_id}', overdue=${overdue}, student_number=${student_number} WHERE assignment_id=${req.params.id}`;
+    connection.query(query, (err, rows, fields) => {
+        if (err) throw err;
+
+        console.log(rows);
+        res.status(200);
+        res.send(rows);
+    })
+})
+
+
 //Retrieve a assignments
 app.get('/assignments/:id', (req, res) => {
     console.log(req.params.id)
     
-    connection.query('SELECT * FROM assignments JOIN courses ON assignments.course_id = courses.course_id WHERE assignments.assignment_id = ?', [req.params.id], (err, rows, fields) => {
+    connection.query('SELECT * FROM assignments JOIN courses ON assignments.course_id = courses.course_id WHERE assignment_id = ?', [req.params.id], (err, rows, fields) => {
         try {
             if (err) throw err;
             console.log(rows);
@@ -344,6 +357,8 @@ app.get('/assignments/courses/:course_id', (req, res) => { // Change :course_num
         }
     });
 });
+
+
 
 //Delete all assignments
 //.delete or .put?
