@@ -37,7 +37,7 @@ export default function Tile({ Month, day }) {
   };
 
   return (
-    <Grid item xs={12/7}>
+    <Grid item xs={12/7} sx={{flexBasis: 'auto', flexGrow: 1, flexShrink: 0, minHeight: '200px'}}>
       {handleCompare() ? (
         <>
           <Typography variant="h5" color="textPrimary">{day.date.split(" ")[2]}</Typography>
@@ -46,7 +46,7 @@ export default function Tile({ Month, day }) {
               <Content assignment={assignment}></Content>
             ))
           ) : (
-            <Typography>Add Assignment</Typography>
+            <></>
           )}
         </>
       ) : (
@@ -61,7 +61,7 @@ export default function Tile({ Month, day }) {
               ></Content>
             ))
           ) : (
-            <Typography color="textPrimary">Add Assignment</Typography>
+            <></>
           )}
         </>
       )}
