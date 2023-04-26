@@ -39,12 +39,29 @@ export const Calendar = () => {
   const [view, setView] = useState();
   const [assignments, setAssignments] = useState([]);
 
-  const initialCourseColors = JSON.parse(localStorage.getItem('courseColors')) || [];
+  const initialCourseColors =
+    JSON.parse(localStorage.getItem("courseColors")) || [];
   const colors = [
-    "#ffd1dc", "#81b71a", "#eeac99", "#e06377", "#c83349",
-    "#5b9aa0", "#d6d4e0", "#b8a9c9", "#622569", "#c9a0dc",
-    "#a7ffeb", "#ace5ff", "#f9d5e5", "#b0dd16", "#e3b49a",
-    "#f0e68c", "#d3b88c", "#f0e0b8", "#e6af2e", "#c38d9e"
+    "#ffd1dc",
+    "#81b71a",
+    "#eeac99",
+    "#e06377",
+    "#c83349",
+    "#5b9aa0",
+    "#d6d4e0",
+    "#b8a9c9",
+    "#622569",
+    "#c9a0dc",
+    "#a7ffeb",
+    "#ace5ff",
+    "#f9d5e5",
+    "#b0dd16",
+    "#e3b49a",
+    "#f0e68c",
+    "#d3b88c",
+    "#f0e0b8",
+    "#e6af2e",
+    "#c38d9e",
   ];
   const [courseColors, setCourseColors] = useState(initialCourseColors);
 
@@ -73,19 +90,17 @@ export const Calendar = () => {
   function getOrAssignColor(course_id) {
     // Check if a color is already assigned to the courseId
     const colorIndex = courseColors.indexOf(course_id);
-  
+
     if (colorIndex === -1) {
       // not assigned
       const updatedColors = [...courseColors, course_id];
       setCourseColors(updatedColors);
-      localStorage.setItem('courseColors', JSON.stringify(updatedColors));
+      localStorage.setItem("courseColors", JSON.stringify(updatedColors));
       return colors[updatedColors.length - 1];
     }
-  
+
     return colors[colorIndex];
   }
-  
-  
 
   function handleMonthChange(newDate, assignments) {
     // update current date
@@ -127,7 +142,7 @@ export const Calendar = () => {
                 (assignment) =>
                   new Date(assignment.assignment_due_date).toDateString() ===
                   day.toDateString()
-              ),
+              )
             )
           );
         }
@@ -142,7 +157,7 @@ export const Calendar = () => {
                 (assignment) =>
                   new Date(assignment.assignment_due_date).toDateString() ===
                   day.toDateString()
-              ),
+              )
             )
           );
         }
@@ -158,7 +173,7 @@ export const Calendar = () => {
                 (assignment) =>
                   new Date(assignment.assignment_due_date).toDateString() ===
                   day.toDateString()
-              ),
+              )
             )
           );
         }
@@ -191,9 +206,13 @@ export const Calendar = () => {
     setCurrentDate(newDate);
     const startDate = newDate.getDate() - newDate.getDay();
     const week = [];
-  
+
     for (let i = 0; i < 7; i++) {
-      const day = new Date(newDate.getFullYear(), newDate.getMonth(), startDate + i);
+      const day = new Date(
+        newDate.getFullYear(),
+        newDate.getMonth(),
+        startDate + i
+      );
       week.push(
         new Cal(
           day.toDateString(),
@@ -207,7 +226,6 @@ export const Calendar = () => {
     }
     setView(<WeekView week={week} Month={Month} />);
   };
-  
 
   const handleMonthView = () => {
     setView(<MonthView weeks={weeks} Month={Month} />);
@@ -231,60 +249,90 @@ export const Calendar = () => {
   return (
     <>
       {currentDate ? (
-        <Page title="Dashboard | Minimal-UI">
+        <Page title="Dashboard | Studi">
           <Container spacing={1}>
             <Box item container>
-              <Button
-                onClick={() => {
-                  const viewType = getCurrentViewType();
-                  if (viewType === "week") {
-                    handleWeekView(
-                        new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 7)
-                      )
-                  } else {
-                    handleMonthChange(
-                      new Date(currentDate.getFullYear(), Month - 1, 1),
-                      assignments
-                    );
-                  }
-                }}
-              >
-                previous
-              </Button>
-              <ButtonGroup
-                size="small"
-                aria-label="small cotained button group"
-              >
-                <Button key="day" onClick={() => handleDayView(currentDate)}>
-                  Days
-                </Button>
-                <Button key="week" onClick={() => handleWeekView(currentDate)}>
-                  Week
-                </Button>
-                <Button key="month" onClick={() => handleMonthView()}>
-                  Month
-                </Button>
-              </ButtonGroup>
-              <Button
-                onClick={() => {
-                  const viewType = getCurrentViewType();
-                  if (viewType === "week") {
-                    handleWeekView(
-                        new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 7)
-                      )
-                  } else {
-                    handleMonthChange(
-                      new Date(currentDate.getFullYear(), Month + 1, 1),
-                      assignments
-                    );
-                  }
-                }}
-              >
-                next
-              </Button>
-              <Typography>
-                {currentDate.toLocaleString("en-US", { month: "long" })}
-              </Typography>
+              <Grid spacing={3}>
+                <Typography variant={"h3"} fontWeight="bold" align="center">
+                  {currentDate.toLocaleString("en-US", { month: "long" })}
+                </Typography>
+                <Grid
+                  container
+                  alignItems="center"
+                  justify="center"
+                >
+                  <Grid item xs={1}>
+                    <Button
+                      onClick={() => {
+                        const viewType = getCurrentViewType();
+                        if (viewType === "week") {
+                          handleWeekView(
+                            new Date(
+                              currentDate.getFullYear(),
+                              currentDate.getMonth(),
+                              currentDate.getDate() - 7
+                            )
+                          );
+                        } else {
+                          handleMonthChange(
+                            new Date(currentDate.getFullYear(), Month - 1, 1),
+                            assignments
+                          );
+                        }
+                      }}
+                    >
+                      previous
+                    </Button>
+                  </Grid>
+                  <Grid item xs={4.25}></Grid>
+                  <Grid item xs={2}>
+                    <ButtonGroup
+                      size="small"
+                      aria-label="small cotained button group"
+                    >
+                      <Button
+                        key="day"
+                        onClick={() => handleDayView(currentDate)}
+                      >
+                        Days
+                      </Button>
+                      <Button
+                        key="week"
+                        onClick={() => handleWeekView(currentDate)}
+                      >
+                        Week
+                      </Button>
+                      <Button key="month" onClick={() => handleMonthView()}>
+                        Month
+                      </Button>
+                    </ButtonGroup>
+                  </Grid>
+                  <Grid item xs={3.75}></Grid>
+                  <Grid item xs={1}>
+                    <Button
+                      onClick={() => {
+                        const viewType = getCurrentViewType();
+                        if (viewType === "week") {
+                          handleWeekView(
+                            new Date(
+                              currentDate.getFullYear(),
+                              currentDate.getMonth(),
+                              currentDate.getDate() + 7
+                            )
+                          );
+                        } else {
+                          handleMonthChange(
+                            new Date(currentDate.getFullYear(), Month + 1, 1),
+                            assignments
+                          );
+                        }
+                      }}
+                    >
+                      next
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
               <Grid container spacing={2}>
                 <Grid item xs={12 / 7}>
                   <Typography variant="h5">Sunday</Typography>
