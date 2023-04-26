@@ -49,6 +49,9 @@ export const AssignmentEditor = () => {
       console.log(params.assignment_id)
       getAssignmentById(params.assignment_id)
         .then(x => {
+          // gets rid of timestamp
+          x[0].assignment_due_date = (x[0].assignment_due_date + " ").split('T')[0];
+          x[0].assignment_work_date = (x[0].assignment_due_date + " ").split('T')[0];
           setAssignment(...x);
         })
     }
