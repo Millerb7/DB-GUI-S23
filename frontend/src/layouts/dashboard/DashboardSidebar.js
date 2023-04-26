@@ -24,14 +24,6 @@ const RootStyle = styled('div')(({ theme }) => ({
   }
 }));
 
-const AccountStyle = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(2, 2.5),
-  borderRadius: Number(theme.shape.borderRadius) * 1.5,
-  backgroundColor: theme.palette.grey[500_12]
-}));
-
 // ----------------------------------------------------------------------
 
 DashboardSidebar.propTypes = {
@@ -60,22 +52,6 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar, acct }
     >
       <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
         <Logo />
-      </Box>
-
-      <Box sx={{ mb: 5, mx: 2.5 }}>
-        <Link underline="none" component={RouterLink} to="#">
-          <AccountStyle>
-            <Avatar src="" alt="photoURL" />
-            <Box sx={{ ml: 2 }}>
-              <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                displayName
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                role
-              </Typography>
-            </Box>
-          </AccountStyle>
-        </Link>
       </Box>
 
       <NavSection navConfig={sidebarConfig} />
