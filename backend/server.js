@@ -56,25 +56,13 @@ app.get('/db', (req,res) => {
 //     });
 // });
 
-app.post('/user', (req,res) => {
-    console.log(req.body);
-    const { first_name, last_name, email, password } = req.body;
-    const query = `INSERT INTO users (first_name, last_name, email, password) VALUES ('${user_id}', '${first_name}','${last_name}','${email}','${password}')`;
-        connection.query(query, (err,rows,fields) => {
-            if (err) throw err;
-            console.log(rows);
-            res.status(200);
-            res.send(rows);
-        });
-});
-
 //ryans stuff
 
 //add user
 app.post('/user', (req,res) => {
     console.log(req.body);
     const { first_name, last_name, email, password} = req.body;
-    const query = `INSERT INTO users (first_name, last_name, email, password) VALUES ('${user_id}', '${first_name}','${last_name}','${email}','${password}')`;
+    const query = `INSERT INTO users (first_name, last_name, email, password) VALUES ('${first_name}','${last_name}','${email}','${password}')`;
         connection.query(query, (err,rows,fields) => {
             if (err) throw err;
             console.log(rows);
@@ -274,11 +262,11 @@ app.listen(port, () => {
 
 //Add Assignment
 app.post('/assignments', (req, res)=> {
-    const { assignment_name, assignment_due_date, assignment_work_date, assignment_description, overdue, student_number} = req.body;
+    const { assignment_name, assignment_due_date, assignment_work_date, assignment_description, course_id, overdue, student_number} = req.body;
     const query = `INSERT INTO assignments 
-               (assignment_name, assignment_due_date, assignment_work_date, assignment_description, overdue, student_number)
+               (assignment_name, assignment_due_date, assignment_work_date, assignment_description, course_id, overdue, student_number)
                VALUES 
-               ('${assignment_name}', '${assignment_due_date}', '${assignment_work_date}', '${assignment_description}', ${overdue}, ${student_number})`;
+               ('${assignment_name}', '${assignment_due_date}', '${assignment_work_date}', '${assignment_description}', '${course_id}', ${overdue}, ${student_number})`;
         connection.query(query, (err, rows, fields) => {
             if (err) throw err;
 
@@ -289,11 +277,24 @@ app.post('/assignments', (req, res)=> {
 
 })
 
+app.put('/assignments/:id', (req, res)=> {
+    const { assignment_name, assignment_due_date, assignment_work_date, assignment_description, course_id, overdue, student_number} = req.body;
+    const query = `UPDATE assignments SET assignment_name='${assignment_name}', assignment_due_date='${assignment_due_date}', assignment_work_date='${assignment_work_date}', assignment_description='${assignment_description}', course_id='${course_id}', overdue=${overdue}, student_number=${student_number} WHERE assignment_id=${req.params.id}`;
+    connection.query(query, (err, rows, fields) => {
+        if (err) throw err;
+
+        console.log(rows);
+        res.status(200);
+        res.send(rows);
+    })
+})
+
+
 //Retrieve a assignments
 app.get('/assignments/:id', (req, res) => {
     console.log(req.params.id)
     
-    connection.query('SELECT * FROM assignments JOIN courses ON assignments.course_id = courses.course_id WHERE assignments.assignment_id = ?', [req.params.id], (err, rows, fields) => {
+    connection.query('SELECT * FROM assignments JOIN courses ON assignments.course_id = courses.course_id WHERE assignment_id = ?', [req.params.id], (err, rows, fields) => {
         try {
             if (err) throw err;
             console.log(rows);
@@ -356,6 +357,8 @@ app.get('/assignments/courses/:course_id', (req, res) => { // Change :course_num
         }
     });
 });
+
+
 
 //Delete all assignments
 //.delete or .put?

@@ -31,27 +31,14 @@ export default function Tile({ Month, day }) {
     "Dec",
   ];
 
-
-  // useEffect(() => {
-  //     console.log(day + " " + convertToDateObject(day))
-  //     getAssignmentsByDay(convertToDateObject(day)).then(x => setAssignments(x));
-  // }, []);
-
   const handleCompare = () => {
     if (months[Month] === day.date.split(" ")[1]) return true;
     else return false;
   };
 
-  // function convertToDateObject(dateString) {
-  //     const dateParts = dateString.split(' ');
-  //     const month = months.indexOf(dateParts[1]) + 1;
-  //     return `${dateParts[3]}-${month < 10 ? '0' + month : month}-${dateParts[2]}`;
-  //   }
-
-  console.log(day.assignments)
-
   return (
-    <Grid item xs="auto">
+    <Grid item xs={12/7}>
+      <Paper elevation={11} square={false} sx={{m: .5, flexBasis: 'auto', flexGrow: 1, flexShrink: 0, minHeight: '200px'}}>
       {handleCompare() ? (
         <>
           <Typography variant="h5">{day.date.split(" ")[2]}</Typography>
@@ -60,26 +47,27 @@ export default function Tile({ Month, day }) {
               <Content assignment={assignment}></Content>
             ))
           ) : (
-            <Typography>Add Assignment</Typography>
+            <></>
           )}
         </>
       ) : (
         <>
-          <Typography variant="h5" color="text.secondary">
+          <Typography variant="h5" color="#808080">
             {day.date.split(" ")[2]}
           </Typography>
           {day.assignments.length > 0 ? (
             day.assignments.map((assignment) => (
               <Content
                 assignment={assignment}
-                color={"text.secondary"}
               ></Content>
             ))
           ) : (
-            <Typography color="text.secondary">Add Assignment</Typography>
+            <></>
           )}
         </>
       )}
+      
+      </Paper>
     </Grid>
   );
 }

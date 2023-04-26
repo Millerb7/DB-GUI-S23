@@ -21,7 +21,6 @@ CREATE TABLE IF NOT EXISTS courses
 (
     course_id        INT AUTO_INCREMENT PRIMARY KEY,
     course_name      VARCHAR(255) NOT NULL,
-    course_number    INT          NOT NULL,
     professor_name   VARCHAR(255),
     year             INT          NOT NULL,
     semester         VARCHAR(255) NOT NULL,
@@ -30,18 +29,18 @@ CREATE TABLE IF NOT EXISTS courses
     FOREIGN KEY (student_id) REFERENCES users (user_id)
 );
 
-INSERT INTO courses (course_name, course_number, professor_name, year, semester, course_completed, student_id)
-VALUES ('Mathematical Biology', 1243, 'Mr. James', 2023, 'Fall', true, 1),
-       ('History II', 1511, 'Mrs. Teach', 2023, 'Spring', false, 1),
-       ('Calculus I', 1160, 'Mr. Yuko', 2022, 'Fall', true, 1),
-       ('Spanish II', 1020, 'Ms. Hiyla', 2023, 'Fall', false, 1),
-       ('English III', 1400, 'Ms. Miyagi', 2022, 'Spring', true, 1),
-       ('Algebra II', 3330, 'Mr. Romeo', 2021, 'Fall', true, 1),
-       ('History I', 1411, 'Ms .Hitory', 2020, 'Spring', true, 1),
-       ('Differential Equations', 4320, 'Ms .Maf', 2023, 'Spring', false, 1),
-       ('Spanish I', 1010, 'Ms. Hiyla', 2022, 'Fall', true, 1),
-       ('Graphical User Interface', 3345, 'Sir Lawrimore', 2023, 'Spring', false, 1),
-       ('Algorithms', 3353, 'Mr. Lin', 2023, 'Spring', false, 1);
+INSERT INTO courses (course_name, professor_name, year, semester, course_completed, student_id)
+VALUES ('Mathematical Biology', 'Mr. James', 2023, 'Fall', true, 1),
+       ('History II', 'Mrs. Teach', 2023, 'Spring', false, 1),
+       ('Calculus I', 'Mr. Yuko', 2022, 'Fall', true, 1),
+       ('Spanish II', 'Ms. Hiyla', 2023, 'Fall', false, 1),
+       ('English III', 'Ms. Miyagi', 2022, 'Spring', true, 1),
+       ('Algebra II', 'Mr. Romeo', 2021, 'Fall', true, 1),
+       ('History I', 'Ms .Hitory', 2020, 'Spring', true, 1),
+       ('Differential Equations', 'Ms .Maf', 2023, 'Spring', false, 1),
+       ('Spanish I', 'Ms. Hiyla', 2022, 'Fall', true, 1),
+       ('Graphical User Interface', 'Sir Lawrimore', 2023, 'Spring', false, 1),
+       ('Algorithms', 'Mr. Lin', 2023, 'Spring', false, 1);
 
 
 -- DROP TABLE assignments;
