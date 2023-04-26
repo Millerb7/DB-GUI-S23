@@ -37,10 +37,11 @@ export default function Tile({ Month, day }) {
   };
 
   return (
-    <Grid item xs={12/7} sx={{flexBasis: 'auto', flexGrow: 1, flexShrink: 0, minHeight: '200px'}}>
+    <Grid item xs={12/7}>
+      <Paper elevation={11} square={false} sx={{m: .5, flexBasis: 'auto', flexGrow: 1, flexShrink: 0, minHeight: '200px'}}>
       {handleCompare() ? (
         <>
-          <Typography variant="h5" color="textPrimary">{day.date.split(" ")[2]}</Typography>
+          <Typography variant="h5">{day.date.split(" ")[2]}</Typography>
           {day.assignments.length > 0 ? (
             day.assignments.map((assignment) => (
               <Content assignment={assignment}></Content>
@@ -51,7 +52,7 @@ export default function Tile({ Month, day }) {
         </>
       ) : (
         <>
-          <Typography variant="h5">
+          <Typography variant="h5" color="#808080">
             {day.date.split(" ")[2]}
           </Typography>
           {day.assignments.length > 0 ? (
@@ -65,6 +66,8 @@ export default function Tile({ Month, day }) {
           )}
         </>
       )}
+      
+      </Paper>
     </Grid>
   );
 }
