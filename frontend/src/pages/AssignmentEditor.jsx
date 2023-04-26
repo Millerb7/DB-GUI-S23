@@ -5,7 +5,6 @@ import { Textfield } from "../components/Textfield";
 import { UserContext } from "src/layouts/dashboard";
 import { addAssignment, editAssignment, getAssignmentById } from "src/api/AssignmentApi";
 import { getCourseById } from "src/api/coursePageApi";
-import { TextField } from "@mui/material";
 
 
 
@@ -21,17 +20,17 @@ export const AssignmentEditor = () => {
     const mergeAccount = delta => setAssignment({ ...assignment, ...delta });
 
     const handleSave = () => {
-        if (params.id){
-            editAssignment(params.id, assignment).then(() => navigate(`/dashboard/courses/${params.course_id}`));
+        if (params.assignment_id){
+            editAssignment(assignment.assignment_id, assignment).then(() => navigate(`/dashboard/courses/${params.course_id}`));
         }
         else{
-            addAssignment(assignment).then(() => navigate(`/dashboard/courses/${params.course_id}`));
+            addAssignment(assignment.assignmentName, assignment.dueDate, '', assignment.description, assignment.missing, useContext.user.user_id).then(() => navigate(`/dashboard/courses/${params.course_id}`));
         }
     }
     
     useEffect(() => {
-        if (params.id) {
-            getAssignmentById(params.id).then(x => {
+        if (params.assignment_id) {
+            getAssignmentById(params.assignment_id).then(x => {
                 setAssignment(x);
             })
         }
@@ -57,12 +56,11 @@ export const AssignmentEditor = () => {
                     value = {assignment.description}
                     setValue = {description => mergeAccount({ description })}>
                 </Textfield>
-                <InputLabel>Due Date</InputLabel>
-                <TextField autoFocus id = "dueDate"
-                    type = "date"
+                <Textfield autoFocus id = "dueDate"
+                    label = "Due Date (YYYY-MM-DD)"
                     value = {assignment.dueDate}
-                    onChange = {(dueDate) => mergeAccount({ dueDate })}>
-                </TextField>
+                    setValue = {(dueDate) => mergeAccount({ dueDate })}>
+                </Textfield>
                 <Button type="button"
                     onClick={() => { handleSave();}}>
                     Submit
