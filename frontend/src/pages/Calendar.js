@@ -199,8 +199,19 @@ export const Calendar = () => {
   }
 
   const handleDayView = (day) => {
-    setView(<DayView day={day.toDateString()} />);
+    let selectedDay;
+    const dayString = day.toDateString();
+    for (const week of weeks) {
+      const foundDay = week.find((calDay) => calDay.date === dayString);
+      if (foundDay) {
+        selectedDay = foundDay;
+        break;
+      }
+    }
+    setView(<DayView day={selectedDay} />);
   };
+  
+  
 
   const handleWeekView = (newDate) => {
     setCurrentDate(newDate);
@@ -256,11 +267,7 @@ export const Calendar = () => {
                 <Typography variant={"h3"} fontWeight="bold" align="center">
                   {currentDate.toLocaleString("en-US", { month: "long" })}
                 </Typography>
-                <Grid
-                  container
-                  alignItems="center"
-                  justify="center"
-                >
+                <Grid container alignItems="center" justify="center">
                   <Grid item xs={1}>
                     <Button
                       onClick={() => {
