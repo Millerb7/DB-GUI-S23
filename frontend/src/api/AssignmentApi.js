@@ -76,6 +76,7 @@ export const getAssignmentsByDay = (date) => new Promise((resolve, reject) => {
 });
 
 export const addAssignment = (assignment) => new Promise((resolve, reject) => {
+    console.log(assignment)
     axios.post(`${url}`, assignment)
         .then(resp => {
             console.log(resp)

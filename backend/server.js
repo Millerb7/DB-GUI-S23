@@ -262,11 +262,11 @@ app.listen(port, () => {
 
 //Add Assignment
 app.post('/assignments', (req, res)=> {
-    const { assignment_name, assignment_due_date, assignment_work_date, assignment_description, overdue, student_number} = req.body;
+    const { assignment_name, assignment_due_date, assignment_work_date, assignment_description, course_id, overdue, student_number} = req.body;
     const query = `INSERT INTO assignments 
-               (assignment_name, assignment_due_date, assignment_work_date, assignment_description, overdue, student_number)
+               (assignment_name, assignment_due_date, assignment_work_date, assignment_description, course_id, overdue, student_number)
                VALUES 
-               ('${assignment_name}', '${assignment_due_date}', '${assignment_work_date}', '${assignment_description}', ${overdue}, ${student_number})`;
+               ('${assignment_name}', '${assignment_due_date}', '${assignment_work_date}', '${assignment_description}', '${course_id}', ${overdue}, ${student_number})`;
         connection.query(query, (err, rows, fields) => {
             if (err) throw err;
 
