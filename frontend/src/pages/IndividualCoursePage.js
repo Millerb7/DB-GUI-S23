@@ -4,7 +4,7 @@ import { getCourseById } from "src/api/coursePageApi";
 import { getAssignmentsByCourse, getUserAssignments } from "src/api/AssignmentApi";
 import { AssignmentList } from "src/components/AssignmentList";
 import { Button, LinearProgress } from "@mui/material";
-import { UserContext } from "src/layouts/dashboard";
+import { UserContext } from "src/layouts";
 import { Assignment } from '../sections/Assignment'
 
 export const IndividualCoursePage = () => {

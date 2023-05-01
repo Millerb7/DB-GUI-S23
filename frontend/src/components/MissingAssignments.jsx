@@ -6,7 +6,7 @@ import {  } from '@mui/material';
 import { AssignmentLate } from '@mui/icons-material';
 
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from 'src/layouts/dashboard';
+import { UserContext } from 'src/layouts';
 
 
 export const MissingAssignments = () => {

@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCurrentCoursesByID, getPastCoursesByID } from "src/api/coursePageApi";
 import { CourseList } from "src/components/CourseList";
-import { UserContext } from "src/layouts/dashboard";
+import { UserContext } from "src/layouts";
 
 
 export const Courses = () => {

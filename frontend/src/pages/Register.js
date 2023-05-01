@@ -1,77 +1,53 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from "react-router-dom";
 // material
-import { styled } from '@mui/material/styles';
-import { Box, Card, Link, Container, Typography } from '@mui/material';
-// layouts
-import AuthLayout from '../layouts/AuthLayout';
-// components
-import Page from '../components/Page';
-import { RegisterForm } from '../sections/authentication/register';
-
-// ----------------------------------------------------------------------
-
-const RootStyle = styled(Page)(({ theme }) => ({
-  [theme.breakpoints.up('md')]: {
-    display: 'flex'
-  }
-}));
-
-const SectionStyle = styled(Card)(({ theme }) => ({
-  width: '100%',
-  maxWidth: 464,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  margin: theme.spacing(2, 0, 2, 2)
-}));
-
-const ContentStyle = styled('div')(({ theme }) => ({
-  maxWidth: 480,
-  margin: 'auto',
-  display: 'flex',
-  minHeight: '100vh',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  padding: theme.spacing(12, 0)
-}));
-
-// ----------------------------------------------------------------------
+import { styled } from "@mui/material/styles";
+import { Box, Stack, Link, Container, Typography } from "@mui/material";
+import { RegisterForm } from "../sections/authentication/RegisterForm";
+import Logo from "src/components/Logo";
 
 export default function Register() {
   return (
-    <RootStyle title="Register | Minimal-UI">
-      <AuthLayout>
+    <Box>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Logo />
+        <Box>
         Already have an account? &nbsp;
-        <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
+        <Link
+          underline="none"
+          variant="subtitle2"
+          component={RouterLink}
+          to="/login"
+        >
           Login
         </Link>
-      </AuthLayout>
+        </Box>
+      </Box>
 
-      <Container>
-        <ContentStyle>
-          <Box sx={{ mb: 5 }}>
+      <Container maxWidth="sm">
+        <Box
+          sx={{
+            display: "flex",
+            minHeight: "100vh",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <Stack sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Make an account by entering your information
+              Sign in to STUDI
             </Typography>
-          </Box>
+          </Stack>
 
           <RegisterForm />
 
-          <Typography
-            variant="subtitle2"
-            sx={{
-              mt: 3,
-              textAlign: 'center',
-              display: { sm: 'none' }
-            }}
-          >
-            Already have an account?&nbsp;
-            <Link underline="hover" to="/login" component={RouterLink}>
-              Login
-            </Link>
-          </Typography>
-        </ContentStyle>
+        </Box>
       </Container>
-    </RootStyle>
+    </Box>
   );
 }

@@ -14,15 +14,14 @@ import {
   MenuItem,
   Box,
 } from "@mui/material";
-import Page from "../components/Page";
 import { useContext, useEffect, useState } from "react";
 import Tile from "src/components/Calendar/Tile";
 import WeekView from "../components/Calendar/Week";
 import MonthView from "src/components/Calendar/Month";
 import DayView from "src/components/Calendar/Day";
 import { getUserAssignments } from "src/api/AssignmentApi";
-import { UserContext } from "src/layouts/dashboard";
-import Cal from "src/utils/Calendar";
+import { UserContext } from "src/layouts";
+import Cal from "src/sections/Calendar";
 import { ConstructionOutlined } from "@mui/icons-material";
 
 export const Calendar = () => {
@@ -260,7 +259,6 @@ export const Calendar = () => {
   return (
     <>
       {currentDate ? (
-        <Page title="Calendar">
           <Container spacing={1}>
             <Box item container>
               <Grid spacing={3}>
@@ -363,7 +361,6 @@ export const Calendar = () => {
               </Grid>
             </Box>
           </Container>
-        </Page>
       ) : (
         <></>
       )}

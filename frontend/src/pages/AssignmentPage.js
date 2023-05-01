@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, Typography, Grid } from '@mui/material';
 
 import { getAssignmentById } from "src/api/AssignmentApi";
-import { UserContext } from "src/layouts/dashboard";
+import { UserContext } from "src/layouts";
 
 export const AssignmentPage = () => {
     console.log("here");
