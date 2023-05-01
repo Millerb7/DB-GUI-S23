@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Grid, Typography, Paper, FormControl, InputLabel } from '@mui/material';
+import { Container, Grid, Typography, Paper, FormControl, InputLabel } from '@mui/material';
 import { Box, Card, CardActions, CardContent, Button, Select, MenuItem } from '@mui/material';
 
 import { MissingAssignments } from "src/components/MissingAssignments";
-import { UserContext } from "src/layouts/dashboard";
+import { UserContext } from "src/layouts";
 import { getAssignmentsByCourse, getUpcoming, getUpcomingAssignments } from "src/api/AssignmentApi";
 import { getCurrentCoursesByID } from "src/api/coursePageApi";
 
@@ -49,6 +49,8 @@ export const Home = () => {
     }
 
     return<>
+    <Container maxWidth="xl">
+        <Box sx={{ pb: 5 }}>
         <Typography variant="h4" style={{textAlign: 'center'}}>Hi, Welcome Back {userContext.user.first_name}</Typography>
             <br/>
             <Paper elevation={3}>
@@ -142,6 +144,9 @@ export const Home = () => {
                             </Grid>
                         ))  :  <></>}
                     </Grid>                
-            </Paper>                   
+            </Paper>
+        </Box>
+      </Container>
+                           
     </>
 }

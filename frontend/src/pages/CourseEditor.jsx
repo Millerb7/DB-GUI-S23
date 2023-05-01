@@ -4,7 +4,7 @@ import { Textfield } from "../components/Textfield";
 import { CheckboxField } from "../components/CheckboxField";
 import { addCourse, editCourse, getCourseById } from "src/api/coursePageApi";
 import { Button, FormGroup} from "@mui/material";
-import { UserContext } from "src/layouts/dashboard";
+import { UserContext } from "src/layouts";
 
 export const CourseEditor = () => {
     const [course, setCourse] = useState(undefined);

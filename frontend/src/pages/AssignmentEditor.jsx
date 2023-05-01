@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FormGroup, Button, InputLabel, FormControlLabel, Switch } from "@mui/material"
 import { Textfield } from "../components/Textfield";
-import { UserContext } from "src/layouts/dashboard";
+import { UserContext } from "src/layouts";
 import { addAssignment, editAssignment, getAssignmentById } from "src/api/AssignmentApi";
 import { getCourseById } from "src/api/coursePageApi";
 

@@ -14,6 +14,7 @@ import {
 import HourView from "./Hour";
 import Content from "./Content";
 
+// cut out of demo :(
 export default function DayView({ day }) {
   return (
     <Paper style={{ padding: 15, margin: 1 }}>
