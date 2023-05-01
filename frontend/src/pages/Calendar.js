@@ -260,7 +260,7 @@ export const Calendar = () => {
   return (
     <>
       {currentDate ? (
-        <Page title="Dashboard | Studi">
+        <Page title="Calendar">
           <Container spacing={1}>
             <Box item container>
               <Grid spacing={3}>
